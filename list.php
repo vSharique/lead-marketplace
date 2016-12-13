@@ -88,6 +88,7 @@ function form_list()
 		<th id="columnname" class="manage-column column-columnname" scope="col">Institute Name</th>
 		<th id="columnname" class="manage-column column-columnname" scope="col">Phone No./Status</th> 
 		<th id="columnname" class="manage-column column-columnname" scope="col">Email/Status</th> 
+    	<th id="columnname" class="manage-column column-columnname" scope="col">Email Count(s)</th>
     	<th id="columnname" class="manage-column column-columnname" scope="col">Date Time</th>
     </tr>
     </thead>
@@ -96,7 +97,8 @@ function form_list()
 		<th id="cb" class="manage-column column-cb check-column" scope="col"><input id="cb-select-all-1" style="margin-top:16px;" type="checkbox"></th> 
 		<th id="columnname" class="manage-column column-columnname" scope="col">Institute Name</th>
 		<th id="columnname" class="manage-column column-columnname" scope="col">Phone No./Status</th> 
-		<th id="columnname" class="manage-column column-columnname" scope="col">Email/Status</th> 
+		<th id="columnname" class="manage-column column-columnname" scope="col">Email/Status</th>
+     	<th id="columnname" class="manage-column column-columnname" scope="col">Email Count(s)</th>
     	<th id="columnname" class="manage-column column-columnname" scope="col">Date Time</th>
     </tr>
     </tfoot>
@@ -131,6 +133,7 @@ function form_list()
 	            <td class="column-columnname">
                 	<?php
     						$emails_confrms = json_decode($leads_data['email_status'],true);
+        					$email_count = count($emails_confrms);
     						if(!empty($emails_confrms))
                             {
     							foreach($emails_confrms as $email => $status)
@@ -142,6 +145,7 @@ function form_list()
                             }
                 	?>
             	</td>
+            	<td class="column-columnname"><?php echo $email_count;?></td>
             	<td class="column-columnname"><?php echo $leads_data['date_time'];?></td>
 	        </tr>
  <?php } ?>
