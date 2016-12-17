@@ -50,23 +50,6 @@ function form_list()
             	<input type="hidden" name="list_caller" value="self">
 				<input class="button action" type="submit" value="OK" id="delete">
     		</form>
-        	<label> Total no. of Emails Sent</label> 
-        	<?php
-				$i=0;
-				foreach($leads_datas as $leads_data)
-                {
-    				$emails_confrms = json_decode($leads_data['email_status'],true);
-    				if(!empty($emails_confrms))
-                	{
-                 		
-    					foreach($emails_confrms as $email => $status)
-                   	 	{
-                    		if($status == true) $i++;
-                    	}
-                	}
-                }
-            ?>
-        	<b><?php echo $i; ?>.</b>
     	`</div>
     		<form method="post">
         		<label>Date From</label><input name="edugorilla_list_date_from" id="edugorilla_list_date_from">
@@ -104,6 +87,12 @@ function form_list()
     </tfoot>
     <tbody>
     <?php
+		$lead_names = array();
+		foreach($leads_datas as $leads_data)
+        {
+        	$lead_names[] = $leads_data['institute_name'];
+        }
+
 		foreach($leads_datas as $leads_data)
       {
       	$category = "";
@@ -133,7 +122,8 @@ function form_list()
 	            <td class="column-columnname">
                 	<?php
     						$emails_confrms = json_decode($leads_data['email_status'],true);
-        					$email_count = count($emails_confrms);
+        				
+        					$email_count = array_count_values($lead_names);
     						if(!empty($emails_confrms))
                             {
     							foreach($emails_confrms as $email => $status)
@@ -145,7 +135,7 @@ function form_list()
                             }
                 	?>
             	</td>
-            	<td class="column-columnname"><?php echo $email_count;?></td>
+            	<td class="column-columnname"><?php echo $email_count[$leads_data['institute_name']];?></td>
             	<td class="column-columnname"><?php echo $leads_data['date_time'];?></td>
 	        </tr>
  <?php } ?>
