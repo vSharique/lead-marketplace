@@ -10,17 +10,24 @@
 	{
 		global $wpdb;
 		$charset_collate = $wpdb->get_charset_collate();
-		$table_name = $wpdb->prefix . 'edugorilla_lead'; //Defining a table name.
-		$sql = "CREATE TABLE $table_name (
+		$table_name1 = $wpdb->prefix . 'edugorilla_lead_contact_log'; //Defining a table name.
+		$sql1 = "CREATE TABLE $table_name1 (
 											id int(11) NOT NULL AUTO_INCREMENT,
 											name varchar(200) NOT NULL,
-                                            keyword varchar(200) NOT NULL,
 											contact_no varchar(50) NOT NULL,
 											email varchar(200) NOT NULL,
 											query text(500) NOT NULL,
-											longitude double NOT NULL,
-											latitude double NOT NULL,
-											category_id text(500) NOT NULL,
+                                            date_time varchar(200) NOT NULL,
+											PRIMARY KEY id (id)
+										) $charset_collate;"; //Defining query to create table.
+    
+    
+    	$table_name2 = $wpdb->prefix . 'edugorilla_lead'; //Defining a table name.
+		$sql2 = "CREATE TABLE $table_name2 (
+											id int(11) NOT NULL AUTO_INCREMENT,
+                                            contact_log_id int(11) NOT NULL,
+                                            category_id text(500) NOT NULL,
+                                            keyword varchar(200) NOT NULL,
 											institute_name varchar(200) NOT NULL,
                                             institute_address text NOT NULL,
                                             email_status text NOT NULL,
@@ -30,7 +37,9 @@
 										) $charset_collate;"; //Defining query to create table.
 		
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-		dbDelta($sql);//Creating a table name in cureent wordpress
+    	//Creating a table in cureent wordpress
+		dbDelta($sql1);
+    	dbDelta($sql2);
 	}
 	register_activation_hook( __FILE__, 'create_edugorilla_lead_table' );
 	
@@ -63,7 +72,18 @@
                              'Listing',
                              'form_list'
                             );
+    		add_submenu_page(
+                          	 'edugorilla',
+                         	 'EduGorilla | OTP',
+                          	 'OTP',
+                         	 'read',
+                         	 'edugorilla-otp',
+                         	 'edugorilla_otp'
+                       	 );
 	}
+
+
+	include_once plugin_dir_path( __FILE__ )."otp.php";
 
 	function edugorilla()
 	{
@@ -113,16 +133,24 @@
             	   	 }
                 		$category = implode(",",$category_id);
 						global $wpdb;
-						$wpdb->insert( 
-										$wpdb->prefix . 'edugorilla_lead', 
+                		$wpdb->insert( 
+										$wpdb->prefix . 'edugorilla_lead_contact_log', 
 									array( 
 											'name' => $name,
-                            				'keyword' => $keyword,
 											'contact_no' => $contact_no,
 											'email' => $email,
 											'query' => $query,
-                           			 		'longitude' =>  $json_result->long,
-                           			 		'latitude' =>  $json_result->lat,
+                            				'date_time' => current_time('mysql')
+										)
+						);
+                		
+                		$contact_log_id = $wpdb->insert_id;
+                
+						$wpdb->insert( 
+										$wpdb->prefix . 'edugorilla_lead', 
+									array( 
+                                    		'contact_log_id' => $contact_log_id,
+                            				'keyword' => $keyword,
 											'category_id' => $category,
                            			 		'institute_name' => $json_result->title,
                          			   		'institute_address' => $json_result->address,
@@ -278,6 +306,7 @@
                  	<tr>
 						 <th>Location<sup><font color="red">*</font></sup></th>
 						 <td>
+                         	<input id="pac-input" name="location" class="controls" type="text" placeholder="Enter a location">
                              <div id="map"></div>
 						</td>
 					</tr>
@@ -303,16 +332,93 @@
 <script>
 
  function initMap() {
-        var uluru = {lat: 26.10212199999999, lng: 85.40720720000002};
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
-          center: uluru
+          center: {lat: -33.8688, lng: 151.2195},
+          zoom: 13
         });
+		
+        var input = /** @type {!HTMLInputElement} */(
+            document.getElementById('pac-input'));
+
+        var types = document.getElementById('type-selector');
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
+
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.bindTo('bounds', map);
+
+        var infowindow = new google.maps.InfoWindow();
         var marker = new google.maps.Marker({
-          position: uluru,
-          map: map
+          map: map,
+          anchorPoint: new google.maps.Point(0, -29)
         });
-}
+		        google.maps.event.addListener(map, 'center_changed', function () {
+            var location = map.getCenter();
+            document.getElementById("latitude").value = location.lat();
+
+            document.getElementById("longitude").value = location.lng();          
+        });
+
+        autocomplete.addListener('place_changed', function() 
+		{
+          infowindow.close();
+          marker.setVisible(false);
+          var place = autocomplete.getPlace();
+          if (!place.geometry) {
+            // User entered the name of a Place that was not suggested and
+            // pressed the Enter key, or the Place Details request failed.
+            window.alert("No details available for input: '" + place.name + "'");
+            return;
+          }
+		  
+
+          // If the place has a geometry, then present it on a map.
+          if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+          } else {
+            map.setCenter(place.geometry.location);
+            map.setZoom(17);  // Why 17? Because it looks good.
+          }
+		  
+          marker.setIcon(/** @type {google.maps.Icon} */({
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(35, 35)
+          }));
+          marker.setPosition(place.geometry.location);
+          marker.setVisible(true);
+
+          var address = '';
+          if (place.address_components) {
+            address = [
+              (place.address_components[0] && place.address_components[0].short_name || ''),
+              (place.address_components[1] && place.address_components[1].short_name || ''),
+              (place.address_components[2] && place.address_components[2].short_name || '')
+            ].join(' ');
+          }
+
+          infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+          infowindow.open(map, marker);
+		  
+        });
+
+			
+        // Sets a listener on a radio button to change the filter type on Places
+        // Autocomplete.
+        function setupClickListener(id, types) {
+          var radioButton = document.getElementById(id);
+          radioButton.addEventListener('click', function() {
+            autocomplete.setTypes(types);
+          });
+        }
+
+        setupClickListener('changetype-all', []);
+        setupClickListener('changetype-address', ['address']);
+        setupClickListener('changetype-establishment', ['establishment']);
+        setupClickListener('changetype-geocode', ['geocode']);
+      }
 
 </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6v5-2uaq_wusHDktM9ILcqIrlPtnZgEk&libraries=places&callback=initMap"
