@@ -2,14 +2,16 @@ Background: At [EduGorilla Directory Listing](https://directory.edugorilla.com) 
 
 We have to come with a transparent platform of all the leads on our website. There are two aspects of this project:
 
-1. 1)Promotional Lead: These leads will be forwarded to all the people in that category
-2. 2)Sellable leads: These leads can be sold in the market. People can buy them.
+1. Promotional Lead: These leads will be forwarded to all the people in that category for free
+2. Sellable leads: These leads can be sold in the market. People can buy them.
 
 ## Promotional Lead:
 
-We are using Superlist theme to display content on our website.
+ We would get the leads accumulated in our database and send it in email to the interested parties.  
 
 ### Getting Started:
+
+We are using Superlist theme to display content on our website.
 
 Step 1: Download Superlist theme from [https://edugorilla.com/superlist.zip](https://edugorilla.com/superlist.zip)
 
@@ -38,10 +40,17 @@ Show the details of all the fetched Institutes.
 They should be properly hyperlinked.
 
 ## Sellable leads:
+  The marketing manager/Owner of the institute will be the user of this portal and they use the credits present in their account to get the details of leads(email/phone of people interested). 
 
-1. 1)Users should be able to purchase definite number of leads (points) in the beginning. These points will be credited in User&#39;s account manually from backend. User should be able to see the current points and history in his admin panel.
-2. 2)Users should be able to sort, filter and find leads before purchasing.
-3. 3)User can see contact details of the lead once he is ready to trade his point and that point should be deducted for the user.
+### Requirements:
+
+1. Users should be able to purchase definite number of EduCash (points) in the beginning. 
+2. We should be able to modify the EduCash credited in User&#39;s account from backend. If Possible, we can provide an admin UI to bulk edit the EduCash for all users.
+3. User should be able to see the current points and history in his user panel.
+4. User should be able to sort, filter and find leads before purchasing.
+5. Overview of the leads should be given to the user before he makes the purchase (like which city the lead is from and what service the lead is looking for).
+5. User can see contact details of the lead once he is ready to trade his EduCash and those corresponding number of EduCash should be deducted for the user.
+6. The proportion between how many leads you can buy with one EduCash should be configurable. By default,one EduCash can buy one lead. Add an UI to buy leads from using EduCash. 
 
 # Technology:
 
@@ -53,4 +62,6 @@ We will contribute this project back to Open Source Repository i.e. a Wordpress 
 
 # Glossary:
 
-Lead: Students who are interested in a particular educational service.
+Lead: Contact details of students who are interested in a particular educational service.
+
+EduCash : The credit/points assiciated with each account that the user can utilize to purchase leads.
