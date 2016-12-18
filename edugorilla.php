@@ -27,7 +27,6 @@
 											id int(11) NOT NULL AUTO_INCREMENT,
                                             contact_log_id int(11) NOT NULL,
                                             category_id text(500) NOT NULL,
-                                            keyword varchar(200) NOT NULL,
 											institute_name varchar(200) NOT NULL,
                                             institute_address text NOT NULL,
                                             email_status text NOT NULL,
@@ -131,7 +130,10 @@
                 		if(!empty($institute_email))
             			$institute_emails_status[$institute_email] = wp_mail($institute_email , "Hi", "Hi ".$name);
             	   	 }
-                		$category = implode(",",$category_id);
+                	
+                	if(!empty($category_id)) $category = implode(",",$category_id);
+                	else $category = "";
+                
 						global $wpdb;
                 		$wpdb->insert( 
 										$wpdb->prefix . 'edugorilla_lead_contact_log', 
@@ -146,12 +148,11 @@
                 		
                 		$contact_log_id = $wpdb->insert_id;
                 
-						$wpdb->insert( 
+						$result = $wpdb->insert( 
 										$wpdb->prefix . 'edugorilla_lead', 
 									array( 
                                     		'contact_log_id' => $contact_log_id,
-                            				'keyword' => $keyword,
-											'category_id' => $category,
+                            				'category_id' => $category,
                            			 		'institute_name' => $json_result->title,
                          			   		'institute_address' => $json_result->address,
                             				'email_status' => json_encode($institute_emails_status),
@@ -161,7 +162,9 @@
                 	
                 }
             
-				$success="Saved Successfully";
+            	if($result)
+					$success="Saved Successfully";
+            	else $success = $result;
             	
 			//	foreach($_REQUEST as $var=>$val)$$var="";
 			}
