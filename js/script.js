@@ -24,22 +24,23 @@ jQuery(document).ready(function( $ ) {
         {
         	$("#edugorilla_keyword").removeAttr("disabled");
         	$("#edugorilla_category").removeAttr("disabled");
+        	$("#edugorilla_location").removeAttr("disabled");
         }
     	else
         {
         	$("#edugorilla_keyword").attr("disabled","disabled");
         	$("#edugorilla_category").attr("disabled","disabled");
+        	$("#edugorilla_location").attr("disabled","disabled");
         }
 
     });
 
-$(document).on('keyup','#edugorilla_keyword',function(){
+$(document).on('keyup','#edugorilla_keyword, #edugorilla_location',function(){
 		var institute_data;
-		
-                
+		     
 		var ptype = $("#edugorilla_listing_type").val();
-		var keyword = $(this).val();
-		var keyword_split = keyword.split("in");
+		var keyword = $('#edugorilla_keyword').val();
+		var location = $('#edugorilla_location').val();
 		var category = $("#edugorilla_category").val();
 		
     		$.ajax({
@@ -48,8 +49,8 @@ $(document).on('keyup','#edugorilla_keyword',function(){
          		data: {
             			'action':'edugorilla_show_location',
             			'ptype': ptype,
-                		'term': keyword_split[0],
-                        'address' : keyword_split[1],
+                		'term': keyword,
+                        'address' : location,
                 		'category': category
           			  },
                 dataType: 'json',
