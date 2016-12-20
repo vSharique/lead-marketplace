@@ -35,7 +35,7 @@ jQuery(document).ready(function( $ ) {
 
     });
 
-$(document).on('keyup','#edugorilla_keyword, #edugorilla_location',function(){
+$(document).on('click','#edugorilla_filter',function(){
 		var institute_data;
 		     
 		var ptype = $("#edugorilla_listing_type").val();
@@ -102,6 +102,7 @@ $(document).on('keyup','#edugorilla_keyword, #edugorilla_location',function(){
 
 
 	$('#edugorilla_category').select2({placeholder: 'Select category'});
+	$('#edugorilla_location').select2();
 
 
 	

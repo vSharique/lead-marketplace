@@ -103,8 +103,6 @@
 			$errors = array();
 			if(empty($name))$errors['name']="Empty";
 			elseif(!preg_match("/([A-Za-z]+)/", $name)) $errors['name']="Invalid";
-        
-        	if(empty($keyword)) $errors['keyword']="Empty";
 			
 			if(empty($contact_no))$errors['contact_no']="Empty";
 			elseif(!preg_match("/([0-9]{10}+)/", $contact_no)) $errors['contact_no']="Invalid";
@@ -121,14 +119,24 @@
             	$institute_emails_status = array();
             
             	$json_results =json_decode(str_replace("\\","",$edugorilla_institute_datas));
+            	
+            	$edugorilla_email = json_decode(file_get_contents(plugin_dir_path( __FILE__ )."email_style.json"));
+            	
+            	$edugorilla_email_subject = $edugorilla_email->subject;
+            
+            	$edugorilla_email_body = str_replace("/**name**/",$name,$edugorilla_email->body);
             
             	foreach($json_results as $json_result)
                 {
                 	 $institute_emails = explode(",",$json_result->emails);
                		 foreach($institute_emails as $institute_email)
                		 {
+                     	add_filter( 'wp_mail_content_type', 'edugorilla_html_mail_content_type' );
+                     
                 		if(!empty($institute_email))
-            			$institute_emails_status[$institute_email] = wp_mail($institute_email , "Hi", "Hi ".$name);
+            			$institute_emails_status[$institute_email] = wp_mail($institute_email , $edugorilla_email_subject, $edugorilla_email_body);
+                     
+                     	remove_filter( 'wp_mail_content_type', 'edugorilla_html_mail_content_type' );
             	   	 }
                 	
                 	if(!empty($category_id)) $category = implode(",",$category_id);
@@ -256,7 +264,7 @@
 						</td>
 					</tr>
                  		<tr>
-						 <th>Category<sup><font color="red">*</font></sup></th>
+						 <th>Category</th>
 						 <td>
 							<select disabled name="category_id[]" multiple id="edugorilla_category" class="js-example-basic-single">
 								<?php 
@@ -300,16 +308,53 @@
 						</td>
 					</tr>
                  	 <tr>
-						 <th>Keyword<sup><font color="red">*</font></sup></th>
+						 <th>Keyword</th>
 						 <td>
 							<input name="keyword" id="edugorilla_keyword" disabled value="<?php echo $keyword;?>" placeholder="Type keyword here">
 							<font color="red"><?php echo $errors['keyword'];?></font>
 						</td>
 					</tr>
                  	<tr>
-						 <th>Location<sup><font color="red">*</font></sup></th>
+						 <th>Location</th>
 						 <td>
-                         	<input name="location"  id="edugorilla_location" disabled value="<?php echo $location;?>" type="text" placeholder="Enter a location"><br><br>
+                         	<select disabled name="location"  id="edugorilla_location" class="js-example-basic-single">
+                            <option value="">Select</option>
+								<?php 
+    									$templocationarray = array();
+    									$edugorilla_locations = get_terms('locations', array('hide_empty' => false));
+    									
+    									foreach ($edugorilla_locations as $edugorilla_location) {
+                                        	if((int)$edugorilla_location->parent != 0)
+                                            {
+                                            	$templocationarray[$edugorilla_location->parent][$edugorilla_location->term_id] = $edugorilla_location->name;
+                                            }
+                                        }
+    					
+										foreach ($templocationarray as $var=>$vals ) {
+                                        
+                                        	$d = get_term_by('id', $var, 'locations');
+                                      	
+                                    ?>
+                                 
+                                        <optgroup label="<?php echo $d->name; ?>">
+                                   
+                            		<?php
+											foreach($vals as $index=>$val)
+                                            {
+                                     ?>
+                                        		
+                                                <option value="<?php echo $index; ?>">
+                                   					<?php echo $val; ?>
+                                        		</option>
+                                     <?php
+                                            }
+                                       ?>
+                            			</optgroup>
+                                <?php
+										}
+								?>
+							</select><br><br>
+                         	<input type="button" class="button button-secondary" id="edugorilla_filter" value="Filter"><br><br>
                              <div id="map"></div>
 						</td>
 					</tr>
@@ -391,20 +436,28 @@ function edugorilla_show_location() {
 	$args['post_status'] = 'publish';
 	if(!empty($ptype))  $args['post_type'] = $ptype;
 	if(!empty($term))  $args['s'] = $term;
+
+	if(!empty($category))
+    {	
+    	//$address = "%".$address."%";
+    	$args['tax_query'][0] = array(
+										'taxonomy'     => 'listing_categories',
+										'field'   => 'id',
+										'terms' => $category
+									);
+    								
+	}	
+
 	if(!empty($address))
     {	
     	//$address = "%".$address."%";
-    	$args['meta_query'] = array(
-    									array(
-												'key'     => 'listing_address',
-												'value'   => $address,
-												'compare' => 'LIKE'
-											)
-    								);
+    	$args['tax_query'][0] =array(
+									'taxonomy'     => 'locations',
+									'field'   => 'id',
+									'terms' => $address
+								);
 	}
 
-	if(!empty($category)) $args['cat'] = $category;  
-	//var_dump($args);
 	$eduction_posts = array();
 	$the_query = new WP_Query( $args );
 	if($the_query->have_posts() )
@@ -451,6 +504,12 @@ function edugorilla_show_location() {
 
 add_action( 'wp_ajax_edugorilla_show_location', 'edugorilla_show_location' );
 add_action( 'wp_ajax_nopriv_edugorilla_show_location', 'edugorilla_show_location' );
+
+
+function edugorilla_html_mail_content_type()
+{
+	return 'text/html';
+}
 
 include_once plugin_dir_path( __FILE__ )."list.php";
 ?>
