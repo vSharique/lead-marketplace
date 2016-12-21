@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: EduGorilla
+ * Plugin Name: EduGorilla Lead Marketplace
  * Description: Add Lead and search.
  * Version: 1.0.0
  * Author: Tarun Kumar
@@ -47,8 +47,8 @@
 	function create_menus() 
 	{
 			add_object_page(
-							'EduGorilla',
-							'EduGorilla',
+							'EduGorilla Lead Marketplace',
+							'EduGorilla Lead Marketplace',
 							'read',
 							'edugorilla',
 							'edugorilla'
@@ -56,8 +56,8 @@
     
     	    add_submenu_page(
                              'edugorilla',
-                             'EduGorilla',
-                             'EduGorilla',
+                             'EduGorilla Lead Marketplace',
+                             'EduGorilla Lead Marketplace',
                              'read',
                              'edugorilla',
                              'edugorilla'
@@ -65,7 +65,7 @@
 						
 			add_submenu_page(
                              'edugorilla',
-                             'EduGorilla | Listing',
+                             'EduGorilla Lead Marketplace | Listing',
                              'List',
                              'read',
                              'Listing',
@@ -73,7 +73,7 @@
                             );
     		add_submenu_page(
                           	 'edugorilla',
-                         	 'EduGorilla | OTP',
+                         	 'EduGorilla Lead Marketplace | OTP',
                           	 'OTP',
                          	 'read',
                          	 'edugorilla-otp',
@@ -251,7 +251,7 @@
 					<tr>
 						 <th>Query<sup><font color="red">*</font></sup></th>
 						 <td>
-							<textarea name="query" placeholder="Type your query here"><?php echo $query; ?></textarea>
+							<textarea name="query" rows="4" cols="65" placeholder="Type your query here"><?php echo $query; ?></textarea>
 							<font color="red"><?php echo $errors['query'];?></font>
 						</td>
 					</tr>
@@ -331,12 +331,15 @@
                                         }
     					
 										foreach ($templocationarray as $var=>$vals ) {
-                                        
-                                        	$d = get_term_by('id', $var, 'locations');
                                       	
                                     ?>
                                  
-                                        <optgroup label="<?php echo $d->name; ?>">
+                                         <option value="<?php echo $var; ?>">
+                                   	<?php 
+                                    	$d = get_term_by('id', $var, 'locations');
+                                        echo $d->name;
+                                   ?>
+                                   		</option>
                                    
                             		<?php
 											foreach($vals as $index=>$val)
@@ -349,7 +352,7 @@
                                      <?php
                                             }
                                        ?>
-                            			</optgroup>
+                            			
                                 <?php
 										}
 								?>
