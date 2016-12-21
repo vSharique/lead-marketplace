@@ -90,7 +90,7 @@ function form_page(){
      if($_POST['submit'] && (!empty($_POST['adminName'])) && (!empty($_POST['clientName'])) && (!empty($_POST['educash']))){
 
         
-            $r = $wpdb->get_row("SELECT * FROM $table_name WHERE time = current_time( 'mysql' ) ");
+            $r = $wpdb->get_row("SELECT * FROM $table_name WHERE time = '$time' ");
 
                echo "<center></p>You have made the following entry just now:</p>";
 
