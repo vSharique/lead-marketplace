@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: EduGorilla Lead Marketplace
- * Description: Add Lead and search.
- * Version: 1.0.0
- * Author: Tarun Kumar
- * Author URI: http://www.facebook.com/tjtarunkumar
- * */
+ * Description: A platform to manage all the leads on Website.
+ * Version: Pre release
+ * Author: Tarun Kumar and Arvind
+ * Author URI: https://github.com/rohitmanglik/lead-marketplace
+ **/
 	function create_edugorilla_lead_table()
 	{
 		global $wpdb;
@@ -57,7 +57,7 @@
     	    add_submenu_page(
                              'edugorilla',
                              'EduGorilla Lead Marketplace',
-                             'EduGorilla Lead Marketplace',
+                             'Lead capture form',
                              'read',
                              'edugorilla',
                              'edugorilla'
@@ -66,7 +66,7 @@
 			add_submenu_page(
                              'edugorilla',
                              'EduGorilla Lead Marketplace | Listing',
-                             'List',
+                             'Promotional Leads Sent',
                              'read',
                              'Listing',
                              'form_list'
@@ -83,7 +83,7 @@
     		add_submenu_page(
                           	 'edugorilla',
                          	 'EduGorilla Lead Marketplace | Email Setting',
-                          	 'Email Setting',
+                          	 'Promotional Email Template',
                          	 'read',
                          	 'edugorilla-email-setting',
                          	 'edugorilla_email_setting'
