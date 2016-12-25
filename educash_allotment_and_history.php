@@ -1,43 +1,9 @@
 <?php
-
-function educash_table()
+function educash_deals_form_page()
 {
 
     global $wpdb;
-
-    $table_name = $wpdb->prefix . 'educash_deals';
-
-    $charset_collate = $wpdb->get_charset_collate();
-
-    $sql = "CREATE TABLE $table_name (
-                id mediumint(9) NOT NULL AUTO_INCREMENT,
-                admin_name tinytext NOT NULL,
-                client_name tinytext NOT NULL,
-                educash_added int(9) DEFAULT 0 NOT NULL,
-                time datetime NOT NULL,
-                comments varchar(500) DEFAULT 'No comment' NOT NULL,
-                PRIMARY KEY  (id)
-       ) $charset_collate;";
-
-    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-    dbDelta($sql);
-
-}
-
-register_activation_hook(__FILE__, 'educash_table');
-
-add_action("admin_menu", "leadmarketplace_add_menu");
-
-function leadmarketplace_add_menu()
-{
-    add_menu_page("Educash deals", "Educash deals", 4, "leadmarketplace_form-page", "leadmarketplace_form_page");
-}
-
-function leadmarketplace_form_page()
-{
-
-    global $wpdb;
-    $table_name = $wpdb->prefix . 'educash_deals';
+    $table_name3 = $wpdb->prefix . 'educash_deals';
 
 
     if ($_POST['submit']) {
@@ -64,7 +30,7 @@ function leadmarketplace_form_page()
             $educash = $_POST['educash'];
             $adminComment = $_POST['adminComment'];
             $time = current_time('mysql');
-            $wpdb->insert($table_name, array(
+            $wpdb->insert($table_name3, array(
                 'time' => $time,
                 'admin_name' => $adminName,
                 'client_name' => $clientName,
@@ -101,7 +67,7 @@ function leadmarketplace_form_page()
              </form></div>";
 
     if ($_POST['submit'] && (!empty($_POST['adminName'])) && (!empty($_POST['clientName'])) && (!empty($_POST['educash']))) {
-        $r = $wpdb->get_row("SELECT * FROM $table_name WHERE time = '$time' ");
+        $r = $wpdb->get_row("SELECT * FROM $table_name3 WHERE time = '$time' ");
         echo "<center></p>You have made the following entry just now:</p>";
         echo "<table style='width:70%'><tr><th>Id</th><th>Admin Name</th><th>Client Name</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
         echo "<tr><td>" . $r->id . "</td><td>" . $r->admin_name . "</td><td>" . $r->client_name . "</td><td>" . $r->educash_added . "</td><td>" . $r->time . "</td><td>" . $r->comments . "</td></tr>";
@@ -112,7 +78,7 @@ function leadmarketplace_form_page()
     if ($_POST['Submit']) {
         if (!empty($_POST['admin_Name']) && empty($_POST['client_Name']) && empty($_POST['date'])) {
             $admin_Name = $_POST['admin_Name'];
-            $results = $wpdb->get_results("SELECT * FROM $table_name WHERE admin_name = '$admin_Name' ");
+            $results = $wpdb->get_results("SELECT * FROM $table_name3 WHERE admin_name = '$admin_Name' ");
 
             echo "<center><p>The history of transactions made by admin " . $_POST['admin_Name'] . " is:</p>";
             echo "<table style='width:70%'><tr><th>Id</th><th>Admin Name</th><th>Client Name</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
@@ -120,12 +86,12 @@ function leadmarketplace_form_page()
                 echo "<tr><td>" . $r->id . "</td><td>" . $r->admin_name . "</td><td>" . $r->client_name . "</td><td>" . $r->educash_added . "</td><td>" . $r->time . "</td><td>" . $r->comments . "</td></tr>";
             }
             echo "</table><br/>";
-            $total = $wpdb->get_var("SELECT sum(educash_added) FROM $table_name WHERE admin_name = '$admin_Name' ");
+            $total = $wpdb->get_var("SELECT sum(educash_added) FROM $table_name3 WHERE admin_name = '$admin_Name' ");
             echo "<span style='color:green;'>Total educash transactions made by admin " . $_POST['admin_Name'] . " is <b>" . $total . "</b></span></center>";
         }
         if (empty($_POST['admin_Name']) && !empty($_POST['client_Name']) && empty($_POST['date'])) {
             $client_Name = $_POST['client_Name'];
-            $results = $wpdb->get_results("SELECT * FROM $table_name WHERE client_name = '$client_Name' ");
+            $results = $wpdb->get_results("SELECT * FROM $table_name3 WHERE client_name = '$client_Name' ");
 
             echo "<center><p>The history of transactions made by client " . $_POST['client_Name'] . " is:</p>";
             echo "<table style='width:70%'><tr><th>Id</th><th>Admin Name</th><th>Client Name</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
@@ -133,14 +99,14 @@ function leadmarketplace_form_page()
                 echo "<tr><td>" . $r->id . "</td><td>" . $r->admin_name . "</td><td>" . $r->client_name . "</td><td>" . $r->educash_added . "</td><td>" . $r->time . "</td><td>" . $r->comments . "</td></tr>";
             }
             echo "</table><br/>";
-            $total = $wpdb->get_var("SELECT sum(educash_added) FROM $table_name WHERE client_name = '$client_Name' ");
+            $total = $wpdb->get_var("SELECT sum(educash_added) FROM $table_name3 WHERE client_name = '$client_Name' ");
             echo "<span style='color:green;'>Total educash transactions made by client " . $_POST['client_Name'] . " is <b>" . $total . "</b></span></center>";
 
         }
         if (!empty($_POST['admin_Name']) && !empty($_POST['client_Name']) && empty($_POST['date'])) {
             $admin_Name = $_POST['admin_Name'];
             $client_Name = $_POST['client_Name'];
-            $results = $wpdb->get_results("SELECT * FROM $table_name WHERE admin_name = '$admin_Name' AND client_name = '$client_Name' ");
+            $results = $wpdb->get_results("SELECT * FROM $table_name3 WHERE admin_name = '$admin_Name' AND client_name = '$client_Name' ");
 
             echo "<center><p>The history of transactions made by admin " . $_POST['admin_Name'] . " with client " . $_POST['client_Name'] . " is:</p>";
             echo "<table style='width:70%'><tr><th>Id</th><th>Admin Name</th><th>Client Name</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
@@ -148,12 +114,12 @@ function leadmarketplace_form_page()
                 echo "<tr><td>" . $r->id . "</td><td>" . $r->admin_name . "</td><td>" . $r->client_name . "</td><td>" . $r->educash_added . "</td><td>" . $r->time . "</td><td>" . $r->comments . "</td></tr>";
             }
             echo "</table><br/>";
-            $total = $wpdb->get_var("SELECT sum(educash_added) FROM $table_name WHERE admin_name = '$admin_Name' AND client_name = '$client_Name' ");
+            $total = $wpdb->get_var("SELECT sum(educash_added) FROM $table_name3 WHERE admin_name = '$admin_Name' AND client_name = '$client_Name' ");
             echo "<span style='color:green;'>Total educash transactions made by admin " . $_POST['admin_Name'] . " with client " . $_POST['client_Name'] . " is <b>" . $total . "</b></span></center>";
         }
         if (empty($_POST['admin_Name']) && empty($_POST['client_Name']) && !empty($_POST['date'])) {
             $date = $_POST['date'];
-            $results = $wpdb->get_results("SELECT * FROM $table_name WHERE DATE(time)='$date' ");
+            $results = $wpdb->get_results("SELECT * FROM $table_name3 WHERE DATE(time)='$date' ");
 
             echo "<center><p>The history of transactions made on " . $date . " is:</p>";
             echo "<table style='width:70%'><tr><th>Id</th><th>Admin Name</th><th>Client Name</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
@@ -161,13 +127,13 @@ function leadmarketplace_form_page()
                 echo "<tr><td>" . $r->id . "</td><td>" . $r->admin_name . "</td><td>" . $r->client_name . "</td><td>" . $r->educash_added . "</td><td>" . $r->time . "</td><td>" . $r->comments . "</td></tr>";
             }
             echo "</table><br/>";
-            $total = $wpdb->get_var("SELECT sum(educash_added) FROM $table_name WHERE DATE(time)='$date' ");
+            $total = $wpdb->get_var("SELECT sum(educash_added) FROM $table_name3 WHERE DATE(time)='$date' ");
             echo "<span style='color:green;'>Total educash transactions made on " . $date . " is <b>" . $total . "</b></span></center>";
         }
         if (!empty($_POST['admin_Name']) && empty($_POST['client_Name']) && !empty($_POST['date'])) {
             $admin_Name = $_POST['admin_Name'];
             $date = $_POST['date'];
-            $results = $wpdb->get_results("SELECT * FROM $table_name WHERE admin_name = '$admin_Name' AND DATE(time)='$date' ");
+            $results = $wpdb->get_results("SELECT * FROM $table_name3 WHERE admin_name = '$admin_Name' AND DATE(time)='$date' ");
 
             echo "<center><p>The history of transactions made by admin " . $_POST['admin_Name'] . " on " . $date . " is:</p>";
             echo "<table style='width:70%'><tr><th>Id</th><th>Admin Name</th><th>Client Name</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
@@ -175,13 +141,13 @@ function leadmarketplace_form_page()
                 echo "<tr><td>" . $r->id . "</td><td>" . $r->admin_name . "</td><td>" . $r->client_name . "</td><td>" . $r->educash_added . "</td><td>" . $r->time . "</td><td>" . $r->comments . "</td></tr>";
             }
             echo "</table><br/>";
-            $total = $wpdb->get_var("SELECT sum(educash_added) FROM $table_name WHERE admin_name = '$admin_Name' AND DATE(time)='$date' ");
+            $total = $wpdb->get_var("SELECT sum(educash_added) FROM $table_name3 WHERE admin_name = '$admin_Name' AND DATE(time)='$date' ");
             echo "<span style='color:green;'>Total educash transactions made by admin " . $_POST['admin_Name'] . " on " . $date . " is <b>" . $total . "</b></span></center>";
         }
         if (empty($_POST['admin_Name']) && !empty($_POST['client_Name']) && !empty($_POST['date'])) {
             $date = $_POST['date'];
             $client_Name = $_POST['client_Name'];
-            $results = $wpdb->get_results("SELECT * FROM $table_name WHERE client_name = '$client_Name' AND DATE(time)='$date' ");
+            $results = $wpdb->get_results("SELECT * FROM $table_name3 WHERE client_name = '$client_Name' AND DATE(time)='$date' ");
 
             echo "<center><p>The history of transactions made by client " . $_POST['client_Name'] . " on " . $date . " is:</p>";
             echo "<table style='width:70%'><tr><th>Id</th><th>Admin Name</th><th>Client Name</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
@@ -189,14 +155,14 @@ function leadmarketplace_form_page()
                 echo "<tr><td>" . $r->id . "</td><td>" . $r->admin_name . "</td><td>" . $r->client_name . "</td><td>" . $r->educash_added . "</td><td>" . $r->time . "</td><td>" . $r->comments . "</td></tr>";
             }
             echo "</table><br/>";
-            $total = $wpdb->get_var("SELECT sum(educash_added) FROM $table_name WHERE client_name = '$client_Name' AND DATE(time)='$date' ");
+            $total = $wpdb->get_var("SELECT sum(educash_added) FROM $table_name3 WHERE client_name = '$client_Name' AND DATE(time)='$date' ");
             echo "<span style='color:green;'>Total educash transactions made by client " . $_POST['client_Name'] . " on " . $date . " is <b>" . $total . "</b></span></center>";
         }
         if (!empty($_POST['admin_Name']) && !empty($_POST['client_Name']) && !empty($_POST['date'])) {
             $admin_Name = $_POST['admin_Name'];
             $client_Name = $_POST['client_Name'];
             $date = $_POST['date'];
-            $results = $wpdb->get_results("SELECT * FROM $table_name WHERE admin_name = '$admin_Name' AND client_name = '$client_Name' AND DATE(time)='$date' ");
+            $results = $wpdb->get_results("SELECT * FROM $table_name3 WHERE admin_name = '$admin_Name' AND client_name = '$client_Name' AND DATE(time)='$date' ");
 
             echo "<center><p>The history of transactions made by admin " . $_POST['admin_Name'] . " with client " . $_POST['client_Name'] . " on " . $date . " is:</p>";
             echo "<table style='width:70%'><tr><th>Id</th><th>Admin Name</th><th>Client Name</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
@@ -204,10 +170,9 @@ function leadmarketplace_form_page()
                 echo "<tr><td>" . $r->id . "</td><td>" . $r->admin_name . "</td><td>" . $r->client_name . "</td><td>" . $r->educash_added . "</td><td>" . $r->time . "</td><td>" . $r->comments . "</td></tr>";
             }
             echo "</table><br/>";
-            $total = $wpdb->get_var("SELECT sum(educash_added) FROM $table_name WHERE admin_name = '$admin_Name' AND client_name = '$client_Name' AND DATE(time)='$date' ");
+            $total = $wpdb->get_var("SELECT sum(educash_added) FROM $table_name3 WHERE admin_name = '$admin_Name' AND client_name = '$client_Name' AND DATE(time)='$date' ");
             echo "<span style='color:green;'>Total educash transactions made by admin " . $_POST['admin_Name'] . " with client " . $_POST['client_Name'] . " on " . $date . " is <b>" . $total . "</b></span></center>";
         }
     }
 }
-
 ?>
