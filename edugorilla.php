@@ -79,6 +79,15 @@
                          	 'edugorilla-otp',
                          	 'edugorilla_otp'
                        	 );
+    
+    		add_submenu_page(
+                          	 'edugorilla',
+                         	 'EduGorilla Lead Marketplace | Email Setting',
+                          	 'Email Setting',
+                         	 'read',
+                         	 'edugorilla-email-setting',
+                         	 'edugorilla_email_setting'
+                       	 );
 	}
 
 
@@ -120,11 +129,11 @@
             
             	$json_results =json_decode(str_replace("\\","",$edugorilla_institute_datas));
             	
-            	$edugorilla_email = json_decode(file_get_contents(plugin_dir_path( __FILE__ )."email_style.json"));
+            	$edugorilla_email = get_option('edugorilla_email_setting');
             	
-            	$edugorilla_email_subject = $edugorilla_email->subject;
+            	$edugorilla_email_subject = $edugorilla_email['subject'];
             
-            	$edugorilla_email_body = str_replace("/**name**/",$name,$edugorilla_email->body);
+            	$edugorilla_email_body = str_replace("<name>",$name,$edugorilla_email['body']);
             
             	foreach($json_results as $json_result)
                 {
@@ -513,6 +522,8 @@ function edugorilla_html_mail_content_type()
 {
 	return 'text/html';
 }
+
+include_once plugin_dir_path( __FILE__ )."email_setting.php";
 
 include_once plugin_dir_path( __FILE__ )."list.php";
 ?>
