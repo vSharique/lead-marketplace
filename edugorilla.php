@@ -34,11 +34,24 @@ function create_edugorilla_lead_table()
                                             date_time varchar(200) NOT NULL,
 											PRIMARY KEY id (id)
 										) $charset_collate;"; //Defining query to create table.
-
+                                                
+                                                   
+    $table_name3 = $wpdb->prefix . 'educash_deals'; //Defining a table name.
+    $sql3 = "CREATE TABLE $table_name3 (     
+                                            id mediumint(9) NOT NULL AUTO_INCREMENT,
+                                            admin_name tinytext NOT NULL,
+                                            client_name tinytext NOT NULL,
+                                            educash_added int(9) DEFAULT 0 NOT NULL,
+                                            time datetime NOT NULL,
+                                            comments varchar(500) DEFAULT 'No comment' NOT NULL,
+                                            PRIMARY KEY  (id)
+                                        ) $charset_collate;"; //Defining query to create table.
+    
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
     //Creating a table in cureent wordpress
     dbDelta($sql1);
     dbDelta($sql2);
+    dbDelta($sql3);
 }
 
 register_activation_hook(__FILE__, 'create_edugorilla_lead_table');
@@ -72,6 +85,7 @@ function create_menus()
         'Listing',
         'form_list'
     );
+    
     add_submenu_page(
         'edugorilla',
         'Lead Marketplace | OTP',
@@ -89,10 +103,20 @@ function create_menus()
         'edugorilla-email-setting',
         'edugorilla_email_setting'
     );
+    
+    add_submenu_page(
+        'edugorilla',
+        'Lead Marketplace | Educash deals',
+        'Educash deals',
+        'read',
+        'educash_deals_form_page',
+        'educash_deals_form_page'
+    );    
 }
 
 
 include_once plugin_dir_path(__FILE__) . "otp.php";
+include_once plugin_dir_path(__FILE__) . "educash_allotment_and_history.php";
 
 function edugorilla()
 {
