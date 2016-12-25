@@ -34,7 +34,7 @@ function form_list()
     }
     ?>
     <div class="wrap">
-        <h1>Leads List <a href="admin.php?page=edugorilla" class="button button-primary">Add</a></h1>
+        <h1>Promotional Leads List <a href="admin.php?page=edugorilla" class="button button-primary">Add</a></h1>
         <center><h4><?php echo $_REQUEST['success']; ?></h4></center>
         <table class="widefat fixed" cellspacing="0">
             <thead>
