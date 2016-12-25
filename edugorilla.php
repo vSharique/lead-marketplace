@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Lead Capture Form
+ * Plugin Name: Lead Marketplace
  * Description: A platform to manage all the leads on Website.
  * Version: Pre release
  * Author: Tarun Kumar and Arvind
@@ -48,8 +48,8 @@ add_action("admin_menu", "create_menus");
 function create_menus()
 {
     add_object_page(
-        'Lead Capture Form',
-        'Lead Capture Form',
+        'Lead Marketplace',
+        'Lead Marketplace',
         'read',
         'edugorilla',
         'edugorilla'
@@ -57,7 +57,7 @@ function create_menus()
 
     add_submenu_page(
         'edugorilla',
-        'Lead Capture Form',
+        'Lead Marketplace',
         'Lead capture form',
         'read',
         'edugorilla',
@@ -66,7 +66,7 @@ function create_menus()
 
     add_submenu_page(
         'edugorilla',
-        'Lead Capture Form | Listing',
+        'Lead Marketplace | Listing',
         'Promotional Leads Sent',
         'read',
         'Listing',
@@ -74,7 +74,7 @@ function create_menus()
     );
     add_submenu_page(
         'edugorilla',
-        'Lead Capture Form | OTP',
+        'Lead Marketplace | OTP',
         'OTP',
         'read',
         'edugorilla-otp',
@@ -83,7 +83,7 @@ function create_menus()
 
     add_submenu_page(
         'edugorilla',
-        'Lead Capture Form | Template of Email',
+        'Lead Marketplace | Template of Email',
         'Template of Email',
         'read',
         'edugorilla-email-setting',
