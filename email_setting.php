@@ -26,7 +26,7 @@ function edugorilla_email_setting()
     }
     ?>
     <div class="wrap">
-        <h1>EduGorilla Email Setting</h1>
+        <h1>Promotional Email Template</h1>
         <?php
         if ($success) {
             ?>
