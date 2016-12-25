@@ -1,12 +1,4 @@
 <?php
-/*
-Plugin Name: educash records
-Description: Educash records
-version: 1.0
-Author: Edugorilla
-*/
-?>
-<?php
 
 function educash_table()
 {
@@ -29,7 +21,6 @@ function educash_table()
     
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
     dbDelta($sql);
-    
     
 }
 
