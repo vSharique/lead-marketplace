@@ -7,11 +7,6 @@ function educash_deals_form_page()
 
 
     if ($_POST['submit']) {
-        if (empty($_POST['adminName'])) {
-            $adminamerr = "<span  style='color:red;'>This field cannot be blank</span>";
-        } else {
-            $adminName = $_POST['adminName'];
-        }
 
         if (empty($_POST['clientName'])) {
             $clientnamerr = "<span  style='color:red;'>This field cannot be blank</span>";
@@ -25,9 +20,9 @@ function educash_deals_form_page()
             $educash = $_POST['educash'];
         }
 
-        if ((!empty($_POST['adminName'])) && (!empty($_POST['clientName'])) && (!empty($_POST['educash']))) {
+        if ((!empty($_POST['clientName'])) && (!empty($_POST['educash']))) {
 
-            $educash = $_POST['educash'];
+            $adminName = wp_get_current_user();
             $adminComment = $_POST['adminComment'];
             $time = current_time('mysql');
             $wpdb->insert($table_name3, array(
@@ -49,8 +44,7 @@ function educash_deals_form_page()
     echo "<style>table, th, td{border:1px solid black; border-collapse:collapse;} td{text-align:center;}</style>";
 
     echo "<div style='display:inline-block; width:48%;'><h2>Use this form to allocate educash to a client</h2><br/>";
-    echo "<form method='post' action='" . $_SERVER['REQUEST_URI'] . "'>
-             Admin Name (Type your name here):<br/><input type='text' name='adminName' maxlength='70'><span>* $adminamerr </span><br/><br/>
+    echo "<form method='post' onsubmit='"."return confirm('Do you really want to submit this entry?');"."' action='" . $_SERVER['REQUEST_URI'] . "'>
              Client Name (Type the name of the client whom you want to allot educash):<br/><input type='text' name='clientName' maxlength='70'><span>* $clientnamerr </span><br/><br/>
              Type the educash to be added in the client's account:<br/><input type='number' name='educash' min='-100000000' max='100000000'><span>* $educasherr </span><br/><br/>
              Type your comments here (optional):<br/><textarea rows='4' cols='60' name='adminComment' maxlength='500'></textarea><br/><br/>
@@ -66,7 +60,7 @@ function educash_deals_form_page()
              <input type='submit' name='Submit'>" . $all_three_error . "<br/><br/><br/><br/><br/><br/><br/><br/>
              </form></div>";
 
-    if ($_POST['submit'] && (!empty($_POST['adminName'])) && (!empty($_POST['clientName'])) && (!empty($_POST['educash']))) {
+    if ($_POST['submit'] && (!empty($_POST['clientName'])) && (!empty($_POST['educash']))) {
         $r = $wpdb->get_row("SELECT * FROM $table_name3 WHERE time = '$time' ");
         echo "<center></p>You have made the following entry just now:</p>";
         echo "<table style='width:70%'><tr><th>Id</th><th>Admin Name</th><th>Client Name</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
