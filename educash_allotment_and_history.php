@@ -53,7 +53,7 @@ function educash_deals_form_page()
              Admin Name (Type your name here):<br/><input type='text' name='adminName' maxlength='70'><span>* $adminamerr </span><br/><br/>
              Client Name (Type the name of the client whom you want to allot educash):<br/><input type='text' name='clientName' maxlength='70'><span>* $clientnamerr </span><br/><br/>
              Type the educash to be added in the client's account:<br/><input type='number' name='educash' min='-100000000' max='100000000'><span>* $educasherr </span><br/><br/>
-             Type your comments here (optional):<br/><input type='text' name='adminComment' maxlength='500'><br/><br/>
+             Type your comments here (optional):<br/><textarea rows='4' cols='60' name='adminComment' maxlength='500'></textarea><br/><br/>
              <input type='submit' name='submit'><br/><br/>
              </form></div>";
 
