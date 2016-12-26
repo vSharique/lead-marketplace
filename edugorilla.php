@@ -206,7 +206,9 @@ function edugorilla()
 			}
 
             if ($result)
+            {
                 $success = "Saved Successfully";
+            }
             else $success = $result;
 
             //	foreach($_REQUEST as $var=>$val)$$var="";
@@ -265,14 +267,14 @@ function edugorilla()
                 <tr>
                     <th>Name<sup><font color="red">*</font></sup></th>
                     <td>
-                        <input name="name" value="<?php echo $name; ?>" placeholder="Type name here...">
+                        <input id="edu_name" name="name" value="<?php echo $name; ?>" placeholder="Type name here...">
                         <font color="red"><?php echo $errors['name']; ?></font>
                     </td>
                 </tr>
                 <tr>
                     <th>Contact No.<sup><font color="red">*</font></sup></th>
                     <td>
-                        <input name="contact_no" value="<?php echo $contact_no; ?>"
+                        <input id="edu_contact_no" name="contact_no" value="<?php echo $contact_no; ?>"
                                placeholder="Type contact number here">
                         <font color="red"><?php echo $errors['contact_no']; ?></font>
                     </td>
@@ -280,14 +282,14 @@ function edugorilla()
                 <tr>
                     <th>Email<sup><font color="red">*</font></sup></th>
                     <td>
-                        <input name="email" value="<?php echo $email; ?>" placeholder="Type email here">
+                        <input id="edu_email" name="email" value="<?php echo $email; ?>" placeholder="Type email here">
                         <font color="red"><?php echo $errors['email']; ?></font>
                     </td>
                 </tr>
                 <tr>
                     <th>Query<sup><font color="red">*</font></sup></th>
                     <td>
-                        <textarea name="query" rows="4" cols="65"
+                        <textarea id="edu_query" name="query" rows="4" cols="65"
                                   placeholder="Type your query here"><?php echo $query; ?></textarea>
                         <font color="red"><?php echo $errors['query']; ?></font>
                     </td>
@@ -386,7 +388,7 @@ function edugorilla()
                                     ?>
 
                                     <option value="<?php echo $index; ?>">
-                                        <?php echo $val; ?>
+                                        <?php echo "->".$val; ?>
                                     </option>
                                     <?php
                                 }
@@ -409,7 +411,7 @@ function edugorilla()
                     </th>
                     <td>
 
-                        <a id="save_details_button" href="#confirmation" rel="modal:open" class="button button-primary">Send
+                        <a id="save_details_button" href="#confirmation"  class="button button-primary">Send
                             Details</a>
                     </td>
                 </tr>
@@ -463,7 +465,7 @@ function script()
     wp_enqueue_script(
         'script',                         // Handle
         plugins_url('/js/script.js', __FILE__),  // Path to file
-        array('jquery', 'jquery-ui-datepicker')                             // Dependancies
+        array('jquery', 'jquery-ui-datepicker', 'jquery-ui-tabs') // Dependancies
     );
 
 }

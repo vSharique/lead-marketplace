@@ -103,7 +103,13 @@ $(document).on('click','#edugorilla_filter',function(){
 
 	$('#edugorilla_category').select2({placeholder: 'Select category'});
 	$('#edugorilla_location').select2();
-
-
+	$( "#tabs" ).tabs();
+    
+    $(document).on('click','#save_details_button',function(){
+        if($("#edu_name").val() != "" && $("#edu_email").val() != "" && $("#edu_contact_no").val() != "" && $("#edu_query").val() != "" &&$("#edugorilla_institute_datas").val() != "")
+        {
+            $(this).attr("rel","modal:open");
+        }
+    });
 	
 });
