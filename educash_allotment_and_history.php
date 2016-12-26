@@ -41,12 +41,6 @@ function educash_deals_form_page()
         }
     }
     echo "<style>table, th, td{border:1px solid black; border-collapse:collapse;} td{text-align:center;}</style>";
-    
-    echo "<script> var confirm = document.getElementById('educash_allotment_form');
-                   confirm.addEventListener('submit', function(){
-                   return confirm('Are you sure you want to make this entry?');
-                }, false);
-          </script>";
 
     echo "<div style='display:inline-block; width:48%;'><h2>Use this form to allocate educash to a client</h2><br/>";
     echo "<form id='educash_allotment_form' method='post' action='" . $_SERVER['REQUEST_URI'] . "'>
