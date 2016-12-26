@@ -63,7 +63,7 @@ function educash_deals_form_page()
              Admin Name (Type the name of the admin whose history you want to see):<br/><input type='text' name='admin_Name' maxlength='70'><br/><br/>
              Client Name (Type the name of the client whose history you want to see):<br/><input type='text' name='client_Name' maxlength='70'><br/><br/>
              Date (Select the date whose transaction details you want to see):<br/><input type='date' name='date' min='1990-12-31' max='2050-12-31'><br/><br/>
-             <input type='submit' name='Submit'>" . $all_three_error . "<br/><br/><br/><br/><br/>
+             <input type='submit' name='Submit'>" . $all_three_error . "<br/><br/><br/><br/><br/><br/><br/><br/><br/>
              </form></div>";
 
     if ($_POST['submit'] && (!empty($_POST['adminName'])) && (!empty($_POST['clientName'])) && (!empty($_POST['educash']))) {
