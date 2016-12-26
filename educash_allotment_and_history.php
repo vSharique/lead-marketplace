@@ -21,13 +21,12 @@ function educash_deals_form_page()
         }
 
         if ((!empty($_POST['clientName'])) && (!empty($_POST['educash']))) {
-
             $adminName = wp_get_current_user();
             $adminComment = $_POST['adminComment'];
             $time = current_time('mysql');
             $wpdb->insert($table_name3, array(
                 'time' => $time,
-                'admin_name' => $adminName,
+                'admin_name' => $adminName->ID,
                 'client_name' => $clientName,
                 'educash_added' => $educash,
                 'comments' => $adminComment
@@ -42,9 +41,14 @@ function educash_deals_form_page()
         }
     }
     echo "<style>table, th, td{border:1px solid black; border-collapse:collapse;} td{text-align:center;}</style>";
+    
+    echo "<script> var confirm = document.getElementById('educash_allotment_form');
+                   confirm.addEventListener('submit', function(){
+                   return confirm('Are you sure you want to make this entry?');
+                }, false);</script>";
 
     echo "<div style='display:inline-block; width:48%;'><h2>Use this form to allocate educash to a client</h2><br/>";
-    echo "<form method='post' onsubmit='"."return confirm('Do you really want to submit this entry?');"."' action='" . $_SERVER['REQUEST_URI'] . "'>
+    echo "<form id='educash_allotment_form' method='post' action='" . $_SERVER['REQUEST_URI'] . "'>
              Client Name (Type the name of the client whom you want to allot educash):<br/><input type='text' name='clientName' maxlength='70'><span>* $clientnamerr </span><br/><br/>
              Type the educash to be added in the client's account:<br/><input type='number' name='educash' min='-100000000' max='100000000'><span>* $educasherr </span><br/><br/>
              Type your comments here (optional):<br/><textarea rows='4' cols='60' name='adminComment' maxlength='500'></textarea><br/><br/>
