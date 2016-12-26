@@ -58,10 +58,10 @@ function educash_deals_form_page()
     echo "<div style='display:inline-block; width:48%;'><h2>Use this form to know the history of educash transactions</h2>";
     echo "<p>Fill atleast one field<p>";
     echo "<form method='post' action='" . $_SERVER['REQUEST_URI'] . "'>
-             Admin Name (Type the name of the admin whose history you want to see):<br/><input type='text' name='admin_Name' maxlength='70'><br/><br/>
+             Admin ID (Type the ID of the admin whose history you want to see):<br/><input type='number' name='admin_Name' min='1' max='100000000'><br/><br/>
              Client Name (Type the name of the client whose history you want to see):<br/><input type='text' name='client_Name' maxlength='70'><br/><br/>
              Date (Select the date whose transaction details you want to see):<br/><input type='date' name='date' min='1990-12-31' max='2050-12-31'><br/><br/>
-             <input type='submit' name='Submit'>" . $all_three_error . "<br/><br/><br/><br/><br/><br/><br/><br/>
+             <input type='submit' name='Submit'>" . $all_three_error . "<br/><br/><br/>
              </form></div>";
 
     if ($_POST['submit'] && (!empty($_POST['clientName'])) && (!empty($_POST['educash']))) {
