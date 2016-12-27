@@ -30,6 +30,7 @@ function create_edugorilla_lead_table()
 											institute_name varchar(200) NOT NULL,
                                             institute_address text NOT NULL,
                                             email_status text NOT NULL,
+                                            flag text NOT NULL,
                                             sms_status text NOT NULL,
                                             date_time varchar(200) NOT NULL,
 											PRIMARY KEY id (id)
@@ -56,9 +57,9 @@ function create_edugorilla_lead_table()
 
 register_activation_hook(__FILE__, 'create_edugorilla_lead_table');
 
-add_action("admin_menu", "create_menus");
+add_action("admin_menu", "create_edugorilla_menus");
 
-function create_menus()
+function create_edugorilla_menus()
 {
     add_object_page(
         'Lead Marketplace',
@@ -157,6 +158,21 @@ function edugorilla()
             $edugorilla_email_subject = $edugorilla_email['subject'];
 
             $edugorilla_email_body = str_replace("<name>", $name, $edugorilla_email['body']);
+            
+            if (!empty($category_id)) $category = implode(",", $category_id);
+                else $category = "";
+
+		  global $wpdb;
+		  $result =  $wpdb->insert(
+				$wpdb->prefix . 'edugorilla_lead_contact_log',
+				array(
+					'name' => $name,
+					'contact_no' => $contact_no,
+					'email' => $email,
+					'query' => $query,
+					'date_time' => current_time('mysql')
+				)
+			);
 
             foreach ($json_results as $json_result) {
 				if($is_promotional_lead == "yes")
@@ -172,20 +188,7 @@ function edugorilla()
 					}
 				}
 
-                if (!empty($category_id)) $category = implode(",", $category_id);
-                else $category = "";
-
-                global $wpdb;
-              $result =  $wpdb->insert(
-                    $wpdb->prefix . 'edugorilla_lead_contact_log',
-                    array(
-                        'name' => $name,
-                        'contact_no' => $contact_no,
-                        'email' => $email,
-                        'query' => $query,
-                        'date_time' => current_time('mysql')
-                    )
-                );
+               
 			if($is_promotional_lead == "yes")
             {
                 $contact_log_id = $wpdb->insert_id;
@@ -198,6 +201,7 @@ function edugorilla()
                         'institute_name' => $json_result->title,
                         'institute_address' => $json_result->address,
                         'email_status' => json_encode($institute_emails_status),
+                        'flag' => $json_result->flag,
                         'date_time' => current_time('mysql')
                     )
                 );
@@ -516,6 +520,9 @@ function edugorilla_show_location()
             $eduction_post['title'] = get_the_title();
             if (get_post_meta(get_the_ID(), 'listing_address', true)) $eduction_post['address'] = get_post_meta(get_the_ID(), 'listing_address', true);
             else  $eduction_post['address'] = "Unavailable";
+            
+            if (get_post_meta(get_the_ID(), 'listing_verified', true)) $eduction_post['flag'] = "verified";
+            else  $eduction_post['flag'] = "Unverified";
 
             //check whether email values ara available or not.
             if (get_post_meta(get_the_ID(), 'listing_email', true)) $emails[] = get_post_meta(get_the_ID(), 'listing_email', true);
