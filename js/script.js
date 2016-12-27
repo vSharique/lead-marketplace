@@ -59,7 +59,7 @@ $(document).on('click','#edugorilla_filter',function(){
                 },
          		success: function(data) 
             	{
-                	var cnfbox = "<table class='widefat fixed' align='center' width='100%' border=1><tr><th>Institude Name</th><th>Email(s)</th><th>SMS(s)</th></tr>";
+                	var cnfbox = "<table class='widefat fixed' align='center' width='100%' border=1><tr><th>Institude Name</th><th>Email(s)</th><th>SMS(s)</th><th>Flag</th></tr>";
                 
                 	$("#edugorilla_institute_datas").val(JSON.stringify(data));
                 	
@@ -85,7 +85,7 @@ $(document).on('click','#edugorilla_filter',function(){
                  var infowindow = new google.maps.InfoWindow();
                 	$.each(data,function(i,v){
                     
-                    cnfbox += "<tr><td>"+v.title+"</td><td>"+v.emails+"</td><td>"+v.phones+"</td></tr>";
+                    cnfbox += "<tr><td>"+v.title+"</td><td>"+v.emails+"</td><td>"+v.phones+"</td><td>"+v.flag+"</td></tr>";
                     	
         				var marker = new google.maps.Marker({
           						position: new google.maps.LatLng(v.lat, v.long),
