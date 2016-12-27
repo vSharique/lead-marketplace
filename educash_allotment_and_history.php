@@ -41,15 +41,15 @@ function educash_deals_form_page()
         }
     }
     echo "<style>table, th, td{border:1px solid black; border-collapse:collapse;} td{text-align:center;}</style>";
-
-    echo "<div style='display:inline-block; width:48%;'><h2>Use this form to allocate educash to a client</h2><br/>";
-    echo "<form id='educash_allotment_form' method='post' action='" . $_SERVER['REQUEST_URI'] . "'>
-             Client Name (Type the name of the client whom you want to allot educash):<br/><input type='text' name='clientName' maxlength='70'><span>* $clientnamerr </span><br/><br/>
-             Type the educash to be added in the client's account:<br/><input type='number' name='educash' min='-100000000' max='100000000'><span>* $educasherr </span><br/><br/>
+?>
+    <div style='display:inline-block; width:48%;'><h2>Use this form to allocate educash to a client</h2><br/>
+    <form method='post' onsubmit="return confirm('Do you really want to submit this entry?');" action="<?php echo $_SERVER['REQUEST_URI'];?>">
+             Client Name (Type the name of the client whom you want to allot educash):<br/><input type='text' name='clientName' maxlength='70'><span>* <?php echo $clientnamerr;?> </span><br/><br/>
+             Type the educash to be added in the client's account:<br/><input type='number' name='educash' min='-100000000' max='100000000'><span>* <?php echo $educasherr;?> </span><br/><br/>
              Type your comments here (optional):<br/><textarea rows='4' cols='60' name='adminComment' maxlength='500'></textarea><br/><br/>
              <input type='submit' name='submit'><br/>
-             </form></div>";
-
+             </form></div>
+<?php
     echo "<div style='display:inline-block; width:48%;'><h2>Use this form to know the history of educash transactions</h2>";
     echo "<p>Fill atleast one field<p>";
     echo "<form method='post' action='" . $_SERVER['REQUEST_URI'] . "'>
