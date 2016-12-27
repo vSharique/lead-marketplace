@@ -34,10 +34,10 @@ function create_edugorilla_lead_table()
                                             date_time varchar(200) NOT NULL,
 											PRIMARY KEY id (id)
 										) $charset_collate;"; //Defining query to create table.
-                                                
-                                                   
+
+
     $table_name3 = $wpdb->prefix . 'educash_deals'; //Defining a table name.
-    $sql3 = "CREATE TABLE $table_name3 (     
+    $sql3 = "CREATE TABLE $table_name3 (
                                             id mediumint(9) NOT NULL AUTO_INCREMENT,
                                             admin_name tinytext NOT NULL,
                                             client_name tinytext NOT NULL,
@@ -46,9 +46,9 @@ function create_edugorilla_lead_table()
                                             comments varchar(500) DEFAULT 'No comment' NOT NULL,
                                             PRIMARY KEY  (id)
                                         ) $charset_collate;"; //Defining query to create table.
-    
+
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-    //Creating a table in cureent wordpress
+    //Creating a table in current Wordpress
     dbDelta($sql1);
     dbDelta($sql2);
     dbDelta($sql3);
@@ -80,12 +80,12 @@ function create_menus()
     add_submenu_page(
         'edugorilla',
         'Lead Marketplace | Listing',
-        'Promotional Leads Sent',
+        'All Leads',
         'read',
         'Listing',
         'form_list'
     );
-    
+
     add_submenu_page(
         'edugorilla',
         'Lead Marketplace | OTP',
@@ -103,7 +103,7 @@ function create_menus()
         'edugorilla-email-setting',
         'edugorilla_email_setting'
     );
-    
+
     add_submenu_page(
         'edugorilla',
         'Lead Marketplace | Educash deals',
@@ -111,7 +111,7 @@ function create_menus()
         'read',
         'educash_deals_form_page',
         'educash_deals_form_page'
-    );    
+    );
 }
 
 
