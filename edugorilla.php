@@ -252,7 +252,7 @@ function edugorilla()
 
 
     <div class="wrap">
-        <h1>EduGorilla Leads</h1>
+        <h1>Lead Capture Form</h1>
         <?php
         if ($success) {
             ?>
