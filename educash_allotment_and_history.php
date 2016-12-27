@@ -24,7 +24,7 @@ function educash_deals_form_page()
             $educash = $_POST['educash'];
         }
 
-        if ((!empty($_POST['clientName'])) && (!empty($_POST['educash'])) && (!($ckeck_client == 0))) {
+        if ((!empty($_POST['clientName'])) && (!empty($_POST['educash'])) && (!($check_client == 0))) {
             $adminName = wp_get_current_user();
             $adminComment = $_POST['adminComment'];
             $time = current_time('mysql');
