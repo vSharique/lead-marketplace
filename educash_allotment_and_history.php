@@ -4,7 +4,7 @@ function educash_deals_form_page()
 
     global $wpdb;
     $table_name3 = $wpdb->prefix . 'educash_deals';
-
+    $users_table = $wpdb->prefix.users;
 
     if ($_POST['submit']) {
 
@@ -12,7 +12,7 @@ function educash_deals_form_page()
             $clientnamerr = "<span  style='color:red;'>This field cannot be blank</span>";
         } else {
             $clientName = $_POST['clientName'];
-            $check_client = $wpdp->get_var("SELECT COUNT(ID) from $wpdb->prefix.users WHERE ID = '$clientName' ");
+            $check_client = $wpdp->get_var("SELECT COUNT(ID) from $users_table WHERE ID = '$clientName' ");
             if($check_client == 0){
                 $invalid_client = "<span style='color:red'>This client does not exist in our database</span>";
             }
