@@ -66,7 +66,7 @@ function educash_deals_form_page()
     if ($_POST['submit'] && (!empty($_POST['clientName'])) && (!empty($_POST['educash'])) && (!($check_client == 0))) {
         $r = $wpdb->get_row("SELECT * FROM $table_name3 WHERE time = '$time' ");
         echo "<center></p>You have made the following entry just now:</p>";
-        echo "<table style='width:70%'><tr><th>Id</th><th>Admin ID</th><th>Client Name</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
+        echo "<table style='width:70%'><tr><th>Id</th><th>Admin ID</th><th>Client ID</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
         echo "<tr><td>" . $r->id . "</td><td>" . $r->admin_name . "</td><td>" . $r->client_name . "</td><td>" . $r->educash_added . "</td><td>" . $r->time . "</td><td>" . $r->comments . "</td></tr>";
         echo "</table></center><br/><br/>";
 
@@ -78,7 +78,7 @@ function educash_deals_form_page()
             $results = $wpdb->get_results("SELECT * FROM $table_name3 WHERE admin_name = '$admin_Name' ");
 
             echo "<center><p>The history of transactions made by admin " . $_POST['admin_Name'] . " is:</p>";
-            echo "<table style='width:70%'><tr><th>Id</th><th>Admin ID</th><th>Client Name</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
+            echo "<table style='width:70%'><tr><th>Id</th><th>Admin ID</th><th>Client ID</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
             foreach ($results as $r) {
                 echo "<tr><td>" . $r->id . "</td><td>" . $r->admin_name . "</td><td>" . $r->client_name . "</td><td>" . $r->educash_added . "</td><td>" . $r->time . "</td><td>" . $r->comments . "</td></tr>";
             }
@@ -91,7 +91,7 @@ function educash_deals_form_page()
             $results = $wpdb->get_results("SELECT * FROM $table_name3 WHERE client_name = '$client_Name' ");
 
             echo "<center><p>The history of transactions made by client " . $_POST['client_Name'] . " is:</p>";
-            echo "<table style='width:70%'><tr><th>Id</th><th>Admin ID</th><th>Client Name</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
+            echo "<table style='width:70%'><tr><th>Id</th><th>Admin ID</th><th>Client ID</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
             foreach ($results as $r) {
                 echo "<tr><td>" . $r->id . "</td><td>" . $r->admin_name . "</td><td>" . $r->client_name . "</td><td>" . $r->educash_added . "</td><td>" . $r->time . "</td><td>" . $r->comments . "</td></tr>";
             }
@@ -106,7 +106,7 @@ function educash_deals_form_page()
             $results = $wpdb->get_results("SELECT * FROM $table_name3 WHERE admin_name = '$admin_Name' AND client_name = '$client_Name' ");
 
             echo "<center><p>The history of transactions made by admin " . $_POST['admin_Name'] . " with client " . $_POST['client_Name'] . " is:</p>";
-            echo "<table style='width:70%'><tr><th>Id</th><th>Admin ID</th><th>Client Name</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
+            echo "<table style='width:70%'><tr><th>Id</th><th>Admin ID</th><th>Client ID</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
             foreach ($results as $r) {
                 echo "<tr><td>" . $r->id . "</td><td>" . $r->admin_name . "</td><td>" . $r->client_name . "</td><td>" . $r->educash_added . "</td><td>" . $r->time . "</td><td>" . $r->comments . "</td></tr>";
             }
@@ -119,7 +119,7 @@ function educash_deals_form_page()
             $results = $wpdb->get_results("SELECT * FROM $table_name3 WHERE DATE(time)='$date' ");
 
             echo "<center><p>The history of transactions made on " . $date . " is:</p>";
-            echo "<table style='width:70%'><tr><th>Id</th><th>Admin ID</th><th>Client Name</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
+            echo "<table style='width:70%'><tr><th>Id</th><th>Admin ID</th><th>Client ID</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
             foreach ($results as $r) {
                 echo "<tr><td>" . $r->id . "</td><td>" . $r->admin_name . "</td><td>" . $r->client_name . "</td><td>" . $r->educash_added . "</td><td>" . $r->time . "</td><td>" . $r->comments . "</td></tr>";
             }
@@ -133,7 +133,7 @@ function educash_deals_form_page()
             $results = $wpdb->get_results("SELECT * FROM $table_name3 WHERE admin_name = '$admin_Name' AND DATE(time)='$date' ");
 
             echo "<center><p>The history of transactions made by admin " . $_POST['admin_Name'] . " on " . $date . " is:</p>";
-            echo "<table style='width:70%'><tr><th>Id</th><th>Admin ID</th><th>Client Name</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
+            echo "<table style='width:70%'><tr><th>Id</th><th>Admin ID</th><th>Client ID</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
             foreach ($results as $r) {
                 echo "<tr><td>" . $r->id . "</td><td>" . $r->admin_name . "</td><td>" . $r->client_name . "</td><td>" . $r->educash_added . "</td><td>" . $r->time . "</td><td>" . $r->comments . "</td></tr>";
             }
@@ -147,7 +147,7 @@ function educash_deals_form_page()
             $results = $wpdb->get_results("SELECT * FROM $table_name3 WHERE client_name = '$client_Name' AND DATE(time)='$date' ");
 
             echo "<center><p>The history of transactions made by client " . $_POST['client_Name'] . " on " . $date . " is:</p>";
-            echo "<table style='width:70%'><tr><th>Id</th><th>Admin ID</th><th>Client Name</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
+            echo "<table style='width:70%'><tr><th>Id</th><th>Admin ID</th><th>Client ID</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
             foreach ($results as $r) {
                 echo "<tr><td>" . $r->id . "</td><td>" . $r->admin_name . "</td><td>" . $r->client_name . "</td><td>" . $r->educash_added . "</td><td>" . $r->time . "</td><td>" . $r->comments . "</td></tr>";
             }
@@ -162,7 +162,7 @@ function educash_deals_form_page()
             $results = $wpdb->get_results("SELECT * FROM $table_name3 WHERE admin_name = '$admin_Name' AND client_name = '$client_Name' AND DATE(time)='$date' ");
 
             echo "<center><p>The history of transactions made by admin " . $_POST['admin_Name'] . " with client " . $_POST['client_Name'] . " on " . $date . " is:</p>";
-            echo "<table style='width:70%'><tr><th>Id</th><th>Admin ID</th><th>Client Name</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
+            echo "<table style='width:70%'><tr><th>Id</th><th>Admin ID</th><th>Client ID</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
             foreach ($results as $r) {
                 echo "<tr><td>" . $r->id . "</td><td>" . $r->admin_name . "</td><td>" . $r->client_name . "</td><td>" . $r->educash_added . "</td><td>" . $r->time . "</td><td>" . $r->comments . "</td></tr>";
             }
