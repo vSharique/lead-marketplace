@@ -63,7 +63,7 @@ function educash_deals_form_page()
              <input type='submit' name='Submit'>" . $all_three_error . "<br/><br/><br/>
              </form></div>";
 
-    if ($_POST['submit'] && (!empty($_POST['clientName'])) && (!empty($_POST['educash']))) {
+    if ($_POST['submit'] && (!empty($_POST['clientName'])) && (!empty($_POST['educash'])) && (!($ckeck_client == 0))) {
         $r = $wpdb->get_row("SELECT * FROM $table_name3 WHERE time = '$time' ");
         echo "<center></p>You have made the following entry just now:</p>";
         echo "<table style='width:70%'><tr><th>Id</th><th>Admin ID</th><th>Client Name</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
