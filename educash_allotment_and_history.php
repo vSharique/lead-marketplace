@@ -12,8 +12,8 @@ function educash_deals_form_page()
             $clientnamerr = "<span  style='color:red;'>This field cannot be blank</span>";
         } else {
             $clientName = $_POST['clientName'];
-            $check_client = $wpdp->get_results("SELECT ID from $wpdb->prefix.users WHERE ID = '$clientName' ");
-            if($check_client == NULL){
+            $check_client = $wpdp->get_var("SELECT COUNT(ID) from $wpdb->prefix.users WHERE ID = '$clientName' ");
+            if($check_client == 0){
                 $invalid_client = "<span style='color:red'>This client does not exist in our database</span>";
             }
         }
@@ -24,7 +24,7 @@ function educash_deals_form_page()
             $educash = $_POST['educash'];
         }
 
-        if ((!empty($_POST['clientName'])) && (!empty($_POST['educash'])) && (!($ckeck_client == NULL))) {
+        if ((!empty($_POST['clientName'])) && (!empty($_POST['educash'])) && (!($ckeck_client == 0))) {
             $adminName = wp_get_current_user();
             $adminComment = $_POST['adminComment'];
             $time = current_time('mysql');
