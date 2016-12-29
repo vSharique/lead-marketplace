@@ -63,10 +63,17 @@ $(document).on('click','#edugorilla_filter',function(){
                 
                 	$("#edugorilla_institute_datas").val(JSON.stringify(data));
                 	
-                	 if($("#edu_name").val() !== "" && $("#edu_email").val() !== "" && $("#edu_contact_no").val() !== "" && $("#edu_query").val() !== "" &&$("#edugorilla_institute_datas").val() !== "")
+                	 if($("#edu_name").val() !== "" && $("#edu_email").val() !== "" && $("#edu_contact_no").val() !== "" && $("#edu_query").val() !== "" && $("#edugorilla_institute_datas").val() !== "")
                     {
-                        $('#save_details_button').attr("rel","modal:open");
-                        $('#save_details_button').removeAttr("disabled");
+                    	$('#save_details_button').removeAttr("disabled");
+                    	if($("#is_promotional_lead").is(":checked"))
+                        {
+                        	$('#save_details_button').attr("rel","modal:open");
+                        	
+                        }else
+                        {
+                        	$('#save_details_button').attr("onclick","document.details.submit();");
+                        }
                     }
                 var temppoints = [];
                 var i= 0;
@@ -78,14 +85,14 @@ $(document).on('click','#edugorilla_filter',function(){
                 	
                 	var points = {lat: parseFloat(temppoints[0]), lng: parseFloat(temppoints[1])};
         			 	var map = new google.maps.Map(document.getElementById('map'), {
-         					 zoom: 10,
+         					 zoom: 5,
         				 	center: points
        				 	});
                 
                  var infowindow = new google.maps.InfoWindow();
                 	$.each(data,function(i,v){
                     
-                    cnfbox += "<tr><td>"+v.title+"</td><td>"+v.emails+"</td><td>"+v.phones+"</td><td>"+v.flag+"</td></tr>";
+                    cnfbox += "<tr><td><a href='"+v.listing_url+"'>"+v.title+"</a></td><td>"+v.emails+"</td><td>"+v.phones+"</td><td>"+v.flag+"</td></tr>";
                     	
         				var marker = new google.maps.Marker({
           						position: new google.maps.LatLng(v.lat, v.long),
@@ -94,7 +101,7 @@ $(document).on('click','#edugorilla_filter',function(){
                     	
                     	google.maps.event.addListener(marker, 'click', (function(marker, i) {
        							 return function() {
-       									   infowindow.setContent('Institute Name: <b>'+v.title+"</b><br>Address: <b>"+v.address+"</b><br>Latitude <b>"+v.lat+"</b><br>Longitude <b>"+v.long+"</b><br>Flag <b>"+v.flag+"</b>");
+       									   infowindow.setContent('Institute Name: <b><a href="'+v.listing_url+'">'+v.title+"</a></b><br>Address: <b>"+v.address+"</b><br>Latitude <b>"+v.lat+"</b><br>Longitude <b>"+v.long+"</b><br>Flag <b>"+v.flag+"</b>");
       									    infowindow.open(map, marker);
       							  }
       					})(marker, i));

@@ -62,9 +62,9 @@ function form_list()
                         </form>
                     </div>
                     <tr>
-                        <th id="cb" class="manage-column column-cb check-column" scope="col"><input id="cb-select-all-1"
-                                                                                                    style="margin-top:16px;"
-                                                                                                    type="checkbox"></th>
+                        <th id="cb" class="manage-column column-cb check-column" scope="col">
+                        	<input id="cb-select-all-1" style="margin-top:16px;" type="checkbox">
+                    	</th>
                         <th id="columnname" class="manage-column column-columnname" scope="col">Institute Name</th>
                         <th id="columnname" class="manage-column column-columnname" scope="col">Flag</th>
                         <th id="columnname" class="manage-column column-columnname" scope="col">Email/Status</th>
@@ -74,9 +74,9 @@ function form_list()
                     </thead>
                     <tfoot>
                     <tr>
-                        <th id="cb" class="manage-column column-cb check-column" scope="col"><input id="cb-select-all-1"
-                                                                                                    style="margin-top:16px;"
-                                                                                                    type="checkbox"></th>
+                        <th id="cb" class="manage-column column-cb check-column" scope="col">
+                        	<input id="cb-select-all-1" style="margin-top:16px;" type="checkbox">
+                    	</th>
                         <th id="columnname" class="manage-column column-columnname" scope="col">Institute Name</th>
                         <th id="columnname" class="manage-column column-columnname" scope="col">Flag</th>
                         <th id="columnname" class="manage-column column-columnname" scope="col">Email/Status</th>
@@ -110,9 +110,9 @@ function form_list()
                                                                         value="<?php echo $leads_data['id']; ?>"></th>
                             <td class="column-columnname"><?php echo $leads_data['institute_name']; ?>
                                 <div class="row-actions">
-                                    <span><a href="admin.php?page=edugorilla-edit&tid=<?php echo $leads_data['id']; ?>">
+                                    <span><a href="admin.php?page=edugorilla-edit-promotion-sent&iid=<?php echo $leads_data['id']; ?>">
                                             Edit</a> | </span>
-                                    <span><a href="admin.php?page=edugorilla-view&tid=<?php echo $leads_data['id']; ?>">
+                                    <span><a href="admin.php?page=edugorilla-view-promotion-sent&iid=<?php echo $leads_data['id']; ?>">
                                             View</a> | </span>
                                 </div>
                             </td>
@@ -150,6 +150,8 @@ function form_list()
                         <th id="columnname" class="manage-column column-columnname" scope="col">Lead's Contact#</th>
                         <th id="columnname" class="manage-column column-columnname" scope="col">Lead's Email</th>
                         <th id="columnname" class="manage-column column-columnname" scope="col">Lead's Query</th>
+                     	<th id="columnname" class="manage-column column-columnname" scope="col">Lead's Category</th>
+                    	<th id="columnname" class="manage-column column-columnname" scope="col">Lead's Location</th>
                         <th id="columnname" class="manage-column column-columnname" scope="col">Date Time</th>
                     </tr>
                     </thead>
@@ -162,6 +164,8 @@ function form_list()
                         <th id="columnname" class="manage-column column-columnname" scope="col">Lead's Contact#</th>
                         <th id="columnname" class="manage-column column-columnname" scope="col">Lead's Email</th>
                         <th id="columnname" class="manage-column column-columnname" scope="col">Lead's Query</th>
+                    	<th id="columnname" class="manage-column column-columnname" scope="col">Lead's Category</th>
+                    	<th id="columnname" class="manage-column column-columnname" scope="col">Lead's Location</th>
                         <th id="columnname" class="manage-column column-columnname" scope="col">Date Time</th>
                     </tr>
                     </tfoot>
@@ -171,6 +175,29 @@ function form_list()
                     	$leads_details = $wpdb->get_results($q1, 'ARRAY_A');
 						foreach($leads_details as $leads_detail)
                         {
+ 							if(!empty($leads_detail['category_id']))
+        					{
+        						$category_names = array();
+            					$term_ids = explode(",", $leads_detail['category_id']);
+            					
+            					if (!empty($term_ids)) {
+                					foreach ($term_ids as $index => $term_id) {
+                  						$category_data = get_term_by('id', $term_id, 'listing_categories');
+                   						$category_names[] = $category_data->name;
+                					}
+                                
+            	 					$leads_category = implode(",",$category_names);
+             					}else $leads_category = "N/A";
+        	
+        					}else $leads_category = "N/A";  
+        
+        					if (!empty($leads_detail['location_id'])) {
+        							$location_data = get_term_by('id', $leads_detail['location_id'], 'locations');
+        							$leads_location = $location_data->name;
+           					 }else
+            				{
+            					$leads_location = "N/A";
+           					 }
                     ?>
                         <tr class="alternate" valign="top">
                             <th class="check-column" scope="row"><input id="cb-select-all-1" type="checkbox" name="check_list[]"
@@ -186,7 +213,9 @@ function form_list()
                             <td class="column-columnname"><?php echo $leads_detail['contact_no']; ?></td>
                             <td class="column-columnname"><?php echo $leads_detail['email']; ?></td>
                         	<td class="column-columnname"><?php echo $leads_detail['query']; ?></td>
-                            <td class="column-columnname"><?php echo $leads_detail['date_time']; ?></td>
+                        	<th class="manage-column column-columnname"><?php echo $leads_category; ?></th>
+                    		<th class="manage-column column-columnname"><?php echo $leads_location; ?></th>
+                            <td class="column-columnname"><?php echo $leads_location; ?></td>
                         </tr>
                     <?php } ?>
                     </tbody>

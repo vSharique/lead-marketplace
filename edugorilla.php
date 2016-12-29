@@ -17,6 +17,8 @@ function create_edugorilla_lead_table()
 											contact_no varchar(50) NOT NULL,
 											email varchar(200) NOT NULL,
 											query text(500) NOT NULL,
+                                            category_id text(500) NOT NULL,
+                                            location_id varchar(200) NOT NULL,
                                             date_time varchar(200) NOT NULL,
 											PRIMARY KEY id (id)
 										) $charset_collate;"; //Defining query to create table.
@@ -26,8 +28,9 @@ function create_edugorilla_lead_table()
     $sql2 = "CREATE TABLE $table_name2 (
 											id int(11) NOT NULL AUTO_INCREMENT,
                                             contact_log_id int(11) NOT NULL,
-                                            category_id text(500) NOT NULL,
 											institute_name varchar(200) NOT NULL,
+                                            contact_person varchar(200) NOT NULL,
+                                            listing_url varchar(200) NOT NULL,
                                             institute_address text NOT NULL,
                                             email_status text NOT NULL,
                                             flag text NOT NULL,
@@ -127,6 +130,24 @@ function create_edugorilla_menus()
         'edugorilla-email-setting',
         'edugorilla_email_setting'
     );
+
+	 add_submenu_page(
+        '',
+        'Lead Marketplace | Edit Promotion sent',
+        'Promotion Sent Edit',
+        'read',
+        'edugorilla-edit-promotion-sent',
+        'edugorilla_promotion_sent_edit'
+    );
+
+	add_submenu_page(
+        '',
+        'Lead Marketplace | View Promotion sent',
+        'Promotion Sent View',
+        'read',
+        'edugorilla-view-promotion-sent',
+        'edugorilla_promotion_sent_view'
+    );
     
     add_submenu_page(
         'edugorilla',
@@ -138,7 +159,8 @@ function create_edugorilla_menus()
     );    
 }
 
-
+include_once plugin_dir_path(__FILE__) . "view.php";
+include_once plugin_dir_path(__FILE__) . "edit.php";
 include_once plugin_dir_path(__FILE__) . "otp.php";
 include_once plugin_dir_path(__FILE__) . "educash_allotment_and_history.php";
 
@@ -154,7 +176,7 @@ function edugorilla()
         $email = $_POST['email'];
         $query = $_POST['query'];
         $category_id = $_POST['category_id'];
-    	$location = $_POST['location'];
+    	$location_id = $_POST['location'];
         $edugorilla_institute_datas = $_POST['edugorilla_institute_datas'];
         $is_promotional_lead = $_POST['is_promotional_lead'];
 
@@ -178,7 +200,7 @@ function edugorilla()
         	 if (!empty($category_id)) $category = implode(",", $category_id);
              else $category = "";
         
-            $json_results = json_decode(str_replace("\\", "", $edugorilla_institute_datas));
+            $json_results = json_decode(stripslashes($edugorilla_institute_datas));
 
             $edugorilla_email = get_option('edugorilla_email_setting1');
 
@@ -187,13 +209,15 @@ function edugorilla()
         	
 
               global $wpdb;
-              $result =  $wpdb->insert(
+              $result1 =  $wpdb->insert(
                     $wpdb->prefix . 'edugorilla_lead_contact_log',
                     array(
                         'name' => $name,
                         'contact_no' => $contact_no,
                         'email' => $email,
                         'query' => $query,
+                    	'category_id' => $category,
+                    	'location_id' => $location_id,
                         'date_time' => current_time('mysql')
                     )
                 );
@@ -222,12 +246,13 @@ function edugorilla()
 				
                 $contact_log_id = $wpdb->insert_id;
 
-                $result = $wpdb->insert(
+                $result2 = $wpdb->insert(
                     $wpdb->prefix . 'edugorilla_lead',
                     array(
                         'contact_log_id' => $contact_log_id,
-                        'category_id' => $category,
                         'institute_name' => $json_result->title,
+                    	'contact_person' => $json_result->contact_person,
+                    	'listing_url'=>	$json_result->listing_url,
                         'institute_address' => $json_result->address,
                         'email_status' => json_encode($institute_emails_status),
                     	'flag' => $json_result->flag,
@@ -238,11 +263,12 @@ function edugorilla()
 			  }
 			}
 
-            if ($result)
+            if ($result1)
             {
-                $success = "Saved Successfully";
+                $success = "Saved Successfully.";
             }
-            else $success = $result;
+        	elseif($result2) $success = "Saved and Message Send Successfully.";
+            else $success = $result1;
 
             //	foreach($_REQUEST as $var=>$val)$$var="";
         }
@@ -330,7 +356,7 @@ function edugorilla()
                <tr>
 					<th>Is it a promotional lead?</th>
 						 <td>
-							<input name="is_promotional_lead" type="checkbox" value="yes" <?php if($is_promotional_lead ==  "yes") echo "checked"; ?>>
+							<input name="is_promotional_lead" id="is_promotional_lead" type="checkbox" value="yes" <?php if($is_promotional_lead ==  "yes") echo "checked"; ?>>
 						</td>
 					</tr>
                 <tr>
@@ -444,8 +470,7 @@ function edugorilla()
                     </th>
                     <td>
 
-                        <a id="save_details_button" disabled href="#confirmation"  class="button button-primary">Send
-                            Details</a>
+                        <a id="save_details_button" disabled href="#confirmation"  class="button button-primary">Send Details</a>
                     </td>
                 </tr>
             </table>
@@ -526,7 +551,6 @@ function edugorilla_show_location()
             'field' => 'id',
             'terms' => $category
         );
-
     }
 
     if (!empty($address)) {
@@ -546,6 +570,7 @@ function edugorilla_show_location()
             $emails = array();
             $phones = array();
             $eduction_post = array();
+        	$eduction_post['id'] = get_the_ID();
             $eduction_post['title'] = get_the_title();
         	$eduction_post['listing_url'] = get_permalink( $the_query->ID );
         
