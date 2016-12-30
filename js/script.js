@@ -126,6 +126,5 @@ $(document).on('click','#edugorilla_filter',function(){
 	$( "#tabs" ).tabs();
 	$( "#list-tabs" ).tabs();
     
-       
 	
 });

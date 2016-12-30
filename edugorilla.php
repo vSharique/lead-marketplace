@@ -494,12 +494,8 @@ function edugorilla()
             var infowindow = new google.maps.InfoWindow();
 
         }
-
+		initMap();
     </script>
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6v5-2uaq_wusHDktM9ILcqIrlPtnZgEk&libraries=places&callback=initMap"
-        async defer></script>
-
     <?php
 }
 
@@ -508,6 +504,7 @@ function script()
 {
     wp_enqueue_style('select2-css', plugins_url('/css/select2.css', __FILE__));
     wp_enqueue_style('modal-css', plugins_url('/css/jquery.modal.css', __FILE__));
+	wp_enqueue_style('cazary-css', plugins_url('/css/cazary.css', __FILE__));
     wp_enqueue_style('jquery-ui-styles', "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css");
 
     wp_enqueue_script(
@@ -515,6 +512,14 @@ function script()
         plugins_url('/js/select2.js', __FILE__),  // Path to file
         array('jquery')                             // Dependancies
     );
+
+	wp_enqueue_script(
+        'cazary-js',                         // Handle
+        plugins_url('/js/cazary.min.js', __FILE__),  // Path to file
+        array('jquery')                             // Dependancies
+    );
+
+	
     wp_enqueue_script(
         'modal-script',                         // Handle
         plugins_url('/js/jquery.modal.js', __FILE__),  // Path to file
@@ -539,7 +544,7 @@ function edugorilla_show_location()
     $category = $_REQUEST['category'];
 
     $args = array();
-
+	$args['posts_per_page'] = -1;
     $args['post_status'] = 'publish';
     if (!empty($ptype)) $args['post_type'] = $ptype;
     if (!empty($term)) $args['s'] = $term;
@@ -562,6 +567,8 @@ function edugorilla_show_location()
         );
     }
 
+	
+
     $eduction_posts = array();
     $the_query = new WP_Query($args);
     if ($the_query->have_posts()) {
@@ -570,7 +577,7 @@ function edugorilla_show_location()
             $emails = array();
             $phones = array();
             $eduction_post = array();
-        	$eduction_post['id'] = get_the_ID();
+        	
             $eduction_post['title'] = get_the_title();
         	$eduction_post['listing_url'] = get_permalink( $the_query->ID );
         

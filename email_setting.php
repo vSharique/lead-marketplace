@@ -29,13 +29,18 @@ function edugorilla_email_setting()
             
                         update_option("edugorilla_email_setting1", $edugorilla_email_setting1);
                         $success1 = "Email Settings Saved Successfully.";
+                    	$email_setting_options1 = get_option('edugorilla_email_setting1');
+            
+                    	$edugorilla_email_subject1 = stripslashes($email_setting_options1['subject']);
+            
+                   		$edugorilla_email_body1 = stripslashes($email_setting_options1['body']);
                     }
                 } else {
                     $email_setting_options1 = get_option('edugorilla_email_setting1');
             
-                    $edugorilla_email_subject1 = $email_setting_options1['subject'];
+                    $edugorilla_email_subject1 = stripslashes($email_setting_options1['subject']);
             
-                    $edugorilla_email_body1 = $email_setting_options1['body'];
+                    $edugorilla_email_body1 = stripslashes($email_setting_options1['body']);
             
                 }
      
@@ -60,8 +65,12 @@ function edugorilla_email_setting()
                         <tr>
                             <th>Body template<sup><font color="red">*</font></sup></th>
                             <td>
-                                <textarea name="edugorilla_body1" rows="4" cols="65"
-                                          placeholder="Type Email Body here..."><?php echo stripslashes($edugorilla_email_body1); ?></textarea>
+                               <?php
+									$content = $edugorilla_email_body1;
+									$editor_id = 'edugorilla_body1';
+
+									wp_editor( $content, $editor_id );
+								?>
                                 <font color="red"><?php echo $errors1['edugorilla_body1']; ?></font>
                             </td>
                         </tr>
@@ -88,17 +97,19 @@ function edugorilla_email_setting()
                     if (empty($edugorilla_email_body2)) $errors2['edugorilla_body2'] = "Empty";
             
                     if (empty($errors2)) {
-                        $edugorilla_email_setting2 = array('subject' => $edugorilla_email_subject2, 'body' => $edugorilla_email_body2);
+                        $edugorilla_email_setting2 = array('subject' => stripslashes($edugorilla_email_subject2), 'body' => stripslashes($edugorilla_email_body2));
             
-                        update_option("edugorilla_email_setting2", stripslashes($edugorilla_email_setting2));
+                        update_option("edugorilla_email_setting2", $edugorilla_email_setting2);
                         $success2 = "Email Settings Saved Successfully.";
+                    
+                    	$email_setting_options2 = get_option('edugorilla_email_setting2');
+                    	$edugorilla_email_subject2 = stripslashes($email_setting_options2['subject']);
+                    	$edugorilla_email_body2 = stripslashes($email_setting_options2['body']);
                     }
                 } else {
                     $email_setting_options2 = get_option('edugorilla_email_setting2');
-            
-                    $edugorilla_email_subject2 = $email_setting_options2['subject'];
-            
-                    $edugorilla_email_body2 = $email_setting_options2['body'];
+                    $edugorilla_email_subject2 = stripslashes($email_setting_options2['subject']);
+                    $edugorilla_email_body2 = stripslashes($email_setting_options2['body']);
             
                 }
                 
@@ -123,8 +134,12 @@ function edugorilla_email_setting()
                         <tr>
                             <th>Body template<sup><font color="red">*</font></sup></th>
                             <td>
-                                <textarea name="edugorilla_body2" rows="4" cols="65"
-                                          placeholder="Type Email Body here..."><?php echo $edugorilla_email_body2; ?></textarea>
+                                 <?php
+									$content = $edugorilla_email_body2;
+									$editor_id = 'edugorilla_body2';
+
+									wp_editor( $content, $editor_id );
+								?>
                                 <font color="red"><?php echo $errors2['edugorilla_body2']; ?></font>
                             </td>
                         </tr>
@@ -150,17 +165,18 @@ function edugorilla_email_setting()
                     if (empty($edugorilla_email_body3)) $errors3['edugorilla_body3'] = "Empty";
             
                     if (empty($errors3)) {
-                        $edugorilla_email_setting3 = array('subject' => $edugorilla_email_subject3, 'body' => $edugorilla_email_body3);
+                        $edugorilla_email_setting3 = array('subject' => stripslashes($edugorilla_email_subject3), 'body' => stripslashes($edugorilla_email_body3));
             
-                        update_option("edugorilla_email_setting3", stripslashes($edugorilla_email_setting3));
+                        update_option("edugorilla_email_setting3", $edugorilla_email_setting3);
                         $success3 = "Email Settings Saved Successfully.";
+                    	$email_setting_options3 = get_option('edugorilla_email_setting3');
+                    	$edugorilla_email_subject3 = stripslashes($email_setting_options3['subject']);
+                    	$edugorilla_email_body3 = stripslashes($email_setting_options3['body']);
                     }
                 } else {
                     $email_setting_options3 = get_option('edugorilla_email_setting3');
-            
-                    $edugorilla_email_subject3 = $email_setting_options3['subject'];
-            
-                    $edugorilla_email_body3 = $email_setting_options3['body'];
+                    $edugorilla_email_subject3 = stripslashes($email_setting_options3['subject']);
+                    $edugorilla_email_body3 = stripslashes($email_setting_options3['body']);
             
                 }
                 
@@ -185,8 +201,11 @@ function edugorilla_email_setting()
                         <tr>
                             <th>Body template<sup><font color="red">*</font></sup></th>
                             <td>
-                                <textarea name="edugorilla_body3" rows="4" cols="65"
-                                          placeholder="Type Email Body here..."><?php echo $edugorilla_email_body3; ?></textarea>
+                                 <?php
+									$content = $edugorilla_email_body3;
+									$editor_id = 'edugorilla_body3';
+									wp_editor( $content, $editor_id );
+								?>
                                 <font color="red"><?php echo $errors3['edugorilla_body3']; ?></font>
                             </td>
                         </tr>
@@ -213,17 +232,18 @@ function edugorilla_email_setting()
                     if (empty($edugorilla_email_body4)) $errors4['edugorilla_body4'] = "Empty";
             
                     if (empty($errors4)) {
-                        $edugorilla_email_setting4 = array('subject' => $edugorilla_email_subject4, 'body' => $edugorilla_email_body4);
+                        $edugorilla_email_setting4 = array('subject' => stripslashes($edugorilla_email_subject4), 'body' => stripslashes($edugorilla_email_body4));
             
-                        update_option("edugorilla_email_setting4", stripslashes($edugorilla_email_setting4));
+                        update_option("edugorilla_email_setting4", $edugorilla_email_setting4);
                         $success4 = "Email Settings Saved Successfully.";
+                    	$email_setting_options4 = get_option('edugorilla_email_setting4');
+                    	$edugorilla_email_subject4 = stripslashes($email_setting_options4['subject']);
+                    	$edugorilla_email_body4 = stripslashes($email_setting_options4['body']);
                     }
                 } else {
                     $email_setting_options4 = get_option('edugorilla_email_setting4');
-            
-                    $edugorilla_email_subject4 = $email_setting_options4['subject'];
-            
-                    $edugorilla_email_body4 = $email_setting_options4['body'];
+                    $edugorilla_email_subject4 = stripslashes($email_setting_options4['subject']);
+                    $edugorilla_email_body4 = stripslashes($email_setting_options4['body']);
             
                 }
             
@@ -248,8 +268,11 @@ function edugorilla_email_setting()
                         <tr>
                             <th>Body template<sup><font color="red">*</font></sup></th>
                             <td>
-                                <textarea name="edugorilla_body4" rows="4" cols="65"
-                                          placeholder="Type Email Body here..."><?php echo $edugorilla_email_body4; ?></textarea>
+                               <?php
+									$content = $edugorilla_email_body4;
+									$editor_id = 'edugorilla_body4';
+									wp_editor( $content, $editor_id );
+								?>
                                 <font color="red"><?php echo $errors4['edugorilla_body4']; ?></font>
                             </td>
                         </tr>
@@ -276,17 +299,19 @@ function edugorilla_email_setting()
                     if (empty($edugorilla_email_body5)) $errors5['edugorilla_body5'] = "Empty";
             
                     if (empty($errors5)) {
-                        $edugorilla_email_setting5 = array('subject' => $edugorilla_email_subject5, 'body' => $edugorilla_email_body5);
+                        $edugorilla_email_setting5 = array('subject' => stripslashes($edugorilla_email_subject5), 'body' => stripslashes($edugorilla_email_body5));
             
-                        update_option("edugorilla_email_setting5", stripslashes($edugorilla_email_setting5));
+                        update_option("edugorilla_email_setting5", $edugorilla_email_setting5);
                         $success5 = "Email Settings Saved Successfully.";
+                    	
+                    	 $email_setting_options5 = get_option('edugorilla_email_setting5');
+                   		 $edugorilla_email_subject5 = stripslashes($email_setting_options5['subject']);
+                    	 $edugorilla_email_body5 = stripslashes($email_setting_options5['body']);
                     }
                 } else {
                     $email_setting_options5 = get_option('edugorilla_email_setting5');
-            
-                    $edugorilla_email_subject5 = $email_setting_options5['subject'];
-            
-                    $edugorilla_email_body5 = $email_setting_options5['body'];
+                    $edugorilla_email_subject5 = stripslashes($email_setting_options5['subject']);
+                    $edugorilla_email_body5 = stripslashes($email_setting_options5['body']);
             
                 }
                 
@@ -311,8 +336,11 @@ function edugorilla_email_setting()
                         <tr>
                             <th>Body template<sup><font color="red">*</font></sup></th>
                             <td>
-                                <textarea name="edugorilla_body5" rows="4" cols="65"
-                                          placeholder="Type Email Body here..."><?php echo $edugorilla_email_body5; ?></textarea>
+                               <?php
+									$content = $edugorilla_email_body5;
+									$editor_id = 'edugorilla_body5';
+									wp_editor( $content, $editor_id );
+								?>
                                 <font color="red"><?php echo $errors5['edugorilla_body5']; ?></font>
                             </td>
                         </tr>
