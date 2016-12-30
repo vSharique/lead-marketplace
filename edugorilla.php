@@ -28,6 +28,7 @@ function create_edugorilla_lead_table()
     $sql2 = "CREATE TABLE $table_name2 (
 											id int(11) NOT NULL AUTO_INCREMENT,
                                             contact_log_id int(11) NOT NULL,
+                                            post_id int(11) NOT NULL,
 											institute_name varchar(200) NOT NULL,
                                             contact_person varchar(200) NOT NULL,
                                             listing_url varchar(200) NOT NULL,
@@ -250,6 +251,7 @@ function edugorilla()
                     $wpdb->prefix . 'edugorilla_lead',
                     array(
                         'contact_log_id' => $contact_log_id,
+                    	'post_id' => $json_result->post_id,
                         'institute_name' => $json_result->title,
                     	'contact_person' => $json_result->contact_person,
                     	'listing_url'=>	$json_result->listing_url,
@@ -504,7 +506,6 @@ function script()
 {
     wp_enqueue_style('select2-css', plugins_url('/css/select2.css', __FILE__));
     wp_enqueue_style('modal-css', plugins_url('/css/jquery.modal.css', __FILE__));
-	wp_enqueue_style('cazary-css', plugins_url('/css/cazary.css', __FILE__));
     wp_enqueue_style('jquery-ui-styles', "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css");
 
     wp_enqueue_script(
@@ -512,13 +513,6 @@ function script()
         plugins_url('/js/select2.js', __FILE__),  // Path to file
         array('jquery')                             // Dependancies
     );
-
-	wp_enqueue_script(
-        'cazary-js',                         // Handle
-        plugins_url('/js/cazary.min.js', __FILE__),  // Path to file
-        array('jquery')                             // Dependancies
-    );
-
 	
     wp_enqueue_script(
         'modal-script',                         // Handle
@@ -577,7 +571,7 @@ function edugorilla_show_location()
             $emails = array();
             $phones = array();
             $eduction_post = array();
-        	
+        	$eduction_post['post_id'] = get_the_ID();
             $eduction_post['title'] = get_the_title();
         	$eduction_post['listing_url'] = get_permalink( $the_query->ID );
         
@@ -593,7 +587,7 @@ function edugorilla_show_location()
         	if (get_post_meta(get_the_ID(), 'listing_locations', true))
             {
             	$location_temp = get_post_meta(get_the_ID(), 'listing_locations', true);
-            	$eduction_post['contact_location'] = $location_temp[1].", ".$location_temp[0];
+            	$eduction_post['contact_location'] = str_replace("-"," ",$location_temp[1]).", ".str_replace("-"," ",$location_temp[0]);
             }
             else  $eduction_post['contact_location'] = "N/A";
         
@@ -601,7 +595,7 @@ function edugorilla_show_location()
             {
             	$category_temp = get_post_meta(get_the_ID(), 'listing_listing_category', true);
             	
-            	$eduction_post['contact_category'] = $category_temp[0].", ".$category_temp[1];
+            	$eduction_post['contact_category'] = str_replace("-"," ",$category_temp[0]).", ".str_replace("-"," ",$category_temp[1]);
             }
             else  $eduction_post['contact_category'] = "N/A";
 

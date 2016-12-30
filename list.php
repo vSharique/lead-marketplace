@@ -54,9 +54,9 @@ function form_list()
                     </form>
                     <div class="alignright actions bulkactions">
         
-                        <form name=f10 action="admin.php?page=Listing&current_page=$cpage&page_size=$page_size">
+                        <form name="f10" action="admin.php?page=Listing&current_page=$cpage&page_size=$page_size">
                             <label>Page No. </label>
-                            <select name="cpage" onchange='document.f10.submit();'>
+                            <select name="cpage" onchange='this.form.submit();'>
                                 <?php echo $p; ?>
                             </select>
                         </form>
@@ -110,9 +110,9 @@ function form_list()
                                                                         value="<?php echo $leads_data['id']; ?>"></th>
                             <td class="column-columnname"><?php echo $leads_data['institute_name']; ?>
                                 <div class="row-actions">
-                                    <span><a href="admin.php?page=edugorilla-edit-promotion-sent&iid=<?php echo $leads_data['id']; ?>">
+                                    <span><a href="post.php?post=<?php echo $leads_data['post_id']; ?>&action=edit">
                                             Edit</a> | </span>
-                                    <span><a href="admin.php?page=edugorilla-view-promotion-sent&iid=<?php echo $leads_data['id']; ?>">
+                                    <span><a href="<?php echo get_permalink($leads_data['post_id']); ?>">
                                             View</a> | </span>
                                 </div>
                             </td>
@@ -203,19 +203,13 @@ function form_list()
                             <th class="check-column" scope="row"><input id="cb-select-all-1" type="checkbox" name="check_list[]"
                                                                         value="<?php echo $leads_detail['id']; ?>"></th>
                             <td class="column-columnname"><?php echo  $leads_detail['name']; ?>
-                                <div class="row-actions">
-                                    <span><a href="admin.php?page=edugorilla-edit&tid=<?php echo $leads_detail['id']; ?>">
-                                            Edit</a> | </span>
-                                    <span><a href="admin.php?page=edugorilla-view&tid=<?php echo $leads_detail['id']; ?>">
-                                            View</a> | </span>
-                                </div>
                             </td>
                             <td class="column-columnname"><?php echo $leads_detail['contact_no']; ?></td>
                             <td class="column-columnname"><?php echo $leads_detail['email']; ?></td>
                         	<td class="column-columnname"><?php echo $leads_detail['query']; ?></td>
                         	<th class="manage-column column-columnname"><?php echo $leads_category; ?></th>
                     		<th class="manage-column column-columnname"><?php echo $leads_location; ?></th>
-                            <td class="column-columnname"><?php echo $leads_location; ?></td>
+                            <td class="column-columnname"><?php echo $leads_detail['date_time']; ?></td>
                         </tr>
                     <?php } ?>
                     </tbody>
