@@ -44,9 +44,9 @@ function create_edugorilla_lead_table()
     $table_name3 = $wpdb->prefix . 'educash_deals'; //Defining a table name.
     $sql3 = "CREATE TABLE $table_name3 (     
                                             id mediumint(9) NOT NULL AUTO_INCREMENT,
-                                            admin_name tinytext NOT NULL,
-                                            client_name tinytext NOT NULL,
-                                            educash_added int(9) DEFAULT 0 NOT NULL,
+                                            admin_id int(9) NOT NULL,
+                                            client_id int(9) NOT NULL,
+                                            transaction int(9) DEFAULT 0 NOT NULL,
                                             time datetime NOT NULL,
                                             comments varchar(500) DEFAULT 'No comment' NOT NULL,
                                             PRIMARY KEY  (id)
