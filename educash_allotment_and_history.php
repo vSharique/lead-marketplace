@@ -57,6 +57,16 @@ global $wpdb;
              <input type='submit' name='Submit'>" . $all_three_error . "<br/><br/><br/>
              </form></div>";
     if ($_POST['submit'] && (!empty($_POST['clientName'])) && (!empty($_POST['educash'])) && (!($check_client == 0))) {
+        $to = $clientName;
+        $subject = 'Educash Transaction';
+       if($educash>0){
+        $message = 'You have successfully purchased '.$educash.' amount of educash. '.$educash.' amount of educash has been added in your account.';
+        }
+        else{
+        $negative_educash = $educash*(-1);
+        $message = $negative_educash.' amount of educash has been deducted from your account.';
+        }
+        wp_mail( $to, $subject, $message );
         $r = $wpdb->get_row("SELECT * FROM $table_name3 WHERE time = '$time' ");
         echo "<center></p>You have made the following entry just now:</p>";
         echo "<table style='width:70%'><tr><th>Id</th><th>Admin Email</th><th>Client Email</th><th>Educash added</th><th>Time</th><th>Comments</th></tr>";
