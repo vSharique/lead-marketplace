@@ -10,7 +10,7 @@ function create_edugorilla_lead_table()
 {
     global $wpdb;
     $charset_collate = $wpdb->get_charset_collate();
-    $table_name1 = $wpdb->prefix . 'edugorilla_lead_contact_log'; //Defining a table name.
+    $table_name1 = $wpdb->prefix . 'edugorilla_lead'; //Defining a table name.
     $sql1 = "CREATE TABLE $table_name1 (
 											id int(11) NOT NULL AUTO_INCREMENT,
 											name varchar(200) NOT NULL,
@@ -24,17 +24,12 @@ function create_edugorilla_lead_table()
 										) $charset_collate;"; //Defining query to create table.
 
 
-    $table_name2 = $wpdb->prefix . 'edugorilla_lead'; //Defining a table name.
+    $table_name2 = $wpdb->prefix . 'edugorilla_lead_contact_log'; //Defining a table name.
     $sql2 = "CREATE TABLE $table_name2 (
 											id int(11) NOT NULL AUTO_INCREMENT,
                                             contact_log_id int(11) NOT NULL,
                                             post_id int(11) NOT NULL,
-											institute_name varchar(200) NOT NULL,
-                                            contact_person varchar(200) NOT NULL,
-                                            listing_url varchar(200) NOT NULL,
-                                            institute_address text NOT NULL,
                                             email_status text NOT NULL,
-                                            flag text NOT NULL,
                                             sms_status text NOT NULL,
                                             date_time varchar(200) NOT NULL,
 											PRIMARY KEY id (id)
@@ -211,7 +206,7 @@ function edugorilla()
 
               global $wpdb;
               $result1 =  $wpdb->insert(
-                    $wpdb->prefix . 'edugorilla_lead_contact_log',
+                    $wpdb->prefix . 'edugorilla_lead',
                     array(
                         'name' => $name,
                         'contact_no' => $contact_no,
@@ -248,16 +243,11 @@ function edugorilla()
                 $contact_log_id = $wpdb->insert_id;
 
                 $result2 = $wpdb->insert(
-                    $wpdb->prefix . 'edugorilla_lead',
+                    $wpdb->prefix . 'edugorilla_lead_contact_log',
                     array(
                         'contact_log_id' => $contact_log_id,
                     	'post_id' => $json_result->post_id,
-                        'institute_name' => $json_result->title,
-                    	'contact_person' => $json_result->contact_person,
-                    	'listing_url'=>	$json_result->listing_url,
-                        'institute_address' => $json_result->address,
                         'email_status' => json_encode($institute_emails_status),
-                    	'flag' => $json_result->flag,
                         'date_time' => current_time('mysql')
                     )
                 );
