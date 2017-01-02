@@ -103,7 +103,7 @@ function create_edugorilla_menus()
     add_submenu_page(
         'edugorilla',
         'Lead Marketplace | Listing',
-        'Promotional Leads Sent',
+        'Sent Leads',
         'read',
         'Listing',
         'form_list'
@@ -148,7 +148,7 @@ function create_edugorilla_menus()
     add_submenu_page(
         'edugorilla',
         'Lead Marketplace | Educash deals',
-        'Educash deals',
+        'Add Educash',
         'read',
         'educash_deals_form_page',
         'educash_deals_form_page'
