@@ -7,8 +7,8 @@ function edugorilla_email_setting()
      
         <div id="tabs">
           <ul>
-            <li><a href="#tabs-1">Tab 1</a></li>
-            <li><a href="#tabs-2">Tab 2</a></li>
+            <li><a href="#tabs-1">Lead Received</a></li>
+            <li><a href="#tabs-2">EduCash Added</a></li>
             <li><a href="#tabs-3">Tab 3</a></li>
             <li><a href="#tabs-4">Tab 4</a></li>
             <li><a href="#tabs-5">Tab 5</a></li>
