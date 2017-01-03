@@ -79,6 +79,19 @@ EduGorilla Team</div>";
 
 register_activation_hook(__FILE__, 'create_edugorilla_lead_table');
 
+function edugorilla_lead_plugin_uninstall() {
+   global $wpdb;
+   $table_name1 = $wpdb->prefix . 'edugorilla_lead';
+   $table_name2 = $wpdb->prefix . 'edugorilla_lead_contact_log';
+   $table_name3 = $wpdb->prefix . 'educash_deals';
+   $wpdb->query("DROP TABLE IF EXISTS $table_name1");
+   $wpdb->query("DROP TABLE IF EXISTS $table_name2");
+   $wpdb->query("DROP TABLE IF EXISTS $table_name3");
+}
+
+//hook into WordPress when its being deactivated:
+register_deactivation_hook( __FILE__, 'edugorilla_lead_plugin_uninstall' );
+
 add_action("admin_menu", "create_edugorilla_menus");
 
 function create_edugorilla_menus()
@@ -217,6 +230,32 @@ function edugorilla()
                         'date_time' => current_time('mysql')
                     )
                 );
+                
+			$user_login = str_replace(" ","_",$name);
+            
+            $uid = username_exists($user_login);
+            if($uid)
+            {
+        		update_user_meta( $uid, 'user_general_phone', $contact_no);
+        		update_user_meta( $uid, 'user_general_email', $email);
+            }
+            else
+            {
+            	$userdata = array(
+    						  'user_login'  =>  $user_login,
+                              'user_pass'   =>  $contact_no,
+            				  'first_name' => $name,
+            				  'user_email' => $email,
+            				  'user_pass' => $contact_no
+                            );
+			    $user_id = wp_insert_user($userdata);
+        
+       		 	if ( ! is_wp_error( $user_id ) ) {
+    					add_user_meta( $user_id, 'user_general_first_name', $name);
+        				add_user_meta( $user_id, 'user_general_phone', $contact_no);
+        				add_user_meta( $user_id, 'user_general_email', $email);
+				}
+            }
 
             foreach ($json_results as $json_result) {
 				if($is_promotional_lead == "yes")
