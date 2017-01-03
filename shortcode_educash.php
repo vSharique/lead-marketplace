@@ -48,6 +48,6 @@
 
 
       <?php /* to include file include this file in edugorilla page.
-        (*** include_once plugin_dir_path(__FILE__) . "shortcode_educash.php"; ***) ?>
+        (***     include_once plugin_dir_path(__FILE__) . "shortcode_educash.php";         ***) ?>
         and use shorcode *** [educash] ***
       */ ?>
