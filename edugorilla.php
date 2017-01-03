@@ -61,7 +61,7 @@ function create_edugorilla_lead_table()
 <p>Your Institute is listed in before mentioned category on our site. Your listing URL: {listing_URL}</p>
 <br>
 <p>Student\'s Details:<p>
-<p<b>Name:</b> {name}</br>
+<p><b>Name:</b> {name}</br>
 <b>Contact:</b> {contact no}</br>
 <b>E-Mail Address:</b> {email address}</br>
 <b>Full Query:</b> {query}</p>
@@ -232,9 +232,10 @@ function edugorilla()
                 );
             $user_login = str_replace(" ","_",$name);
             
-            $uid = username_exists($user_login);
+            $uid = email_exists($email);
             if($uid)
             {
+            	wp_update_user( array( 'ID' => $uid, 'user_email' => $email ) );
         		update_user_meta( $uid, 'user_general_phone', $contact_no);
         		update_user_meta( $uid, 'user_general_email', $email);
             }
