@@ -11,4 +11,4 @@
   dbDelta($sql);
   ?>
 <?php //transaction_history is a table that store all the details of lead id allocated to user and the date
-      // and the date on which the leads are allocated to user. The user will be identified by client_id ?>
+      // and the date on which the leads are allocated to user. The client_id is user id of particular user ?>
