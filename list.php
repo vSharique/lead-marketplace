@@ -14,14 +14,16 @@ function form_list()
     else
         $total_pages = intval($num_rows / $page_size) + 1;
     $index = ($current_page - 1) * $page_size;
+
+
     global $wpdb;
     $search_from_date_form = $_POST['search_from_date_form'];
     if ($search_from_date_form == "self") {
         $edugorilla_list_date_from = $_POST['edugorilla_list_date_from'];
         $edugorilla_list_date_to = $_POST['edugorilla_list_date_to'];
-        $q = "select * from {$wpdb->prefix}edugorilla_lead WHERE (date_time BETWEEN '$edugorilla_list_date_from%' AND '$edugorilla_list_date_to%') order by id";
+        $q = "select * from {$wpdb->prefix}edugorilla_lead_contact_log WHERE (date_time BETWEEN '$edugorilla_list_date_from%' AND '$edugorilla_list_date_to%') order by id";
     } else {
-        $q = "select * from {$wpdb->prefix}edugorilla_lead order by id";
+        $q = "select * from {$wpdb->prefix}edugorilla_lead_contact_log order by id";
     }
     $leads_datas = $wpdb->get_results($q, 'ARRAY_A');
 
@@ -86,9 +88,9 @@ function form_list()
                     </tfoot>
                     <tbody>
                     <?php
-                    $lead_names = array();
+                    $lead_ids = array();
                     foreach ($leads_datas as $leads_data) {
-                        $lead_names[] = $leads_data['institute_name'];
+                        $lead_ids[] = $leads_data['post_id'];
                     }
         
                     foreach ($leads_datas as $leads_data) {
@@ -108,7 +110,7 @@ function form_list()
                         <tr class="alternate" valign="top">
                             <th class="check-column" scope="row"><input id="cb-select-all-1" type="checkbox" name="check_list[]"
                                                                         value="<?php echo $leads_data['id']; ?>"></th>
-                            <td class="column-columnname"><?php echo $leads_data['institute_name']; ?>
+                            <td class="column-columnname"><?php echo get_the_title($leads_data['post_id']); ?>
                                 <div class="row-actions">
                                     <span><a href="post.php?post=<?php echo $leads_data['post_id']; ?>&action=edit">
                                             Edit</a> | </span>
@@ -116,12 +118,12 @@ function form_list()
                                             View</a> | </span>
                                 </div>
                             </td>
-                            <td class="column-columnname"><?php echo $leads_data['flag']; ?></td>
+                            <td class="column-columnname"><?php echo (get_post_meta($leads_data['post_id'], 'listing_verified', true) == "on"? "Verified": "Unverified"); ?></td>
                             <td class="column-columnname">
                                 <?php
                                 $emails_confrms = json_decode($leads_data['email_status'], true);
         
-                                $email_count = array_count_values($lead_names);
+                                $email_count = array_count_values($lead_ids);
                                 if (!empty($emails_confrms)) {
                                     foreach ($emails_confrms as $email => $status) {
                                         if ($status == true) $staus = "Success";
@@ -131,7 +133,7 @@ function form_list()
                                 }
                                 ?>
                             </td>
-                            <td class="column-columnname"><?php echo $email_count[$leads_data['institute_name']]; ?></td>
+                            <td class="column-columnname"><?php echo $email_count[$leads_data['post_id']]; ?></td>
                             <td class="column-columnname"><?php echo $leads_data['date_time']; ?></td>
                         </tr>
                     <?php } ?>
@@ -171,7 +173,7 @@ function form_list()
                     </tfoot>
                     <tbody>
                     <?php
-						$q1 = "select * from {$wpdb->prefix}edugorilla_lead_contact_log order by id";
+						$q1 = "select * from {$wpdb->prefix}edugorilla_lead order by id";
                     	$leads_details = $wpdb->get_results($q1, 'ARRAY_A');
 						foreach($leads_details as $leads_detail)
                         {

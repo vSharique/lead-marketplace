@@ -34,19 +34,19 @@ function create_edugorilla_lead_table()
                                             date_time varchar(200) NOT NULL,
 											PRIMARY KEY id (id)
 										) $charset_collate;"; //Defining query to create table.
-
-
+                                                
+                                                   
     $table_name3 = $wpdb->prefix . 'educash_deals'; //Defining a table name.
-    $sql3 = "CREATE TABLE $table_name3 (
+    $sql3 = "CREATE TABLE $table_name3 (     
                                             id mediumint(9) NOT NULL AUTO_INCREMENT,
-                                            admin_id int(9) NOT NULL,
-                                            client_id int(9) NOT NULL,
-                                            transaction int(9) DEFAULT 0 NOT NULL,
+                                            admin_name tinytext NOT NULL,
+                                            client_name tinytext NOT NULL,
+                                            educash_added int(9) DEFAULT 0 NOT NULL,
                                             time datetime NOT NULL,
                                             comments varchar(500) DEFAULT 'No comment' NOT NULL,
                                             PRIMARY KEY  (id)
                                         ) $charset_collate;"; //Defining query to create table.
-
+    
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
     //Creating a table in cureent wordpress
     dbDelta($sql1);
@@ -87,7 +87,7 @@ function edugorilla_lead_plugin_uninstall() {
    $wpdb->query("DROP TABLE IF EXISTS $table_name1");
    $wpdb->query("DROP TABLE IF EXISTS $table_name2");
    $wpdb->query("DROP TABLE IF EXISTS $table_name3");
-}
+}//end pluginUninstall function
 
 //hook into WordPress when its being deactivated:
 register_deactivation_hook( __FILE__, 'edugorilla_lead_plugin_uninstall' );
@@ -121,7 +121,7 @@ function create_edugorilla_menus()
         'Listing',
         'form_list'
     );
-
+    
     add_submenu_page(
         'edugorilla',
         'Lead Marketplace | OTP',
@@ -157,15 +157,15 @@ function create_edugorilla_menus()
         'edugorilla-view-promotion-sent',
         'edugorilla_promotion_sent_view'
     );
-
+    
     add_submenu_page(
         'edugorilla',
         'Lead Marketplace | Educash deals',
-        'Add Educash',
+        'Educash deals',
         'read',
         'educash_deals_form_page',
         'educash_deals_form_page'
-    );
+    );    
 }
 
 include_once plugin_dir_path(__FILE__) . "view.php";
@@ -205,18 +205,18 @@ function edugorilla()
 
         if (empty($errors)) {
             $institute_emails_status = array();
-
+			
         	 if (!empty($category_id)) $category = implode(",", $category_id);
              else $category = "";
-
+        
             $json_results = json_decode(stripslashes($edugorilla_institute_datas));
 
             $edugorilla_email = get_option('edugorilla_email_setting1');
 
         	$edugorilla_email_body = stripslashes($edugorilla_email['body']);
-
-
-
+        
+        	
+			
               global $wpdb;
               $result1 =  $wpdb->insert(
                     $wpdb->prefix . 'edugorilla_lead',
@@ -230,9 +230,8 @@ function edugorilla()
                         'date_time' => current_time('mysql')
                     )
                 );
-
-			$user_login = str_replace(" ","_",$name);
-
+            $user_login = str_replace(" ","_",$name);
+            
             $uid = username_exists($user_login);
             if($uid)
             {
@@ -249,7 +248,7 @@ function edugorilla()
             				  'user_pass' => $contact_no
                             );
 			    $user_id = wp_insert_user($userdata);
-
+        
        		 	if ( ! is_wp_error( $user_id ) ) {
     					add_user_meta( $user_id, 'user_general_first_name', $name);
         				add_user_meta( $user_id, 'user_general_phone', $contact_no);
@@ -262,13 +261,13 @@ function edugorilla()
                 {
                 	$edugorilla_email_subject = str_replace("{category}", $json_result->contact_category, $edugorilla_email['subject']);
                 	$email_template_datas = array("{Contact_Person}"=>$json_result->contact_person,"{category}" => $json_result->contact_category,"{location}"=>$json_result->contact_location,"{listing_URL}"=>$json_result->listing_url,"{name}"=>$name,"{contact no}"=>$contact_no,"{email address}"=>$email,"{query}" => $query);
-
+        	
             		foreach($email_template_datas as $var=>$email_template_data)
            			{
                 		$edugorilla_email_body = str_replace($var, $email_template_data, $edugorilla_email_body);
             		}
-
-
+                
+                
 					$institute_emails = explode(",", $json_result->emails);
 					foreach ($institute_emails as $institute_email) {
 						add_filter('wp_mail_content_type', 'edugorilla_html_mail_content_type');
@@ -278,7 +277,7 @@ function edugorilla()
 
 						remove_filter('wp_mail_content_type', 'edugorilla_html_mail_content_type');
 					}
-
+				
                 $contact_log_id = $wpdb->insert_id;
 
                 $result2 = $wpdb->insert(
@@ -542,7 +541,7 @@ function script()
         plugins_url('/js/select2.js', __FILE__),  // Path to file
         array('jquery')                             // Dependancies
     );
-
+	
     wp_enqueue_script(
         'modal-script',                         // Handle
         plugins_url('/js/jquery.modal.js', __FILE__),  // Path to file
@@ -590,7 +589,7 @@ function edugorilla_show_location()
         );
     }
 
-
+	
 
     $eduction_posts = array();
     $the_query = new WP_Query($args);
@@ -603,27 +602,27 @@ function edugorilla_show_location()
         	$eduction_post['post_id'] = get_the_ID();
             $eduction_post['title'] = get_the_title();
         	$eduction_post['listing_url'] = get_permalink( $the_query->ID );
-
+        
             if (get_post_meta(get_the_ID(), 'listing_address', true)) $eduction_post['address'] = get_post_meta(get_the_ID(), 'listing_address', true);
             else  $eduction_post['address'] = "Unavailable";
-
+        
         	if (get_post_meta(get_the_ID(), 'listing_verified', true)) $eduction_post['flag'] = "verified";
             else  $eduction_post['flag'] = "Unverified";
-
+        
         	if (get_post_meta(get_the_ID(), 'listing_person', true)) $eduction_post['contact_person'] = get_post_meta(get_the_ID(), 'listing_person', true);
             else  $eduction_post['contact_person'] = "Guest";
-
+        
         	if (get_post_meta(get_the_ID(), 'listing_locations', true))
             {
             	$location_temp = get_post_meta(get_the_ID(), 'listing_locations', true);
             	$eduction_post['contact_location'] = str_replace("-"," ",$location_temp[1]).", ".str_replace("-"," ",$location_temp[0]);
             }
             else  $eduction_post['contact_location'] = "N/A";
-
-        	if (get_post_meta(get_the_ID(), 'listing_listing_category', true))
+        
+        	if (get_post_meta(get_the_ID(), 'listing_listing_category', true)) 
             {
             	$category_temp = get_post_meta(get_the_ID(), 'listing_listing_category', true);
-
+            	
             	$eduction_post['contact_category'] = str_replace("-"," ",$category_temp[0]).", ".str_replace("-"," ",$category_temp[1]);
             }
             else  $eduction_post['contact_category'] = "N/A";
@@ -677,6 +676,6 @@ add_filter( 'script_loader_src', 'vc_remove_wp_ver_css_js', 9999 );
 
 
 include_once plugin_dir_path(__FILE__) . "email_setting.php";
-include_once plugin_dir_path(__FILE__) . "shortcode_educash.php";
+
 include_once plugin_dir_path(__FILE__) . "list.php";
 ?>
