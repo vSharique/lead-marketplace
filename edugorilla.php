@@ -457,9 +457,7 @@ function edugorilla()
                             $edugorilla_locations = get_terms('locations', array('hide_empty' => false));
 
                             foreach ($edugorilla_locations as $edugorilla_location) {
-                                if ((int)$edugorilla_location->parent != 0) {
                                     $templocationarray[$edugorilla_location->parent][$edugorilla_location->term_id] = $edugorilla_location->name;
-                                }
                             }
 
                             foreach ($templocationarray as $var => $vals) {
@@ -572,6 +570,8 @@ function edugorilla_show_location()
     if (!empty($ptype)) $args['post_type'] = $ptype;
     if (!empty($term)) $args['s'] = $term;
 
+    if(!empty($category) && !empty($address)) $args['tax_query']['relation'] = 'AND';
+    
     if (!empty($category)) {
         //$address = "%".$address."%";
         $args['tax_query'][0] = array(
@@ -583,14 +583,12 @@ function edugorilla_show_location()
 
     if (!empty($address)) {
         //$address = "%".$address."%";
-        $args['tax_query'][0] = array(
+        $args['tax_query'][1] = array(
             'taxonomy' => 'locations',
             'field' => 'id',
             'terms' => $address
         );
     }
-
-	
 
     $eduction_posts = array();
     $the_query = new WP_Query($args);

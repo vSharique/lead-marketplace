@@ -36,9 +36,10 @@ jQuery(document).ready(function( $ ) {
     });
 
 
-$(document).on('click','#edugorilla_leads_view', function(){
+$(document).on('click','a[id^=edugorilla_leads_view]', function(){
 
-	var pid = $('#edugorilla_leads_view').data('cid');
+	var pid = $(this).attr('href').replace("#","");
+	
 	$.ajax({
             	url: ajaxurl,
                 type: 'GET',
@@ -49,16 +50,15 @@ $(document).on('click','#edugorilla_leads_view', function(){
                 dataType: 'json',
          		success: function(data) 
             	{
+                	
                 	var cnfbox = "<table class='widefat fixed' align='center' width='100%' border=1><tr><th>Name</th><th>Email</th><th>Contact No.</th><th>Date Time</th></tr>";
                 
-                
-                	 $.each(data,function(i,v){
-                     	cnfbox += "<tr><td>"+v.name+"</td><td>"+v.email+"</td><td>"+v.contact_no+"</td><td>"+v.date_time+"</td></tr>";
-                	});
-                
+                     	cnfbox += "<tr><td>"+data.name+"</td><td>"+data.email+"</td><td>"+data.contact_no+"</td><td>"+data.date_time+"</td></tr>";
+               
                 	cnfbox += "</table>";
                 
-                	alert(cnfbox);
+                	$('#edugorilla_view_leads').html(cnfbox);
+                	$('#edugorilla_view_leads').modal();
                 },
     			error: function(err)
             	{
@@ -161,6 +161,13 @@ $(document).on('click','#edugorilla_filter',function(){
 	$('#edugorilla_location').select2();
 	$( "#tabs" ).tabs();
 	$( "#list-tabs" ).tabs();
+	$(document).on('click','#is_promotional_lead',function() {
+  		if ($(this).is(':checked')) {
+    		$("#save_details_button").text('Send Details');
+  		} else {
+   			 $("#save_details_button").text('Save Details');
+  		}
+	});
     
 	
 });

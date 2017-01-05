@@ -116,7 +116,7 @@ function form_list()
                                             Edit</a> | </span>
                                     <span><a href="<?php echo get_permalink($leads_data['post_id']); ?>">
                                             View</a> | </span>
-                                	 <span><a id="edugorilla_leads_view" href="#edugorilla_view_leads" data-cid="<?php echo $leads_data['contact_log_id']; ?>"  >
+                                	 <span><a id="edugorilla_leads_view<?php echo $leads_data['contact_log_id']; ?>" href="#<?php echo $leads_data['contact_log_id']; ?>"  >
                                             View leads</a> </span>
                                 </div>
                             </td>
