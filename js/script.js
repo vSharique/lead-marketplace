@@ -113,15 +113,10 @@ $(document).on('click','#edugorilla_filter',function(){
                     }
                 var temppoints = [];
                 var i= 0;
-                $.each(data,function(i,v){
-                	temppoints[i] = v.lat;
-                	temppoints[i+1] = v.long;
-                	i++;
-                });
-                	
-                	var points = {lat: parseFloat(temppoints[0]), lng: parseFloat(temppoints[1])};
+               
+                	var points = {lat: parseFloat(20.5937), lng: parseFloat(78.9629)};
         			 	var map = new google.maps.Map(document.getElementById('map'), {
-         					 zoom: 5,
+         					 zoom: 4,
         				 	center: points
        				 	});
                 
