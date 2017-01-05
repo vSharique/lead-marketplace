@@ -116,6 +116,8 @@ function form_list()
                                             Edit</a> | </span>
                                     <span><a href="<?php echo get_permalink($leads_data['post_id']); ?>">
                                             View</a> | </span>
+                                	 <span><a id="edugorilla_leads_view" href="#edugorilla_view_leads" data-cid="<?php echo $leads_data['contact_log_id']; ?>"  >
+                                            View leads</a> </span>
                                 </div>
                             </td>
                             <td class="column-columnname"><?php echo (get_post_meta($leads_data['post_id'], 'listing_verified', true) == "on"? "Verified": "Unverified"); ?></td>
@@ -238,7 +240,69 @@ function form_list()
         }
         ?>
     </div>
+<div id="edugorilla_view_leads" style="display:none;">
+	
+</div>
     <?php
 }
+
+function edugorilla_view_leads()
+{
+	global $wpdb;
+	$promotion_id = $_REQUEST['promotion_id'];
+
+	if(!empty($promotion_id))
+    {
+    $q1 = "select * from {$wpdb->prefix}edugorilla_lead where id=$promotion_id ";
+$leads_details = $wpdb->get_results($q1, 'ARRAY_A');
+$temp_data = array();
+foreach($leads_details as $leads_detail)
+{
+    
+    $temp_data['name'] = $leads_detail['name'];
+    $temp_data['contact_no'] = $leads_detail['contact_no'];
+    $temp_data['email'] = $leads_detail['email'];
+    
+    if(!empty($leads_detail['category_id']))
+    {
+        $category_names = array();
+        $term_ids = explode(",", $leads_detail['category_id']);
+        
+        if (!empty($term_ids)) {
+            foreach ($term_ids as $index => $term_id) {
+                $category_data = get_term_by('id', $term_id, 'listing_categories');
+                $category_names[] = $category_data->name;
+            }
+        
+            $leads_category = implode(",",$category_names);
+        }else $leads_category = "N/A";
+
+    }else $leads_category = "N/A";  
+
+    if (!empty($leads_detail['location_id'])) 
+    {
+            $location_data = get_term_by('id', $leads_detail['location_id'], 'locations');
+            $leads_location = $location_data->name;
+    }
+    else
+    {
+        $leads_location = "N/A";
+    }
+    
+    $temp_data['location'] = $leads_location;
+    $temp_data['category'] = $leads_category;
+    $temp_data['date_time'] = $leads_detail['date_time'];
+   
+}
+
+	echo json_encode($temp_data);
+    
+    exit();
+    }
+	
+}
+
+add_action('wp_ajax_edugorilla_view_leads', 'edugorilla_view_leads');
+add_action('wp_ajax_nopriv_edugorilla_view_leads', 'edugorilla_view_leads');
 
 ?>

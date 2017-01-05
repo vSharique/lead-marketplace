@@ -35,6 +35,40 @@ jQuery(document).ready(function( $ ) {
 
     });
 
+
+$(document).on('click','#edugorilla_leads_view', function(){
+
+	var pid = $('#edugorilla_leads_view').data('cid');
+	$.ajax({
+            	url: ajaxurl,
+                type: 'GET',
+         		data: {
+            			'action':'edugorilla_view_leads',
+            			'promotion_id': pid
+          			  },
+                dataType: 'json',
+         		success: function(data) 
+            	{
+                	var cnfbox = "<table class='widefat fixed' align='center' width='100%' border=1><tr><th>Name</th><th>Email</th><th>Contact No.</th><th>Date Time</th></tr>";
+                
+                
+                	 $.each(data,function(i,v){
+                     	cnfbox += "<tr><td>"+v.name+"</td><td>"+v.email+"</td><td>"+v.contact_no+"</td><td>"+v.date_time+"</td></tr>";
+                	});
+                
+                	cnfbox += "</table>";
+                
+                	alert(cnfbox);
+                },
+    			error: function(err)
+            	{
+                	console.log(err);
+                }
+    	});
+});
+
+
+
 $(document).on('click','#edugorilla_filter',function(){
 		var institute_data;
 		     
@@ -60,6 +94,8 @@ $(document).on('click','#edugorilla_filter',function(){
          		success: function(data) 
             	{
                 	var cnfbox = "<table class='widefat fixed' align='center' width='100%' border=1><tr><th>Institude Name</th><th>Email(s)</th><th>SMS(s)</th><th>Flag</th></tr>";
+                
+               
                 
                 	$("#edugorilla_institute_datas").val(JSON.stringify(data));
                 	
