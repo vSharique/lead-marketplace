@@ -22,9 +22,9 @@ class lead{
 			<div class="contents">
 				<div class="col-sm-12 bgimg">
 				 <ul class="card-cont">
-					<li><i class="fa fa-user fa-fw icof" aria-hidden="true"></i> '.$name.'</li>
-					<li><i class="fa fa-map-marker fa-fw icof" aria-hidden="true"></i> '.$location.'</li>
-					<li><i class="fa fa-tag fa-fw icof" aria-hidden="true"></i> '.$category.'</li>
+					<li><i class="fa fa-user fa-fw" aria-hidden="true"></i> '.$name.'</li>
+					<li><i class="fa fa-map-marker fa-fw" aria-hidden="true"></i> '.$location.'</li>
+					<li><i class="fa fa-tag fa-fw" aria-hidden="true"></i> '.$category.'</li>
 				 </ul>
 				</div>
 			</div>
@@ -38,9 +38,7 @@ class lead{
 						<a href="#" class="btn btn-success"><i class="fa fa-unlock-alt icof" aria-hidden="true"> Unlock</i></a>
 					</div>
 			 </div>
-			</div>';
-
-		// $this->edu_shortcode($appear);	
+			</div>';	
 	}
 
 	public function edu_shortcode($appear){
@@ -53,9 +51,6 @@ class lead{
 }
 
 $shrt_code=new lead('Rohit','Lucknow','CEO','Nirvana');
-$scnd_lead=new lead('Mark','Mumbai','JEE','Prep for board');
-$shrt_code=new lead('Rohit','Lucknow','CEO','Nirvana');
-$scnd_lead=new lead('Mark','Mumbai','JEE','Prep for board');
 
 add_shortcode('edugorilla_leads', array($shrt_code,'edu_shortcode' ));
 
