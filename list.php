@@ -2,18 +2,44 @@
 function form_list()
 {
     global $wpdb;
-    $table_name = $wpdb->prefix . 'edugorilla_lead ';
+//Promotion sent Listing
+    $table_name = $wpdb->prefix . 'edugorilla_lead_contact_log ';
     $count_query = $wpdb->get_results("SELECT * FROM $table_name");
     $num_rows = count($count_query); //PHP count()
+
     $cpage = $_REQUEST['cpage'];
     $list_caller = $_REQUEST['list_caller'];
-    $current_page = 1;
+
+	if(empty($cpage)) $current_page = 1;
+	else $current_page = $cpage;
+    
     $page_size = 10;
     if ($num_rows % $page_size == 0)
         $total_pages = $num_rows / $page_size;
     else
         $total_pages = intval($num_rows / $page_size) + 1;
+
     $index = ($current_page - 1) * $page_size;
+//end of Promotion send listing
+
+//Leads Listing
+	$lead_table = $wpdb->prefix .'edugorilla_lead';
+    $leads_query = $wpdb->get_results("SELECT * FROM $lead_table");
+    $total_rows = count($leads_query); //counting total rows
+    $lead_current_page = $_REQUEST['lead_current_page'];
+
+	if(empty($lead_current_page)) $lead_current_page = 1;
+	
+    
+    if ($total_rows % $page_size == 0)
+        $total_pages = $total_rows / $page_size;
+    else
+        $total_pages = intval($total_rows / $page_size) + 1;
+
+    $lead_index = ($lead_current_page - 1) * $page_size;
+//end of Leads listing
+
+
 
 
     global $wpdb;
@@ -21,9 +47,9 @@ function form_list()
     if ($search_from_date_form == "self") {
         $edugorilla_list_date_from = $_POST['edugorilla_list_date_from'];
         $edugorilla_list_date_to = $_POST['edugorilla_list_date_to'];
-        $q = "select * from {$wpdb->prefix}edugorilla_lead_contact_log WHERE (date_time BETWEEN '$edugorilla_list_date_from%' AND '$edugorilla_list_date_to%') order by id";
+        $q = "select * from {$wpdb->prefix}edugorilla_lead_contact_log WHERE (date_time BETWEEN '$edugorilla_list_date_from%' AND '$edugorilla_list_date_to%') order by id desc limit $index, $page_size";
     } else {
-        $q = "select * from {$wpdb->prefix}edugorilla_lead_contact_log order by id";
+        $q = "select * from {$wpdb->prefix}edugorilla_lead_contact_log order by id desc limit $index, $page_size";
     }
     $leads_datas = $wpdb->get_results($q, 'ARRAY_A');
 
@@ -33,6 +59,15 @@ function form_list()
             $p .= "<option value='$i' selected> $i </option>";
         else
             $p .= "<option value='$i'>$i</option>";
+    }
+
+
+	$lead_sent_p = '';
+	for ($j = 1; $j <= $total_pages; $j++) {
+        if ($j == $current_page)
+            $lead_sent_p .= "<option value='$j' selected> $j </option>";
+        else
+            $lead_sent_p .= "<option value='$j'>$j</option>";
     }
     ?>
     <div class="wrap">
@@ -55,12 +90,12 @@ function form_list()
                         <input type="submit" class="button action" value="OK">
                     </form>
                     <div class="alignright actions bulkactions">
-        
-                        <form name="f10" action="admin.php?page=Listing&current_page=$cpage&page_size=$page_size">
+                        <form name="f10" action="admin.php">
+                        	<input type="hidden" name="page" value="Listing">
                             <label>Page No. </label>
                             <select name="cpage" onchange='this.form.submit();'>
                                 <?php echo $p; ?>
-                            </select>
+                            </select>	
                         </form>
                     </div>
                     <tr>
@@ -146,6 +181,15 @@ function form_list()
           
           		<table class="widefat fixed" cellspacing="0">
                     <thead>
+                    <div class="alignright actions bulkactions">
+                        <form name="f9" action="admin.php">
+                        	<input type="hidden" name="page" value="Listing">
+                            <label>Page No. </label>
+                            <select name="lead_current_page" onchange='this.form.submit();'>
+                                <?php echo $lead_sent_p; ?>
+                            </select>	
+                        </form>
+                    </div>
                     <tr>
                         <th id="cb" class="manage-column column-cb check-column" scope="col">
                         	<input id="cb-select-all-1" style="margin-top:16px;" type="checkbox">
@@ -175,7 +219,7 @@ function form_list()
                     </tfoot>
                     <tbody>
                     <?php
-						$q1 = "select * from {$wpdb->prefix}edugorilla_lead order by id";
+						$q1 = "select * from {$wpdb->prefix}edugorilla_lead order by id desc limit $lead_index, $page_size";
                     	$leads_details = $wpdb->get_results($q1, 'ARRAY_A');
 						foreach($leads_details as $leads_detail)
                         {
