@@ -6,6 +6,8 @@
  * Author: Tarun Kumar and Arvind
  * Author URI: https://github.com/rohitmanglik/lead-marketplace
  **/
+require_once (plugin_dir_path(__FILE__) . 'edugorilla_disp_lead_shortcode.php'); /*for displaying leads */
+
 function create_edugorilla_lead_table()
 {
     global $wpdb;
