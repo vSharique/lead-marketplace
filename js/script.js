@@ -93,9 +93,7 @@ $(document).on('click','#edugorilla_filter',function(){
                 },
          		success: function(data) 
             	{
-                	var cnfbox = "<table class='widefat fixed' align='center' width='100%' border=1><tr><th>Institude Name</th><th>Email(s)</th><th>SMS(s)</th><th>Flag</th></tr>";
-                
-               
+
                 
                 	$("#edugorilla_institute_datas").val(JSON.stringify(data));
                 	
@@ -111,10 +109,16 @@ $(document).on('click','#edugorilla_filter',function(){
                         	$('#save_details_button').attr("onclick","document.details.submit();");
                         }
                     }
-                var temppoints = [];
-                var i= 0;
-               
-                	var points = {lat: parseFloat(20.5937), lng: parseFloat(78.9629)};
+            
+                
+                var address = $("#edugorilla_location option:selected").text().replace("->","");
+                var geocoder =  new google.maps.Geocoder();
+    geocoder.geocode( { 'address': address}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+          		 points = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()};
+            	
+          
+          		var cnfbox = "<table class='widefat fixed' align='center' width='100%' border=1><tr><th>Institude Name</th><th>Email(s)</th><th>SMS(s)</th><th>Flag</th></tr>";
         			 	var map = new google.maps.Map(document.getElementById('map'), {
          					 zoom: 4,
         				 	center: points
@@ -142,6 +146,13 @@ $(document).on('click','#edugorilla_filter',function(){
          
 					cnfbox += "</table><center><button id='confirm' onclick='document.details.submit();'>Confirm</button></center>";
                		$("#confirmation").html(cnfbox);
+          
+          
+          
+          }
+        });
+               
+              
                 },
                 error: function(err)
             	{
