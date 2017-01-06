@@ -685,8 +685,7 @@ function edugorilla_shortcode_require(){
  wp_enqueue_script('ajaxlib1','https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js');
  wp_enqueue_script('ajaxlib2','https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js' );
  wp_enqueue_script('bootjs','https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js');
-
- wp_enqueue_style('google_font','https://fonts.googleapis.com/css?family=Roboto' );
+    
  wp_enqueue_style('custom_css',plugins_url('/css/leads_shortcode.css',__FILE__), array(), rand(111,9999), 'all');
 }
 
