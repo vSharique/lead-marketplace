@@ -1,7 +1,7 @@
 <?php
 $appear='';
 
-class lead{
+class Lead_Card{
 
 	private $name,$location,$category,$query;
 
@@ -44,13 +44,12 @@ class lead{
 	public function edu_shortcode($appear){
 		$final_rend=
 		'<div class="container col-lg-12">'.$GLOBALS['appear'].'</div>';
-		
 		return $final_rend;
 	}
 
 }
 
-$shrt_code=new lead('Rohit','Lucknow','CEO','Nirvana');
+$shrt_code=new Lead_Card('Rohit','Lucknow','CEO','Nirvana');
 
 add_shortcode('edugorilla_leads', array($shrt_code,'edu_shortcode' ));
 

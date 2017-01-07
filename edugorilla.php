@@ -2,11 +2,11 @@
 /**
  * Plugin Name: Lead Marketplace
  * Description: A platform to manage all the leads on Website.
- * Version: Pre release
- * Author: Tarun Kumar and Arvind
+ * Version: Alpha release
+ * Author: EduGorilla Tech Team
  * Author URI: https://github.com/rohitmanglik/lead-marketplace
  **/
-require_once (plugin_dir_path(__FILE__) . 'edugorilla_disp_lead_shortcode.php'); /*for displaying leads */
+require_once (plugin_dir_path(__FILE__) . 'frontend/edugorilla_disp_lead_shortcode.php'); /*for displaying leads */
 
 function create_edugorilla_lead_table()
 {
