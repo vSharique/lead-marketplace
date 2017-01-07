@@ -3,20 +3,11 @@
  */
 (function(angular) {
     'use strict';
-    angular.module('learnAngular', [])
-        .controller('postExample', ['$scope', function($scope) {
-            $scope.post = {
-                title: 'Enter Title'
-            };
-
-            $scope.submit = function(){
-                alert( 'save');
-            }
-        }]).controller('postsExample', ['$scope', function($scope) {
-        $scope.posts = [
-            { title: 'Post One' },
-            { title: 'Post Two' }
+    angular.module('leadPortalModule', [])
+        .controller('leadsFromAPI', ['$scope', function($scope) {
+        $scope.cards = [
+            { Name: 'Rohit', Location: 'Lucknow', Category: 'CEO', Query: 'Nirvana'},
+            { Name: 'Anantharam', Location: 'Chennai', Category: 'CTO', Query: 'Relationship' }
         ];
-
     }]);
 })(window.angular);
