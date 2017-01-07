@@ -501,7 +501,7 @@ function edugorilla()
                     </th>
                     <td>
 
-                        <a id="save_details_button" disabled href="#confirmation"  class="button button-primary">Send Details</a>
+                        <a id="save_details_button" disabled href="#confirmation"  class="button button-primary">Save Details</a>
                     </td>
                 </tr>
             </table>

@@ -112,15 +112,27 @@ $(document).on('click','#edugorilla_filter',function(){
             
                 
                 var address = $("#edugorilla_location option:selected").text().replace("->","");
+                
                 var geocoder =  new google.maps.Geocoder();
     geocoder.geocode( { 'address': address}, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
-          		 points = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()};
-            	
+          	var points;
+          	var zoom;
+          		if(results[0].formatted_address == "Select Staffing, 969 N Grand Ave, Covina, CA 91724, USA")
+                {
+          			points = {lat: parseFloat(0), lng: parseFloat(0)};
+                	zoom = 1;
+                }
+          		else
+                {
+                	points = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()};
+                	zoom = 5;
+                }
+                alert(JSON.stringify(points));
           
           		var cnfbox = "<table class='widefat fixed' align='center' width='100%' border=1><tr><th>Institude Name</th><th>Email(s)</th><th>SMS(s)</th><th>Flag</th></tr>";
         			 	var map = new google.maps.Map(document.getElementById('map'), {
-         					 zoom: 4,
+         					 zoom: zoom,
         				 	center: points
        				 	});
                 
