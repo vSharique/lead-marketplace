@@ -6,7 +6,7 @@
  * Author: EduGorilla Tech Team
  * Author URI: https://github.com/rohitmanglik/lead-marketplace
  **/
-require_once (plugin_dir_path(__FILE__) . 'frontend/edugorilla_disp_lead_shortcode.php'); /*for displaying leads */
+require_once (plugin_dir_path(__FILE__) . 'frontend/class-Lead-Card.php'); /*for displaying leads */
 
 function create_edugorilla_lead_table()
 {
@@ -558,6 +558,28 @@ function script()
 
 add_action('admin_enqueue_scripts', 'script', 2000);
 
+function styles_and_scripts() {
+
+    wp_enqueue_style( 'estilos', get_bloginfo('template_directory').'/library/css/main.css' );
+
+    wp_enqueue_script( 'navigation', get_bloginfo('template_directory').'/library/js/main.js', array(), '1.0', true );
+    wp_enqueue_script( 'jQuery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js', array(), '1.11.0', false );
+
+
+    // ENQUEUE ANGULAR JS
+
+    // Register AngularJS
+    wp_register_script('angular-core', get_stylesheet_directory_uri() . '/library/js/libs/angular.min.js', array(), '1.4.4', false );
+
+    // Register our app.js, which has a dependency on angular-core
+    wp_register_script('angular-app', get_bloginfo('template_directory').'/angular/app.js', array('angular-core'), null, false);
+
+    // Enqueue all scripts
+    wp_enqueue_script('angular-core');
+    wp_enqueue_script('angular-app');
+
+}
+add_action( 'wp_enqueue_scripts', 'styles_and_scripts', 2000 );
 
 function edugorilla_show_location()
 {
@@ -689,6 +711,12 @@ function edugorilla_shortcode_require(){
  wp_enqueue_script('bootjs','https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js');
     
  wp_enqueue_style('custom_css',plugins_url('/css/lead-market-place-frontend.css',__FILE__), array(), rand(111,9999), 'all');
+
+    wp_enqueue_script(
+        'angular-leads-script',                         // Handle
+        plugins_url('/frontend/js/lead-portal.js', __FILE__),  // Path to file
+        array('angular-app')                             // Dependancies
+    );
 }
 
 add_action('wp_enqueue_scripts', 'edugorilla_shortcode_require' );
