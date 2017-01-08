@@ -251,6 +251,12 @@ function form_list()
                             <th class="check-column" scope="row"><input id="cb-select-all-1" type="checkbox" name="check_list[]"
                                                                         value="<?php echo $leads_detail['id']; ?>"></th>
                             <td class="column-columnname"><?php echo  $leads_detail['name']; ?>
+                                <div class="row-actions">
+                            	 	<span><a href="admin.php?page=edugorilla-edit-lead&iid=<?php echo $leads_detail['id']; ?>">
+                                            Edit</a> | </span>
+                                    <span><a href="admin.php?page=edugorilla-delete-lead&iid=<?php echo $leads_detail['id']; ?>">
+                                            Delete</a> | </span>
+                            	</div>
                             </td>
                             <td class="column-columnname"><?php echo $leads_detail['contact_no']; ?></td>
                             <td class="column-columnname"><?php echo $leads_detail['email']; ?></td>

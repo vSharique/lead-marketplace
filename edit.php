@@ -1,143 +1,66 @@
 <?php
 
-function edugorilla_promotion_sent_edit(){
-    	$promotion_sent_edit_form = $_POST['promotion_sent_edit_form'];
+function edugorilla_lead_edit(){
+    	$lead_edit_form = $_POST['lead_edit_form'];
 
-    if ($promotion_sent_edit_form == "self") {
+    if ($lead_edit_form == "self") 
+    {
         /** Get Data From Form **/
-        $contact_person_name = $_POST['contact_person_name'];
-        $email_address= $_POST['email_address'];
+        $lead_name = $_POST['lead_name'];
+        $lead_email= $_POST['lead_email'];
+    	$lead_contact_no = $_POST['lead_contact_no'];
+        $lead_query= $_POST['lead_query'];
         $iid = $_POST['iid'];
 
         /** Error Checking **/
         $errors = array();
-        if (empty($contact_person_name)) $errors['contact_person_name'] = "Empty";
-        elseif (!preg_match("/([A-Za-z]+)/", $contact_person_name)) $errors['contact_person_name'] = "Invalid";
     
-        if (empty($email_address)) $errors['email_address'] = "Empty";
-        else
+    	if(empty($lead_name)) $errors['lead_name'];
+    	if(empty($lead_email)) $errors['lead_email'];
+    	if(empty($lead_contact_no)) $errors['lead_contact_no'];
+    	if(empty($lead_query)) $errors['lead_query'];
+        
+    	if(empty($errors))
         {
-        	$emails = explode(",",$email_address);
-        	if(count($emails) > 1)
-            {
-            	foreach($emails as $email)
-                {
-                	$email = trim($email);
-        			if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) $errors['email_address'] = "Invalid";
-                }
-            }
-        	elseif (filter_var($email_address, FILTER_VALIDATE_EMAIL) === false) $errors['email_address'] = "Invalid";
-        }
-
-        if (empty($errors)) {
-            $institute_emails_status = array();
-
-            $edugorilla_email = get_option('edugorilla_email_setting1');
-
-        	$edugorilla_email_body = stripslashes($edugorilla_email['body']);
-        
-        	global $wpdb;
-        	$q = "select * from {$wpdb->prefix}edugorilla_lead where id=$iid";
-            $leads_details = $wpdb->get_results($q, 'ARRAY_A');
-			foreach($leads_details as $leads_detail);
-        	$contact_log_id = $leads_detail['contact_log_id'];
-        	$email_listing_url = $leads_detail['listing_url'];
-        
-        	$q1 = "select * from {$wpdb->prefix}edugorilla_lead_contact_log where id=$contact_log_id";
-            $email_details = $wpdb->get_results($q1, 'ARRAY_A');
-			foreach($email_details as $email_detail);
-        	$email_name = $email_detail['name'];
-        	$email_contact_no = $email_detail['contact_no'];
-        	$email_lead_email = $email_detail['email'];
-        	$email_query = $email_detail['query'];
-
-        if(!empty($email_detail['category_id']))
-        {
-        	$category_names = array();
-            $term_ids = explode(",", $email_detail['category_id']);
-            echo count($term_ids);
-            if (!empty($term_ids)) {
-                foreach ($term_ids as $index => $term_id) {
-                   $category_data = get_term_by('id', $term_id, 'listing_categories');
-                   $category_names[] = $category_data->name;
-                }
-            	 $email_category = implode(",",$category_names);
-             }else $email_category = "N/A";
-        	
-        }else $email_category = "N/A";  
-        
-        	if (!empty($email_detail['location_id'])) {
-        		$location_data = get_term_by('id', $email_detail['location_id'], 'locations');
-        		$email_location = $location_data->name;
-            }else
-            {
-            	$email_location = "N/A";
-            }
-
-            $edugorilla_email_subject = str_replace("{category}",$email_category , $edugorilla_email['subject']);
-            $email_template_datas = array(
-            								"{Contact_Person}"=> ucwords($contact_person_name),
-            								"{category}" => $email_category,
-            								"{location}"=> $email_location,
-            								"{listing_URL}"=>$email_listing_url,
-            								"{name}"=>$email_name,
-            								"{contact no}"=>$email_contact_no,
-            								"{email address}"=>$email_lead_email,
-            								"{query}" => $email_query
-            							);
-        	
-            		foreach($email_template_datas as $var=>$email_template_data)
-           			{
-                		$edugorilla_email_body = str_replace($var, $email_template_data, $edugorilla_email_body);
-            		}
-                
-                
-					$institute_emails = explode(",", $email_address);
-					foreach ($institute_emails as $institute_email) {
-						add_filter('wp_mail_content_type', 'edugorilla_html_mail_content_type');
-
-						if (!empty($institute_email))
-							$institute_emails_status[$institute_email] = wp_mail($institute_email, $edugorilla_email_subject, $edugorilla_email_body);
-
-						remove_filter('wp_mail_content_type', 'edugorilla_html_mail_content_type');
-					}
-				
             	global $wpdb;
                 $result = $wpdb->update(
                     $wpdb->prefix . 'edugorilla_lead',
                     array(
-                        'contact_person' => $contact_person_name,
-                        'email_status' => json_encode($institute_emails_status),
+                        'name' => $lead_name,
+                    	'contact_no' => $lead_contact_no,
+                    	'email' => $lead_email,
+                    	'query' => $lead_query
                     ),
                 	array( 'id' =>  $iid)
                 );
 
-			}
 
             if ($result)
             {
-                $success = "Mail Resended Successfully";
+                $success = "Updated Successfully";
             }
             else $success = $result;
-
-            //	foreach($_REQUEST as $var=>$val)$$var="";
         }
-    	else
-        {
+
+           
+    }
+    else
+    {
         	global $wpdb;
         	$iid = $_REQUEST['iid'];
         	$q = "select * from {$wpdb->prefix}edugorilla_lead where id=$iid";
             $leads_details = $wpdb->get_results($q, 'ARRAY_A');
 			foreach($leads_details as $leads_detail);
-        	$contact_person_name = $leads_detail['contact_person'];
-            $emails = json_decode($leads_detail['email_status'],1);
-        	$email_address = implode(",",array_keys($emails));
+        	$lead_name = $leads_detail['name'];
+        	$lead_email= $leads_detail['contact_no'];
+    		$lead_contact_no = $leads_detail['email'];
+        	$lead_query= $leads_detail['query'];
         	
-        }
+     }
     ?>
    
     <div class="wrap">
-        <h1>EduGorilla Leads</h1>
+        <h1>EduGorilla Edit Lead</h1>
         <?php
         if ($success) {
             ?>
@@ -152,25 +75,38 @@ function edugorilla_promotion_sent_edit(){
                 <tr>
                     <th>Name<sup><font color="red">*</font></sup></th>
                     <td>
-                        <input name="contact_person_name" value="<?php echo $contact_person_name; ?>" placeholder="Type name here...">
-                        <font color="red"><?php echo $errors['contact_person_name']; ?></font>
+                        <input name="lead_name" value="<?php echo $lead_name; ?>" placeholder="Type name here...">
+                        <font color="red"><?php echo $errors['lead_name']; ?></font>
                     </td>
                 </tr>
                 <tr>
                     <th>Email<sup><font color="red">*</font></sup></th>
                     <td>
-                        <input id="edu_email" name="email_address" value="<?php echo $email_address; ?>" placeholder="Type multiple email(abc@exp.com,cde@abc.co,......)">
-                        <font color="red"><?php echo $errors['email_address']; ?></font>
+                        <input name="lead_email" value="<?php echo $lead_email; ?>" placeholder="Type email(abc@exp.com)">
+                        <font color="red"><?php echo $errors['lead_email']; ?></font>
+                    </td>
+                </tr>
+            	<tr>
+                    <th>Contact No.<sup><font color="red">*</font></sup></th>
+                    <td>
+                        <input name="lead_contact_no" value="<?php echo $lead_contact_no; ?>" placeholder="Type Contact No.">
+                        <font color="red"><?php echo $errors['lead_contact_no']; ?></font>
+                    </td>
+                </tr>
+            	<tr>
+                    <th>Query<sup><font color="red">*</font></sup></th>
+                    <td>
+                    	<textarea name="lead_query" placeholder="Type Query"><?php echo $lead_query; ?></textarea>
+                        <font color="red"><?php echo $errors['lead_query']; ?></font>
                     </td>
                 </tr>
                 <tr>
                     <th>
                     	<input type="hidden" name="iid" value="<?php echo $_REQUEST['iid']; ?>" >
-                        <input type="hidden" name="promotion_sent_edit_form" value="self">
+                        <input type="hidden" name="lead_edit_form" value="self">
                     </th>
                     <td>
-                    	<input type="submit" value="Resend Details" class="button button-primary">
-                        <!--<a id="update_details_button" disabled href="#confirmation"  class="button button-primary">Resend Details</a>-->
+                    	<input type="submit" value="Update" class="button button-primary">
                     </td>
                 </tr>
             </table>

@@ -142,23 +142,24 @@ function create_edugorilla_menus()
         'edugorilla_email_setting'
     );
 
-     add_submenu_page(
-        '',
-        'Lead Marketplace | Edit Promotion sent',
-        'Promotion Sent Edit',
-        'read',
-        'edugorilla-edit-promotion-sent',
-        'edugorilla_promotion_sent_edit'
-    );
-
     add_submenu_page(
         '',
-        'Lead Marketplace | View Promotion sent',
-        'Promotion Sent View',
+        'Lead Marketplace | Edit Lead',
+        'Promotion Sent Edit',
         'read',
-        'edugorilla-view-promotion-sent',
-        'edugorilla_promotion_sent_view'
+        'edugorilla-edit-lead',
+        'edugorilla_lead_edit'
     );
+
+	add_submenu_page(
+        '',
+        'Lead Marketplace | Delete Lead',
+        'View Lead',
+        'read',
+        'edugorilla-delete-lead',
+        'edugorilla_lead_delete'
+    );
+    
     
     add_submenu_page(
         'edugorilla',
