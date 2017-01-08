@@ -7,8 +7,8 @@ class Custom_Lead_API extends WP_REST_Controller {
      */
     public function register_routes() {
         $version = '1';
-        $namespace = 'vendor/v' . $version;
-        $base = 'route';
+        $namespace = 'marketplace/v' . $version;
+        $base = 'leads';
         register_rest_route( $namespace, '/' . $base, array(
             array(
                 'methods'         => WP_REST_Server::READABLE,
@@ -57,6 +57,31 @@ class Custom_Lead_API extends WP_REST_Controller {
             'methods'         => WP_REST_Server::READABLE,
             'callback'        => array( $this, 'get_public_item_schema' ),
         ) );
+        register_rest_route( $namespace, '/' . $base . '/details', array(
+            'methods'         => WP_REST_Server::READABLE,
+            'callback'        => array( $this, 'get_lead_details' ),
+        ) );
+    }
+
+    /**
+     * Get details of all the leads
+     *
+     * @param WP_REST_Request $request Full data about the request.
+     * @return WP_Error|WP_REST_Response
+     */
+    public function get_lead_details( $request ) {
+        $data_object=new Lead_Card('Anantharam','Chennai','CTO','Life');
+
+        // Create the response object
+        $response = new WP_REST_Response( $data_object );
+
+        // Add a custom status code
+        $response->set_status( 201 );
+
+        // Add a custom header
+        $response->header( 'Location', 'http://example.com/' );
+
+        return $response;
     }
 
     /**

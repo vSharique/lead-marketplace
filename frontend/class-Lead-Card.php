@@ -1,7 +1,7 @@
 <?php
 $appear='';
 
-class Lead_Card{
+class Lead_Card implements JsonSerializable{
 
 	private $name,$location,$category,$query;
 
@@ -10,21 +10,57 @@ class Lead_Card{
 		$this->create_card($name, $location, $category, $query);
 	}
 
-	public function print_lead(){
-		echo $this->name.' '.$this->location;
-	}
+    public function getName() {
+        return $this->name;
+    }
+    public function setName($x) {
+        $this->name = $x;
+    }
+    public function getLocation() {
+        return $this->location;
+    }
+    public function setLocation($x) {
+        $this->location = $x;
+    }
 
-	private function create_card($name, $location, $category, $query)
+    public function getCategory() {
+        return $this->category;
+    }
+    public function setCategory($x) {
+        $this->category = $x;
+    }
+
+    public function getQuery() {
+        return $this->query;
+    }
+    public function setQuery($x) {
+        $this->query = $x;
+    }
+
+	private function create_card($_name, $_location, $_category, $_query)
 	{
-		global $appear;
-		$appear .= '';
+        $this->setName($_name);
+        $this->setLocation($_location);
+        $this->setCategory($_category);
+        $this->setQuery($_query);
 	}
 
 	public function edu_shortcode($appear){
-		$final_rend= ''.$GLOBALS['appear'].'';
         include 'html/lead-portal.html';
-		return $final_rend;
+		return null;
 	}
+
+    public function jsonSerialize()
+    {
+        return [
+            'lead_card' => [
+                'name' => $this->getName(),
+                'location' => $this->getLocation(),
+                'category' => $this->getCategory(),
+                'query' => $this->getQuery()
+            ]
+        ];
+    }
 
 }
 
