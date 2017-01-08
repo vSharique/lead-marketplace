@@ -4,11 +4,21 @@ $appear = '';
 class Lead_Card implements JsonSerializable
 {
 
-	private $name, $location, $category, $query;
+	private $name, $location, $category, $query, $isHidden;
 
-	function __construct($name, $location, $category, $query)
+	function __construct($name, $location, $category, $query, $isHidden = false)
 	{
-		$this->create_card($name, $location, $category, $query);
+		$this->create_card($name, $location, $category, $query, $isHidden);
+	}
+
+	public function isHidden()
+	{
+		return $this->isHidden;
+	}
+
+	public function setHidden($x)
+	{
+		$this->isHidden = $x;
 	}
 
 	public function getName()
@@ -51,12 +61,13 @@ class Lead_Card implements JsonSerializable
 		$this->query = $x;
 	}
 
-	private function create_card($_name, $_location, $_category, $_query)
+	private function create_card($_name, $_location, $_category, $_query, $_isHidden)
 	{
 		$this->setName($_name);
 		$this->setLocation($_location);
 		$this->setCategory($_category);
 		$this->setQuery($_query);
+		$this->setHidden($_isHidden);
 	}
 
 	public function edu_shortcode($appear)
@@ -72,7 +83,8 @@ class Lead_Card implements JsonSerializable
 				'name' => $this->getName(),
 				'location' => $this->getLocation(),
 				'category' => $this->getCategory(),
-				'query' => $this->getQuery()
+				'query' => $this->getQuery(),
+				'isHidden' => $this->isHidden()
 			]
 		];
 	}

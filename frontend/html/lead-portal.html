@@ -11,19 +11,19 @@
 			<!-- <input type="checkbox" checked data-toggle="toggle" name="show_all">Show All</br> -->
 			<div class="show_hidden">
 				<label class="switch">
-					<input type="checkbox">
+					<input type="checkbox" ng-model="user_hidden">
 					<div class="slider round"></div>
 				</label>
 				<p>Show Hidden</p>
 			</div>
 			<p> Filters: </p>
 			<hr>
-			<input type="text" name="location" placeholder="location" class="input_filter">
-			<input type="text" name="category" placeholder="category" class="input_filter">
+			<input type="text" name="location" placeholder="location" class="input_filter" ng-model="user_location">
+			<input type="text" name="category" placeholder="category" class="input_filter" ng-model="user_category">
 		</div>
 		<div class="container col-sm-8">
 			<div ng-repeat="card in cards" class="repeated-item">
-				<div class="container col-sm-6" id="stamp">
+				<div class="container col-sm-6" id="stamp" ng-if="(user_hidden || !card.isHidden) && (!user_location || card.Location == user_location) && (!user_category || card.Category == user_category)">
 					<div class="contents">
 						<div class="col-sm-12 bgimg">
 							<ul class="card-cont">
@@ -36,9 +36,14 @@
 					<div class="content col-sm-12">
 						<h6>Asks</h6>
 						<p>{{card.Query}}</p>
-						<div class="hide_lead">
-							<button type="submit" class="btn btn-danger">
+						<div class="hide_lead" ng-if="!card.isHidden">
+							<button type="submit" class="btn btn-danger" ng-click="toggle_card_hidden(card)">
 								<i class="fa fa-eye-slash fa-fw"></i> Hide
+							</button>
+						</div>
+						<div class="hide_lead"  ng-if="card.isHidden">
+							<button type="submit" class="btn btn-warning" ng-click="toggle_card_hidden(card)">
+								<i class="fa fa-eye fa-fw"></i> Show
 							</button>
 						</div>
 						<div class="unlock">
