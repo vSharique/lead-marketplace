@@ -708,8 +708,10 @@ function edugorilla_shortcode_require()
 	wp_enqueue_script('ajaxlib2', 'https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js');
 	wp_enqueue_script('bootjs', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js');
 	wp_enqueue_script('angularJs', 'https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js');
+	wp_enqueue_script('angularAnimate', 'https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js');
 
-	wp_enqueue_style('custom_css', plugins_url('/css/lead-market-place-frontend.css', __FILE__), array(), rand(111, 9999), 'all');
+	wp_enqueue_style('custom_css', plugins_url('/frontend/css/lead-market-place-frontend.css', __FILE__), array(), rand(111, 9999), 'all');
+	wp_enqueue_style('custom_css', plugins_url('/frontend/css/lead-portal-animations.css', __FILE__), array(), rand(111, 9999), 'all');
 
 	wp_enqueue_script(
 		'angular-leads-script',                         // Handle

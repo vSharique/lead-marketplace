@@ -3,7 +3,7 @@
  */
 (function (angular) {
 	'use strict';
-	angular.module('leadPortalModule', [])
+	angular.module('leadPortalModule', ['ngAnimate'])
 		.controller('leadsFromAPI', ['$scope', '$http', function ($scope, $http) {
 			$scope.cards = [];
 			$http({
