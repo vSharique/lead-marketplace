@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/lead-marketplace.iml" filepath="$PROJECT_DIR$/.idea/lead-marketplace.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lead-marketplace.iml" filepath="$PROJECT_DIR$/lead-marketplace.iml" />
     </modules>
   </component>
 </project>

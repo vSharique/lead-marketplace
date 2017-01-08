@@ -6,7 +6,8 @@
  * Author: EduGorilla Tech Team
  * Author URI: https://github.com/rohitmanglik/lead-marketplace
  **/
-require_once (plugin_dir_path(__FILE__) . 'frontend/class-Lead-Card.php'); /*for displaying leads */
+require_once (plugin_dir_path(__FILE__) . 'frontend/class-Lead-Card.php'); /*Cards used for displaying leads */
+require_once (plugin_dir_path(__FILE__) . 'frontend/class-Custom-Lead-API.php'); /*API to be used for displaying leads */
 
 function create_edugorilla_lead_table()
 {
