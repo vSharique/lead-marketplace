@@ -620,6 +620,11 @@
 	justify-content: space-around;
 }
 
+.container.col-sm-8{
+  position: relative;
+  left:-20px;
+}
+
 .dis_img{
 		padding: 0px;
 		margin: 0px;
@@ -633,6 +638,10 @@ div.unlock{
 	float:right;
 }
 
+.show_hidden p{
+  display: inline;
+}
+
 .hide_lead{
 	padding: 0px;
 	margin:0px;
@@ -640,8 +649,32 @@ div.unlock{
 	top:70px;
 }
 
+hr{
+  margin:10px;
+}
+
+.input_filter{
+  margin: 5px;
+  height: 25px;
+}
+
+input[type="text"]{
+  height: 30px;
+  border-radius: 10px;
+  border-color: lightgreen;
+}
+
 .lead_hide{
 	top:100px;
+}
+
+.lead_sidebar{
+  /*display: inline;*/
+  width: 25%;
+  border-right: 2px solid #ddd;
+  height: 100%;
+  position: relative;
+  left: -20px;
 }
 
 .query{
@@ -650,7 +683,7 @@ div.unlock{
 }
 
 #stamp{
-	margin:10px;
+	margin:8px;
 	padding: 0px;
 	max-width: 230px;
 	min-width: 200px;
@@ -668,4 +701,66 @@ ul.card-cont{
 	top:5px;
 	padding: 0px;
 	float: left;
+}
+
+/** slider **/
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 20px;
+  top:10px;
+  margin: 5px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: -7px;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 17px;
+  width: 17px;
+  left: 0px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }
