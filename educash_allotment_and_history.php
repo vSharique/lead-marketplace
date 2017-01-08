@@ -115,15 +115,24 @@ function educash_deals_form_page()
                 $sum = $sum + $educash_add;
                 if($sum<0){$sum = 0;}
             }
+        $edugorilla_email_datas = get_option('edugorilla_email_setting2');
+        $edugorilla_email_datas2 = get_option('edugorilla_email_setting3');
+        $arr1 = array("{Contact_Person}", "{ReceivedCount}", "{EduCashCount}", "{EduCashUrl}", "<pre>", "</pre>", "<code>", "</code>", "<b>", "</b>");
+        $arr2 = array($client_display_name, $educash, $sum, "https://edugorilla.com/", "", "", "", "", "", "");
+        $arr3 = array($client_display_name, $negative_educash, $sum, "https://edugorilla.com/", "", "", "", "", "", "");
+        $positive_email_subject = $edugorilla_email_datas['subject'];
+        $positive_email_body = str_replace($arr1, $arr2, $edugorilla_email_datas['body']);
+        $negative_email_subject = $edugorilla_email_datas2['subject'];
+        $negative_email_body = str_replace($arr1, $arr3, $edugorilla_email_datas2['body']);
         $to = $clientName;
         if($educash>0){
-        $subject = $edugorilla_email_subject2;
-        $message =  $edugorilla_email_body2;
+        $subject =  $positive_email_subject;
+        $message =  $positive_email_body;
         }
         else{
-        $subject = $edugorilla_email_subject3;
+        $subject =  $negative_email_subject;
         $negative_educash = $educash*(-1);
-        $message =  $edugorilla_email_body3;
+        $message =  $negative_email_body;
         }
         wp_mail( $to, $subject, $message );
         $r = $wpdb->get_row("SELECT * FROM $table_name3 WHERE time = '$time' ");
