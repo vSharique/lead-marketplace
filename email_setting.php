@@ -9,7 +9,7 @@ function edugorilla_email_setting()
           <ul>
             <li><a href="#tabs-1">Lead Received</a></li>
             <li><a href="#tabs-2">EduCash Added</a></li>
-            <li><a href="#tabs-3">Educash Deducted</a></li>
+            <li><a href="#tabs-3">EduCash Deducted</a></li>
             <li><a href="#tabs-4">Tab 4</a></li>
             <li><a href="#tabs-5">Tab 5</a></li>
           </ul>
