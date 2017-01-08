@@ -1,56 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+	<meta charset="UTF-8">
+	<title>Title</title>
 </head>
 <body>
-<div class="lead_page col-lg-12">
-    <div class="lead_sidebar col-sm-4">
-        <!-- <input type="checkbox" checked data-toggle="toggle" name="show_all">Show All</br> -->
-        <div class="show_hidden">
-           <label class="switch">
-              <input type="checkbox">
-              <div class="slider round"></div>
-            </label>
-            <p>Show Hidden</p>
-        </div>
-        <p> Filters: </p>
-        <hr>
-        <input type="text" name="location" placeholder="location" class="input_filter">
-        <input type="text" name="category" placeholder="category" class="input_filter">
-    </div>
-<div class="container col-sm-8" ng-app="leadPortalModule">
-    <div ng-controller="leadsFromAPI">
-        <div ng-repeat="card in cards">
-            <div class="container col-sm-6" id="stamp">
-                <div class="contents">
-                    <div class="col-sm-12 bgimg">
-                        <ul class="card-cont">
-                            <li><i class="fa fa-user fa-fw" aria-hidden="true"></i>{{card.Name}}</li>
-                            <li><i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>{{card.Location}}</li>
-                            <li><i class="fa fa-tag fa-fw" aria-hidden="true"></i>{{card.Category}}</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="content col-sm-12">
-                    <h6>Asks</h6>
-                    <p>{{card.Query}}</p>
-                    <div class="hide_lead">
-                        <button type="submit" class="btn btn-danger">
-                            <i class="fa fa-eye-slash fa-fw"></i> Hide
-                        </button> 
-                    </div>
-                    <div class="unlock">
-                        <button type="submit" class="btn btn-success">
-                            <i class="fa fa-unlock-alt fa" aria-hidden="true">
-                             Unlock</i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
- </div>
+<div class="lead_page col-lg-12" ng-app="leadPortalModule">
+	<div ng-controller="leadsFromAPI">
+		<div class="lead_sidebar col-sm-4">
+			<!-- <input type="checkbox" checked data-toggle="toggle" name="show_all">Show All</br> -->
+			<div class="show_hidden">
+				<label class="switch">
+					<input type="checkbox">
+					<div class="slider round"></div>
+				</label>
+				<p>Show Hidden</p>
+			</div>
+			<p> Filters: </p>
+			<hr>
+			<input type="text" name="location" placeholder="location" class="input_filter">
+			<input type="text" name="category" placeholder="category" class="input_filter">
+		</div>
+		<div class="container col-sm-8">
+			<div ng-repeat="card in cards">
+				<div class="container col-sm-6" id="stamp">
+					<div class="contents">
+						<div class="col-sm-12 bgimg">
+							<ul class="card-cont">
+								<li><i class="fa fa-user fa-fw" aria-hidden="true"></i>{{card.Name}}</li>
+								<li><i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>{{card.Location}}</li>
+								<li><i class="fa fa-tag fa-fw" aria-hidden="true"></i>{{card.Category}}</li>
+							</ul>
+						</div>
+					</div>
+					<div class="content col-sm-12">
+						<h6>Asks</h6>
+						<p>{{card.Query}}</p>
+						<div class="hide_lead">
+							<button type="submit" class="btn btn-danger">
+								<i class="fa fa-eye-slash fa-fw"></i> Hide
+							</button>
+						</div>
+						<div class="unlock">
+							<button type="submit" class="btn btn-success">
+								<i class="fa fa-unlock-alt fa" aria-hidden="true">
+									Unlock</i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 </body>
 </html>
