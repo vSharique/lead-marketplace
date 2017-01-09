@@ -104,7 +104,7 @@ function educash_deals_form_page()
     $client_display_name = $wpdb->get_var("SELECT display_name FROM $users_table WHERE user_email = '$clientName' ");
     if ($_POST['submit'] && (!empty($_POST['clientName'])) && (!empty($_POST['educash'])) && (!($check_client == 0))) {
         if($final_total<0){
-           echo "<center><span style='color:red; position:absolute; top:400px;'>The total balance that the client ".$_POST['clientName']." has
+           echo "<center><span style='color:red;'>The total balance that the client ".$_POST['clientName']." has
                  is ".$total. ". Your entry will leave this client with negative amount of educash which is not allowed.</span></center>";
         }
         else{
@@ -118,20 +118,20 @@ function educash_deals_form_page()
         $edugorilla_email_datas = get_option('edugorilla_email_setting2');
         $edugorilla_email_datas2 = get_option('edugorilla_email_setting3');
         $arr1 = array("{Contact_Person}", "{ReceivedCount}", "{EduCashCount}", "{EduCashUrl}", "<pre>", "</pre>", "<code>", "</code>", "<b>", "</b>");
-        $arr2 = array($client_display_name, $educash, $sum, "https://edugorilla.com/", "", "", "", "", "", "");
-        $arr3 = array($client_display_name, $negative_educash, $sum, "https://edugorilla.com/", "", "", "", "", "", "");
-        $positive_email_subject = $edugorilla_email_datas['subject'];
-        $positive_email_body = str_replace($arr1, $arr2, $edugorilla_email_datas['body']);
-        $negative_email_subject = $edugorilla_email_datas2['subject'];
-        $negative_email_body = str_replace($arr1, $arr3, $edugorilla_email_datas2['body']);
         $to = $clientName;
         if($educash>0){
+        $positive_email_subject = $edugorilla_email_datas['subject'];
         $subject =  $positive_email_subject;
+        $arr2 = array($client_display_name, $educash, $sum, "https://edugorilla.com/", "", "", "", "", "", "");
+        $positive_email_body = str_replace($arr1, $arr2, $edugorilla_email_datas['body']);
         $message =  $positive_email_body;
         }
         else{
+        $negative_email_subject = $edugorilla_email_datas2['subject'];
         $subject =  $negative_email_subject;
         $negative_educash = $educash*(-1);
+        $arr3 = array($client_display_name, $negative_educash, $sum, "https://edugorilla.com/", "", "", "", "", "", "");
+        $negative_email_body = str_replace($arr1, $arr3, $edugorilla_email_datas2['body']);
         $message =  $negative_email_body;
         }
         wp_mail( $to, $subject, $message );
