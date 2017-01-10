@@ -1,13 +1,13 @@
 <?php
 
-function send_sms($mobile_no, $msg)
+function send_sms($user_id,$pwd,$mobile_no, $msg)
 {
 	$request =""; //initialise the request variable
 	$param[method]= "sendMessage";
 	$param[send_to] = "91".$mobile_no;
 	$param[msg] = $msg;
-	$param[userid] = "20000xxxxx"; //user id
-	$param[password] = "xxxxxxxx"; //pwd
+	$param[userid] = $user_id; //user id
+	$param[password] = $pwd; //pwd
 	$param[v] = "1.1";
 	$param[msg_type] = "TEXT"; //Can be "FLASH”/"UNICODE_TEXT"/”BINARY”
 	$param[auth_scheme] = "PLAIN";

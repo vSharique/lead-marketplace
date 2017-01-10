@@ -171,6 +171,15 @@ function create_edugorilla_menus()
 		'educash_deals_form_page',
 		'educash_deals_form_page'
 	);
+	
+	add_submenu_page(
+		'options-general.php',
+		'Ghupshup Credentials Setting',
+		'Ghupshup Credentials Setting',
+		'manage_options',
+		'ghupshup-credentials',
+		'ghupshup_credentials'
+	);
 }
 
 include_once plugin_dir_path(__FILE__) . "view.php";

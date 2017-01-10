@@ -10,7 +10,8 @@ function edugorilla_otp()
         	include_once plugin_dir_path(__FILE__) . "api/gupshup.api.php";
         	$otp = rand(1000,9999);
         	$msg = "Your OTP is".$otp.".";
-        	$response = send_sms("2000163336","PI65cXYoE",$edugorilla_mno,$msg);
+        	$credentials = get_option("ghupshup_credentials");
+        	$response = send_sms($credentials['user_id'],$credentials['password'],$edugorilla_mno,$msg);
       
         	list($response, $response_code,$response_msg) = explode("|",$response);
         	$response = trim($response);
@@ -51,6 +52,60 @@ function edugorilla_otp()
         </form>
     </div>
     <?php
+}
+
+function ghupshup_credentials()
+{
+    $ghupshup_credentials_form = $_POST['ghupshup_credentials_form'];
+    if($ghupshup_credentials_form == "self")
+    {
+        $ghupshup_user_id = $_POST['ghupshup_user_id'];
+        $ghupshup_pwd = $_POST['ghupshup_pwd'];
+        
+        $errors = array();
+        
+        if(empty($ghupshup_user_id)) $errors['ghupshup_user_id'] = "Empty";
+        if(empty($ghupshup_pwd)) $errors['ghupshup_pwd'] = "Empty";
+        
+        if(empty($errors))
+        {
+            $credentials = array("user_id"=>$ghupshup_user_id, "password" => $ghupshup_pwd);
+            update_option("ghupshup_credentials",$credentials);
+            $success = "Saved Successfully";
+        }
+    }else
+    {
+        $credentials = get_option("ghupshup_credentials");
+        $ghupshup_user_id = $credentials['user_id'];
+        $ghupshup_pwd = $credentials['password'];
+    }
+?>
+    <div class="wrap">
+        <h1>Ghupshup Credentials</h1>
+        <form method="post">
+            <table>
+                <tr>
+                    <th>User ID</th>
+                    <td>
+                        <input name="ghupshup_user_id" value="<?php echo $ghupshup_user_id; ?>">
+                        <font color="red"><?php echo $errors['ghupshup_user_id']; ?></font>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Password</th>
+                    <td>
+                        <input name="ghupshup_pwd" value="<?php echo $ghupshup_pwd; ?>">
+                        <font color="red"><?php echo $errors['ghupshup_pwd']; ?></font>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="hidden" name="ghupshup_credentials_form" value="self"></td>
+                    <td><input type="submit" value="Save"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+<?
 }
 
 ?>
