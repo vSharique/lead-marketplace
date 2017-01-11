@@ -16,10 +16,22 @@
 				</label>
 				<p>Show Hidden</p>
 			</div>
-			<p> Filters: </p>
+			<h6 class="ref_heading"> Refine: </h6>
 			<hr>
-			<input type="text" name="location" placeholder="location" class="input_filter" ng-model="user_location">
-			<input type="text" name="category" placeholder="category" class="input_filter" ng-model="user_category">
+            <h6 class="ref_heading">By Category</h6>
+            <ul class="refine">
+                <a href="#"><li>CAT Coaching <span class="ref_val">({{}})</span></li></a>
+                <a href="#"><li>JEE Coaching <span class="ref_val">({{}})</span></li></a>
+                <a href="#"><li>JAVA Coaching <span class="ref_val">({{}})</span></li></a>
+                <a href="#"><li class="see_more">[+]See More</li></a>
+            </ul>
+            <h6 class="ref_heading">By Location</h6>
+            <ul class="refine">
+                <a href="#"><li>Delhi <span class="ref_val">({{}})</span></li></a>
+                <a href="#"><li>Mumbai <span class="ref_val">({{}})</span></li></a>
+                <a href="#"><li>Bangalore <span class="ref_val">({{}})</span></li></a>
+                <a href="#"><li class="see_more">[+]See More</li></a>
+            </ul>
 		</div>
 		<div class="container col-sm-8">
 			<div ng-repeat="card in cards" class="repeated-item">

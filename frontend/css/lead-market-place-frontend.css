@@ -801,6 +801,10 @@ div.unlock {
 	display: inline;
 }
 
+.show_hidden{
+	margin-bottom:10px;
+}
+
 .hide_lead {
 	padding: 0px;
 	margin: 0px;
@@ -923,4 +927,34 @@ input:checked + .slider:before {
 
 .slider.round:before {
 	border-radius: 50%;
+}
+
+ul.refine{
+	list-style-type: none;
+
+}
+ul.refine a{
+	text-decoration: none;
+	color:grey;
+}
+
+ul.refine a:hover,.see_more:hover{
+	color:#2196F3;
+}
+
+.see_more {
+	position: relative;
+	text-decoration: none;
+	color: grey;
+	font-size: smaller;
+	margin:2px;
+	left:-5px;
+}
+
+.ref_heading{
+	color:grey;
+}
+
+.ref_val{
+	font-size: smaller;
 }
