@@ -82,20 +82,6 @@ EduGorilla Team</div>";
 
 register_activation_hook(__FILE__, 'create_edugorilla_lead_table');
 
-function edugorilla_lead_plugin_uninstall()
-{
-	global $wpdb;
-	$table_name1 = $wpdb->prefix . 'edugorilla_lead';
-	$table_name2 = $wpdb->prefix . 'edugorilla_lead_contact_log';
-	$table_name3 = $wpdb->prefix . 'educash_deals';
-	$wpdb->query("DROP TABLE IF EXISTS $table_name1");
-	$wpdb->query("DROP TABLE IF EXISTS $table_name2");
-	$wpdb->query("DROP TABLE IF EXISTS $table_name3");
-}//end pluginUninstall function
-
-//hook into WordPress when its being deactivated:
-register_deactivation_hook(__FILE__, 'edugorilla_lead_plugin_uninstall');
-
 add_action("admin_menu", "create_edugorilla_menus");
 
 function create_edugorilla_menus()
