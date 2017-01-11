@@ -40,7 +40,7 @@ function create_edugorilla_lead_table()
 
 
 	$table_name3 = $wpdb->prefix . 'educash_deals'; //Defining a table name.
-	$sql3 = "CREATE TABLE $table_name3 (     
+    $sql3 = "CREATE TABLE $table_name3 (
                                             id mediumint(9) NOT NULL AUTO_INCREMENT,
                                             admin_id int(9) NOT NULL,
                                             client_id int(9) NOT NULL,
@@ -171,8 +171,8 @@ function create_edugorilla_menus()
 		'educash_deals_form_page',
 		'educash_deals_form_page'
 	);
-	
-	add_submenu_page(
+
+    add_submenu_page(
 		'options-general.php',
 		'Ghupshup Credentials Setting',
 		'Ghupshup Credentials Setting',
@@ -564,30 +564,6 @@ function script()
 
 add_action('admin_enqueue_scripts', 'script', 2000);
 
-function styles_and_scripts()
-{
-
-	wp_enqueue_style('estilos', get_bloginfo('template_directory') . '/library/css/main.css');
-
-	wp_enqueue_script('navigation', get_bloginfo('template_directory') . '/library/js/main.js', array(), '1.0', true);
-	wp_enqueue_script('jQuery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js', array(), '1.11.0', false);
-
-
-	// ENQUEUE ANGULAR JS
-
-	// Register AngularJS
-	wp_register_script('angular-core', get_stylesheet_directory_uri() . '/library/js/libs/angular.min.js', array(), '1.4.4', false);
-
-	// Register our app.js, which has a dependency on angular-core
-	wp_register_script('angular-app', get_bloginfo('template_directory') . '/angular/app.js', array('angular-core'), null, false);
-
-	// Enqueue all scripts
-	wp_enqueue_script('angular-core');
-	wp_enqueue_script('angular-app');
-
-}
-
-add_action('wp_enqueue_scripts', 'styles_and_scripts', 2000);
 
 function edugorilla_show_location()
 {
