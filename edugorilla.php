@@ -7,7 +7,7 @@
  * Author URI: https://github.com/rohitmanglik/lead-marketplace
  **/
 require_once(plugin_dir_path(__FILE__) . 'frontend/class-Lead-Card.php'); /*Cards used for displaying leads */
-require_once(plugin_dir_path(__FILE__) . 'frontend/class-Custom-Lead-API.php'); /*API to be used for displaying leads */
+//require_once(plugin_dir_path(__FILE__) . 'frontend/class-Custom-Lead-API.php'); /*API to be used for displaying leads */
 
 function create_edugorilla_lead_table()
 {
@@ -59,9 +59,9 @@ function create_edugorilla_lead_table()
 	$email_subject = "New Lead from EduGorilla: {category}";
 	$email_body = "<b>Dear {Contact_Person},</b>
 <br>
-<p>In EduGorilla, India\'s largest Education Community, one student has inquired about {category} in {location}</p>
+<p>In EduGorilla, India\'s Largest Education Community, One Student Has Inquired About {category} In {location}</p>
 <br>
-<p>Your Institute is listed in before mentioned category on our site. Your listing URL: {listing_URL}</p>
+<p>Your Institute Is Listed In before Mentioned Category On Our Site. Your Listing URL: {listing_URL}</p>
 <br>
 <p>Student\'s Details:<p>
 <p><b>Name:</b> {name}</br>
@@ -69,8 +69,8 @@ function create_edugorilla_lead_table()
 <b>E-Mail Address:</b> {email address}</br>
 <b>Full Query:</b> {query}</p>
 <br>
-<p>Please get in touch with the student.</p>
-<p>Feel free to contact me if you have any queries</p>
+<p>Please Get In Touch With The Student.</p>
+<p>Feel Free To Contact Me if You have Any Queries</p>
 <br>
 <b>Regards</b>
 <div>Priyanka Kapoor</br>
@@ -159,12 +159,12 @@ function create_edugorilla_menus()
 	);
 
     add_submenu_page(
-		'options-general.php',
-		'Ghupshup Credentials Setting',
-		'Ghupshup Credentials Setting',
+		'edugorilla',
+		'Settings',
+		'Settings',
 		'manage_options',
-		'ghupshup-credentials',
-		'ghupshup_credentials'
+		'edugorilla-settings',
+		'edugorilla_settings'
 	);
 }
 

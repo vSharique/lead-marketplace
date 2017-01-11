@@ -54,7 +54,7 @@ function edugorilla_otp()
     <?php
 }
 
-function ghupshup_credentials()
+function edugorilla_settings()
 {
     $ghupshup_credentials_form = $_POST['ghupshup_credentials_form'];
     if($ghupshup_credentials_form == "self")
@@ -100,12 +100,11 @@ function ghupshup_credentials()
                 </tr>
                 <tr>
                     <td><input type="hidden" name="ghupshup_credentials_form" value="self"></td>
-                    <td><input type="submit" value="Save"></td>
+                    <td><input type="submit" class="button button-primary" value="Save"></td>
                 </tr>
             </table>
         </form>
     </div>
-<?
+<?php
 }
-
 ?>

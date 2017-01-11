@@ -93,8 +93,6 @@ $(document).on('click','#edugorilla_filter',function(){
                 },
          		success: function(data) 
             	{
-
-                
                 	$("#edugorilla_institute_datas").val(JSON.stringify(data));
                 	
                 	 if($("#edu_name").val() !== "" && $("#edu_email").val() !== "" && $("#edu_contact_no").val() !== "" && $("#edu_query").val() !== "" && $("#edugorilla_institute_datas").val() !== "")
@@ -112,23 +110,24 @@ $(document).on('click','#edugorilla_filter',function(){
             
                 
                 var address = $("#edugorilla_location option:selected").text().replace("->","");
-                
+              	
                 var geocoder =  new google.maps.Geocoder();
+               
     geocoder.geocode( { 'address': address}, function(results, status) {
-          if (status == google.maps.GeocoderStatus.OK) {
+       
           	var points;
           	var zoom;
-          		if(results[0].formatted_address == "Select Staffing, 969 N Grand Ave, Covina, CA 91724, USA")
+  				if(typeof results[0] === "undefined")
                 {
-          			points = {lat: parseFloat(0), lng: parseFloat(0)};
+                	points = {lat: parseFloat(0), lng: parseFloat(0)};
                 	zoom = 1;
                 }
-          		else
+    			else
                 {
                 	points = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()};
                 	zoom = 5;
                 }
-                alert(JSON.stringify(points));
+    
           
           		var cnfbox = "<table class='widefat fixed' align='center' width='100%' border=1><tr><th>Institude Name</th><th>Email(s)</th><th>SMS(s)</th><th>Flag</th></tr>";
         			 	var map = new google.maps.Map(document.getElementById('map'), {
@@ -158,10 +157,7 @@ $(document).on('click','#edugorilla_filter',function(){
          
 					cnfbox += "</table><center><button id='confirm' onclick='document.details.submit();'>Confirm</button></center>";
                		$("#confirmation").html(cnfbox);
-          
-          
-          
-          }
+ 
         });
                
               
