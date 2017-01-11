@@ -56,28 +56,7 @@ function create_edugorilla_lead_table()
 	dbDelta($sql2);
 	dbDelta($sql3);
 
-	$email_subject = "New Lead from EduGorilla: {category}";
-	$email_body = "<b>Dear {Contact_Person},</b>
-<br>
-<p>In EduGorilla, India\'s Largest Education Community, One Student Has Inquired About {category} In {location}</p>
-<br>
-<p>Your Institute Is Listed In before Mentioned Category On Our Site. Your Listing URL: {listing_URL}</p>
-<br>
-<p>Student\'s Details:<p>
-<p><b>Name:</b> {name}</br>
-<b>Contact:</b> {contact no}</br>
-<b>E-Mail Address:</b> {email address}</br>
-<b>Full Query:</b> {query}</p>
-<br>
-<p>Please Get In Touch With The Student.</p>
-<p>Feel Free To Contact Me if You have Any Queries</p>
-<br>
-<b>Regards</b>
-<div>Priyanka Kapoor</br>
-Institute Support Specialist</br>
-EduGorilla Team</div>";
-	$default_email_template = array('subject' => $email_subject, 'body' => $email_body);
-	update_option('edugorilla_email_setting1', $default_email_template);
+	
 }
 
 register_activation_hook(__FILE__, 'create_edugorilla_lead_table');
