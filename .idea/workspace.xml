@@ -117,7 +117,7 @@
         <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.045822103">
-              <caret line="46" column="42" selection-start-line="46" selection-start-column="42" selection-end-line="46" selection-end-column="42" />
+              <caret line="56" column="42" selection-start-line="56" selection-start-column="42" selection-end-line="56" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -146,7 +146,6 @@
       <list>
         <option value="$PROJECT_DIR$/frontend/edugorilla_disp_lead_shortcode.php" />
         <option value="$PROJECT_DIR$/frontend/class-Lead-API.php" />
-        <option value="$PROJECT_DIR$/.idea/workspace.xml" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/frontend/class-Custom-Lead-API.php" />
         <option value="$PROJECT_DIR$/css/lead-market-place-frontend.css" />
@@ -156,6 +155,7 @@
         <option value="$PROJECT_DIR$/frontend/js/lead-portal.js" />
         <option value="$PROJECT_DIR$/frontend/class-Lead-Card.php" />
         <option value="$PROJECT_DIR$/edugorilla.php" />
+        <option value="$PROJECT_DIR$/.idea/workspace.xml" />
       </list>
     </option>
   </component>
@@ -891,7 +891,7 @@
       <workItem from="1483874211266" duration="4144000" />
       <workItem from="1483880415279" duration="4057000" />
       <workItem from="1483891053885" duration="10932000" />
-      <workItem from="1484117571020" duration="1944000" />
+      <workItem from="1484117571020" duration="1955000" />
     </task>
     <task id="LOCAL-00001" summary="Following wordpress coding standards">
       <created>1483798444503</created>
@@ -941,11 +941,17 @@
       <option name="project" value="LOCAL" />
       <updated>1484120085978</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Remove call to wrong JS and CSS files.">
+      <created>1484120171593</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1484120171593</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43547000" />
+    <option name="totallyTimeSpent" value="43558000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -1373,7 +1379,7 @@
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.045822103">
-          <caret line="46" column="42" selection-start-line="46" selection-start-column="42" selection-end-line="46" selection-end-column="42" />
+          <caret line="56" column="42" selection-start-line="56" selection-start-column="42" selection-end-line="56" selection-end-column="42" />
           <folding />
         </state>
       </provider>
