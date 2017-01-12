@@ -50,13 +50,22 @@ function create_edugorilla_lead_table()
                                             PRIMARY KEY  (id)
                                         ) $charset_collate;"; //Defining query to create table.
 
+	$table_name4 = $wpdb->prefix . 'educash_transaction_history';
+		$sql4 = "CREATE TABLE $table_name4 (
+																			 		 id int(15) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+																  		 		 client_id int(15) NOT NULL,
+																		       lead_id int(15) NOT NULL,
+						                               date_time datetime NOT NULL,
+																		       operation SMALLINT(1) NOT NULL DEFAULT '1'
+				  														  );";
+
 	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 	//Creating a table in cureent wordpress
 	dbDelta($sql1);
 	dbDelta($sql2);
 	dbDelta($sql3);
+	dbDelta($sql4);
 
-	
 }
 
 register_activation_hook(__FILE__, 'create_edugorilla_lead_table');
@@ -649,6 +658,7 @@ include_once plugin_dir_path(__FILE__) . "email_setting.php";
 
 include_once plugin_dir_path(__FILE__) . "list.php";
 
+include_once plugin_dir_path(__FILE__) . "inc/shortcode_transaction_history.php";
 
 function edugorilla_shortcode_require()
 {
