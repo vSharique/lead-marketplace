@@ -247,7 +247,7 @@ function edugorilla()
 						add_filter('wp_mail_content_type', 'edugorilla_html_mail_content_type');
 
 						if (!empty($institute_email))
-							$institute_emails_status[$institute_email] = wp_mail($institute_email, $edugorilla_email_subject, $edugorilla_email_body);
+							$institute_emails_status[$institute_email] = wp_mail($institute_email, $edugorilla_email_subject, ucwords($edugorilla_email_body));
 
 						remove_filter('wp_mail_content_type', 'edugorilla_html_mail_content_type');
 					}
