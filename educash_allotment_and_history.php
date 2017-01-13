@@ -40,8 +40,7 @@ function allocate_educash_form_page()
             ));
            }
         }
-    }
-}    
+    }    
 //Form to allocate educash
 ?>
 <script>
@@ -77,7 +76,9 @@ function allocate_educash_form_page()
              Type your comments here (optional):<br/><textarea rows='4' cols='60' name='adminComment' maxlength='500'></textarea><br/><br/>
              <input type='submit' name='submit'><br/>
              </form></center>
-    
+<?php
+}
+?>
 <?php
 function transaction_history_form_page()
 {
