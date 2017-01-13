@@ -77,34 +77,6 @@ function allocate_educash_form_page()
              <input type='submit' name='submit'><br/>
              </form></center>
 <?php
-}
-?>
-<?php
-function transaction_history_form_page()
-{
-    global $wpdb;
-    $table_name3 = $wpdb->prefix . 'educash_deals';
-    $users_table = $wpdb->prefix.users;
-
-//Checking if the admin has filled atleast one field to submit the form to see history 
-
-    if ($_POST['Submit']) {
-        if (empty($_POST['admin_Name']) && empty($_POST['client_Name']) && empty($_POST['date']) && empty($_POST['date2'])) {
-            $all_four_error = "<span style='color:red;'> * All four fields cannot be blank</span>";
-        }
-    }
-    
-//Form to see history of educash transactions
-    echo "<center><h2>Use this form to know the history of educash transactions</h2>";
-    echo "<p style='color:green;'>Fill atleast one field<p>";
-    echo "<form method='post' action='" . $_SERVER['REQUEST_URI'] . "'>
-             Admin Email (Type the email Id of the admin whose history you want to see):<br/><input type='text' name='admin_Name' maxlength='100'><br/><br/>
-             Client Email (Type the emailId of the client whose history you want to see):<br/><input type='text' name='client_Name' max='100'><br/><br/>
-             Date From: <input type='date' name='date' min='1990-12-31' max='2050-12-31'>
-             Date To: <input type='date' name='date2' min='1990-12-31' max='2050-12-31'><br/><br/>
-             <input type='submit' name='Submit'><br/>" . $all_four_error . "<br/><br/><br/>
-             </form></center>";
-
 //Displaying the transaction made just now if the values are legal and sending a mail to respective client otherwise displaying error message 
 
     $client_display_name = $wpdb->get_var("SELECT display_name FROM $users_table WHERE user_email = '$clientName' ");
@@ -149,8 +121,34 @@ function transaction_history_form_page()
         echo "<tr><th>Id</th><th>Admin Email</th><th>Client Email</th><th>Educash transaction</th><th>Time</th><th>Comments</th></tr>";
         echo "</table></center><br/><br/>";
       }
-    }
+   }
+}
 
+function transaction_history_form_page()
+{
+    global $wpdb;
+    $table_name3 = $wpdb->prefix . 'educash_deals';
+    $users_table = $wpdb->prefix.users;
+
+//Checking if the admin has filled atleast one field to submit the form to see history 
+
+    if ($_POST['Submit']) {
+        if (empty($_POST['admin_Name']) && empty($_POST['client_Name']) && empty($_POST['date']) && empty($_POST['date2'])) {
+            $all_four_error = "<span style='color:red;'> * All four fields cannot be blank</span>";
+        }
+    }
+    
+//Form to see history of educash transactions
+    echo "<center><h2>Use this form to know the history of educash transactions</h2>";
+    echo "<p style='color:green;'>Fill atleast one field<p>";
+    echo "<form method='post' action='" . $_SERVER['REQUEST_URI'] . "'>
+             Admin Email (Type the email Id of the admin whose history you want to see):<br/><input type='text' name='admin_Name' maxlength='100'><br/><br/>
+             Client Email (Type the emailId of the client whose history you want to see):<br/><input type='text' name='client_Name' max='100'><br/><br/>
+             Date From: <input type='date' name='date' min='1990-12-31' max='2050-12-31'>
+             Date To: <input type='date' name='date2' min='1990-12-31' max='2050-12-31'><br/><br/>
+             <input type='submit' name='Submit'><br/>" . $all_four_error . "<br/><br/><br/>
+             </form></center>";
+    
 //Displaying the history of required fields
 
        $admin_Name = $_POST['admin_Name'];
