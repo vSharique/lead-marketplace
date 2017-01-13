@@ -164,7 +164,7 @@ function transaction_history_form_page()
             $check_result = $wpdb->get_var("SELECT COUNT(ID) FROM $table_name3  WHERE IF('$admin_Name' != '', admin_id = '$admin_ID_result', 1=1) AND
                                             IF('$client_Name' != '', client_id = '$client_ID_result', 1=1)");
             if($check_result == 0){
-            echo "<center><span style='color:red; position:absolute; top:400px;'>No records found</span></center>";
+            echo "<center><span style='color:red;'>No records found</span></center>";
             }
             else{
             $results = $wpdb->get_results("SELECT * FROM $table_name3 WHERE IF('$admin_Name' != '', admin_id = '$admin_ID_result', 1=1) AND
@@ -190,7 +190,7 @@ function transaction_history_form_page()
             $check_result = $wpdb->get_var("SELECT COUNT(ID) FROM $table_name3  WHERE IF('$admin_Name' != '', admin_id = '$admin_ID_result', 1=1) AND
                                             IF('$client_Name' != '', client_id = '$client_ID_result', 1=1) AND DATE(time) BETWEEN '$date' AND '2050-12-31' ");
             if($check_result == 0){
-            echo "<center><span style='color:red; position:absolute; top:400px;'>No records found</span></center>";
+            echo "<center><span style='color:red;'>No records found</span></center>";
             }
             else{
             $results = $wpdb->get_results("SELECT * FROM $table_name3 WHERE IF('$admin_Name' != '', admin_id = '$admin_ID_result', 1=1) AND
@@ -216,7 +216,7 @@ function transaction_history_form_page()
             $check_result = $wpdb->get_var("SELECT COUNT(ID) FROM $table_name3  WHERE IF('$admin_Name' != '', admin_id = '$admin_ID_result', 1=1) AND
                                             IF('$client_Name' != '', client_id = '$client_ID_result', 1=1) AND DATE(time) BETWEEN 'TRUE' AND '$date2' ");
             if($check_result == 0){
-            echo "<center><span style='color:red; position:absolute; top:400px;'>No records found</span></center>";
+            echo "<center><span style='color:red;'>No records found</span></center>";
             }
             else{
             $results = $wpdb->get_results("SELECT * FROM $table_name3 WHERE IF('$admin_Name' != '', admin_id = '$admin_ID_result', 1=1) AND
@@ -241,7 +241,7 @@ function transaction_history_form_page()
           if((empty($_POST['admin_Name']) && empty($_POST['client_Name'])) && !empty($_POST['date']) && empty($_POST['date2'])) {
             $check_result = $wpdb->get_var("SELECT COUNT(ID) FROM $table_name3  WHERE DATE(time) BETWEEN '$date' AND '2050-12-31' ");
             if($check_result == 0){
-            echo "<center><span style='color:red; position:absolute; top:400px;'>No records found</span></center>";
+            echo "<center><span style='color:red;'>No records found</span></center>";
             }
             else{
             $results = $wpdb->get_results("SELECT * FROM $table_name3 WHERE DATE(time) BETWEEN '$date' AND '2050-12-31' ");
@@ -264,7 +264,7 @@ function transaction_history_form_page()
           if((empty($_POST['admin_Name']) && empty($_POST['client_Name'])) && empty($_POST['date']) && !empty($_POST['date2'])) {
             $check_result = $wpdb->get_var("SELECT COUNT(ID) FROM $table_name3  WHERE DATE(time) BETWEEN 'TRUE' AND '$date2' ");
             if($check_result == 0){
-            echo "<center><span style='color:red; position:absolute; top:400px;'>No records found</span></center>";
+            echo "<center><span style='color:red;'>No records found</span></center>";
             }
             else{
             $results = $wpdb->get_results("SELECT * FROM $table_name3 WHERE DATE(time) BETWEEN 'TRUE' AND '$date2' ");
@@ -287,7 +287,7 @@ function transaction_history_form_page()
           if((empty($_POST['admin_Name']) && empty($_POST['client_Name'])) && !empty($_POST['date']) && !empty($_POST['date2'])) {
             $check_result = $wpdb->get_var("SELECT COUNT(ID) FROM $table_name3  WHERE DATE(time) BETWEEN '$date' AND '$date2' ");
             if($check_result == 0){
-            echo "<center><span style='color:red; position:absolute; top:400px;'>No records found</span></center>";
+            echo "<center><span style='color:red;'>No records found</span></center>";
             }
             else{
             $results = $wpdb->get_results("SELECT * FROM $table_name3 WHERE DATE(time) BETWEEN '$date' AND '$date2' ");
