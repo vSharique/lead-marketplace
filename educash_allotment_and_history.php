@@ -1,5 +1,5 @@
 <?php
-function educash_deals_form_page()
+function allocate_educash_form_page()
 {
     global $wpdb;
     $table_name3 = $wpdb->prefix . 'educash_deals';
@@ -41,15 +41,7 @@ function educash_deals_form_page()
            }
         }
     }
-
-//Checking if the admin has filled atleast one field to submit the form to see history 
-
-    if ($_POST['Submit']) {
-        if (empty($_POST['admin_Name']) && empty($_POST['client_Name']) && empty($_POST['date']) && empty($_POST['date2'])) {
-            $all_four_error = "<span style='color:red;'> * All four fields cannot be blank</span>";
-        }
-    }
-    
+}    
 //Form to allocate educash
 ?>
 <script>
@@ -72,8 +64,7 @@ function educash_deals_form_page()
     else {return confirm('Do you really want to submit this entry?');}
 }
 </script>
-    <div style='height:400px;'></div>
-    <div style='display:inline-block; width:50%; position:absolute; top:0;left:0;'><center><h2>Use this form to allocate educash to a client</h2><br/>
+    <center><h2>Use this form to allocate educash to a client</h2><br/>
     <form name="myForm" method='post' onsubmit="return validate_allotment_form()" action="<?php echo $_SERVER['REQUEST_URI'];?>">
              Client Email (Type the Email Id of the client whom you want to allot educash):<br/><input type='text' id='input1' name='clientName' maxlength='100'>*<br/>
                                                                                                 <span style='color:red;' id='errmsg1'></span>
@@ -85,11 +76,25 @@ function educash_deals_form_page()
                                                                        <br/><br/>
              Type your comments here (optional):<br/><textarea rows='4' cols='60' name='adminComment' maxlength='500'></textarea><br/><br/>
              <input type='submit' name='submit'><br/>
-             </form></center></div>
+             </form></center>
     
 <?php
+function transaction_history_form_page()
+{
+    global $wpdb;
+    $table_name3 = $wpdb->prefix . 'educash_deals';
+    $users_table = $wpdb->prefix.users;
+
+//Checking if the admin has filled atleast one field to submit the form to see history 
+
+    if ($_POST['Submit']) {
+        if (empty($_POST['admin_Name']) && empty($_POST['client_Name']) && empty($_POST['date']) && empty($_POST['date2'])) {
+            $all_four_error = "<span style='color:red;'> * All four fields cannot be blank</span>";
+        }
+    }
+    
 //Form to see history of educash transactions
-    echo "<div style='display:inline-block; width:50%; position:absolute; top:0; right:0;'><center><h2>Use this form to know the history of educash transactions</h2>";
+    echo "<center><h2>Use this form to know the history of educash transactions</h2>";
     echo "<p style='color:green;'>Fill atleast one field<p>";
     echo "<form method='post' action='" . $_SERVER['REQUEST_URI'] . "'>
              Admin Email (Type the email Id of the admin whose history you want to see):<br/><input type='text' name='admin_Name' maxlength='100'><br/><br/>
@@ -97,7 +102,7 @@ function educash_deals_form_page()
              Date From: <input type='date' name='date' min='1990-12-31' max='2050-12-31'>
              Date To: <input type='date' name='date2' min='1990-12-31' max='2050-12-31'><br/><br/>
              <input type='submit' name='Submit'><br/>" . $all_four_error . "<br/><br/><br/>
-             </form></center></div>";
+             </form></center>";
 
 //Displaying the transaction made just now if the values are legal and sending a mail to respective client otherwise displaying error message 
 
